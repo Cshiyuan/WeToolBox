@@ -1,0 +1,2 @@
+/* pages/activity/publishActivity/publishActivity.wxss */
+@import "../../../libraries/style/weui.wxss";
