@@ -3,7 +3,8 @@
     "pages/index/index",
     "pages/logs/logs",
     "pages/activity/publishActivity/publishActivity",
-    "pages/activity/punchActivity/punchActivity"
+    "pages/activity/punchActivity/punchActivity",
+    "pages/activity/setupPosition/setupPosition"
   ],
   "window": {
     "backgroundTextStyle": "light",

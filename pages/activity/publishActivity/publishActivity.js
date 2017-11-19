@@ -1,66 +1,56 @@
 // pages/activity/publishActivity/publishActivity.js
+const util = require('../../../utils/util');
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-  
+    title: '',
+    description: '',
+    date: "2016-09-01",
+    time: "12:01",
+    toDay: "",
+    nowTime: "",
+
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-  
+    let myDateString = util.formatTime(new Date());
+    let toDay = myDateString.split(' ')[0].replace(new RegExp('/', "gm"), '-');
+    let nowTime = myDateString.split(' ')[1].substring(0, 5);
+    // console.log(toDay);
+    this.setData({
+      toDay: toDay,
+      nowTime: nowTime,
+      date: toDay,
+      time: nowTime
+    });
+
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-  
+  toSetUpPosition: function (e) {
+    wx.navigateTo({
+      url: '../setupPosition/setupPosition'
+    });
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-  
+  bindDateChange: function (e) {
+    this.setData({
+      date: e.detail.value
+    })
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-  
+
+  bindTimeChange: function (e) {
+    this.setData({
+      time: e.detail.value
+    })
   },
 
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-  
-  },
 
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-  
-  },
 
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-  
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-  
-  }
 })
