@@ -21,6 +21,12 @@ Page({
         bgColor: '#7FFFD460',
         padding: 5,
         display: 'ALWAYS'
+      },
+      label: {
+        color: '#808080FF',
+        fontSize: 13,
+        content: '',
+        x: 0, y: 0
       }
     }],
     circles: [{
@@ -61,10 +67,13 @@ Page({
         location: res.latitude.toString() + ',' + res.longitude.toString(),
         success: function (res) {
           console.log(res);
-          marker.callout.content = res.wxMarkerData[0].address;
+          let wxMarkerData = res.wxMarkerData[0];
+          marker.callout.content = wxMarkerData.address;
+          marker.label.content = '(' + wxMarkerData.latitude.toString() + ',' + wxMarkerData.longitude.toString() + ')';
           that.setData({
             circles: [circle],
             markers: [marker],
+            position: that.translateToPoition(res)
           });
         }
       });
@@ -72,25 +81,9 @@ Page({
     }).catch(err => {
       console.log(err);
     });
-
-
-    // wx.getLocation({
-    //   type: 'gcj02',
-    //   success: function (res) {
-    //     let circle = that.data.circles[0];
-    //     let marker = that.data.markers[0];
-    //     circle.latitude = res.latitude;
-    //     circle.longitude = res.longitude;
-    //     marker.latitude = res.latitude;
-    //     marker.longitude = res.longitude;
-    //     that.setData({
-    //       circles: [circle],
-    //       markers: [marker],
-    //     });
-    //   }
-    // });
   },
 
+  //调整范围
   sliderChange: function (e) {
     let value = e.detail.value;
     let circle = this.data.circles[0];
@@ -102,12 +95,14 @@ Page({
 
   },
 
+  //开始输入搜索框
   showInput: function () {
     this.setData({
       inputShowed: true
     });
   },
 
+  //停止输入搜索框
   hideInput: function () {
     this.setData({
       inputVal: "",
@@ -115,12 +110,14 @@ Page({
     });
   },
 
+  //清空搜索框输入
   clearInput: function () {
     this.setData({
       inputVal: ""
     });
   },
 
+  //搜索框输入监听
   inputTyping: function (e) {
     let that = this;
 
@@ -151,6 +148,7 @@ Page({
     });
   },
 
+  //点击地址
   tapPositionItem: function (e) {
 
     let index = e.currentTarget.dataset.index;
@@ -162,6 +160,7 @@ Page({
     marker.latitude = item.location.lat;
     marker.longitude = item.location.lng;
     marker.callout.content = item.name;
+    marker.label.content = '(' + item.location.lat.toString() + ',' + item.location.lng.toString() + ')';
     if (item) {
       this.setData({
         sugData: [],
@@ -181,23 +180,45 @@ Page({
     console.log(e);
   },
 
-  commit: function (e) {
-
+  translateToPoition: function (res) {
+    // lat lng
+    return {
+      name: res.originalData.result.poiRegions[0].name,
+      location: res.originalData.result.location,
+      uid: 'none',
+      city: res.originalData.result.addressComponent.city,
+      district: res.originalData.result.addressComponent.district,
+      business: res.originalData.result.business,
+      cityid: res.originalData.result.cityCode
+    };
   },
 
-  cancel: function (e) {
-    // wx.chooseLocation({
-    //   success: function (res) {
-    //     console.log(res);
+  //确认位置button
+  commit: function (e) {
+    //获得页面栈
+    let pageStacks = getCurrentPages();
+    let prePage = pageStacks[pageStacks.length - 2];
+    prePage.setData({
+      position: [this.data.position]
+    });
+    //返回
+    wx.navigateBack({
+      delta: 1
+    });
+  },
 
-    //   },
-    //   fail: function (res) {
-    //     console.log(res);
-    //   },
-    //   complete: function (res) {
-    //     console.log(res);
-    //   }
-    // });
+  //不设置位置button
+  cancel: function (e) {
+
+    let pageStacks = getCurrentPages();
+    let prePage = pageStacks[pageStacks.length - 2];
+    prePage.setData({
+      position: []
+    });
+    //返回
+    wx.navigateBack({
+      delta: 1
+    });
   }
 
 })

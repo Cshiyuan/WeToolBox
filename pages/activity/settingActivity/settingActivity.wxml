@@ -1,0 +1,17 @@
+<!--pages/activity/settingActivity/settingActivity.wxml-->
+<view class="weui-cells__title">设置</view>
+<view class="weui-cells weui-cells_after-title">
+    <view class="weui-cell weui-cell_switch">
+        <view class="weui-cell__bd">停止打卡</view>
+        <view class="weui-cell__ft">
+            <switch checked />
+        </view>
+    </view>
+</view>
+
+
+
+<view class="page__bd_spacing" style="margin-top: 50rpx;margin-bottom:50rpx;padding-bottom:50rpx;">
+        <button class="weui-btn" type="warn">删除活动</button>
+        <!-- <button class="weui-btn" disabled="true" type="warn">签到 {{wxTimer}}</button> -->
+    </view>

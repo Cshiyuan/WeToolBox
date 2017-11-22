@@ -12,6 +12,7 @@ Page({
     time: "12:01",
     toDay: "",
     nowTime: "",
+    position: []
 
   },
 
@@ -30,6 +31,20 @@ Page({
       time: nowTime
     });
 
+  },
+
+  //输入标题
+  inputTitle: function (e) {
+    this.setData({
+      title: e.detail.value
+    });
+  },
+
+  //输入生命
+  inputDescrtiption: function (e) {
+    this.setData({
+      description: e.detail.value
+    });
   },
 
   toSetUpPosition: function (e) {

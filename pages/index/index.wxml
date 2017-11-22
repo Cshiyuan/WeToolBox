@@ -7,7 +7,27 @@
       <text class="userinfo-nickname">{{userInfo.nickName}}</text>
     </block>
   </view>
-  <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
+</view>
+
+<view class="weui-panel weui-panel_access">
+  <view class="weui-panel__hd">活动模块</view>
+  <view class="weui-panel__bd">
+    <navigator url="../activity/publishActivity/publishActivity" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+      <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+        <view class="weui-media-box__title">发布活动</view>
+        <view class="weui-media-box__desc">发布活动，发布后，提供报名、位置定位、打卡签到、统计、到时提醒等简单实用功能。</view>
+      </view>
+    </navigator>
+    <navigator url="../activity/punchActivity/punchActivity" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+      <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+        <view class="weui-media-box__title">我的活动</view>
+        <view class="weui-media-box__desc">查看我创建的活动，和我报名的活动列表</view>
+      </view>
+    </navigator>
   </view>
 </view>
+
+<!-- <view class="btn-area">
+    <navigator url="/pages/activity/publishActivity/publishActivity" hover-class="navigator-hover">发布活动</navigator>
+
+  </view> -->

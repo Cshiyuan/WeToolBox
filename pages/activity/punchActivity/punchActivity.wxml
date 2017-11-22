@@ -1,2 +1,55 @@
 <!--pages/activity/punchActivity/punchActivity.wxml-->
-<text>pages/activity/punchActivity/punchActivity.wxml</text>
+<!-- 地图 -->
+<map id="map" longitude="{{markers[0].longitude}}" latitude="{{markers[0].latitude}}" scale="17" markers="{{markers}}" circles="{{circles}}"
+    style="width: 100%; height: 300px;"></map>
+
+
+<view class="weui-panel weui-panel_access">
+    <view class="weui-panel__bd">
+        <view class="weui-media-box weui-media-box_text">
+            <view class="weui-media-box__title weui-media-box__title_in-text">计算机原理</view>
+            <view class="weui-media-box__desc" style="display:inline;">由各种物收水电费水电费水电费水电费是对否是对否是对否是对否是对否是对否是对否是对否质组成女i 的形状，有自己的运行轨道。</view>
+            <view class="weui-media-box__info">
+                <view class="weui-media-box__info__meta">开始时间：2017年11月20日 21:50</view>
+            </view>
+        </view>
+    </view>
+</view>
+
+<view class="weui-cells">
+    <view class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+        <view class="weui-cell__bd">报名列表</view>
+        <view class="weui-cell__ft weui-cell__ft_in-access">
+            <view class="weui-grid" style="padding:0;border:0; width:22px;">
+                <image class="weui-grid__icon" style="border:3px solid white;border-radius:28px;" src="https://wx.qlogo.cn/mmopen/vi_32/UbnPnFq4libmxNRDeS3QzXtXQUp54sVoaqIeupy7OkjJSe7pumvzPWp3Flm7ZeuRZpeYb8oaMOB0RXzfgyjXLNA/0"
+                />
+            </view>
+            <view class="weui-grid" style="padding:0; border:0; width:22px; padding-right:30px; ">
+                <image class="weui-grid__icon" style="border:3px solid white;border-radius:28px;" src="https://wx.qlogo.cn/mmopen/vi_32/UbnPnFq4libmxNRDeS3QzXtXQUp54sVoaqIeupy7OkjJSe7pumvzPWp3Flm7ZeuRZpeYb8oaMOB0RXzfgyjXLNA/0"
+                />
+            </view>
+        </view>
+    </view>
+    <view class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+        <view class="weui-cell__bd">打卡列表</view>
+        <view class="weui-cell__ft weui-cell__ft_in-access">
+            <view class="weui-grid" style="padding:0;border:0; width:22px;">
+                <image class="weui-grid__icon" style="border:3px solid white;border-radius:28px;" src="https://wx.qlogo.cn/mmopen/vi_32/UbnPnFq4libmxNRDeS3QzXtXQUp54sVoaqIeupy7OkjJSe7pumvzPWp3Flm7ZeuRZpeYb8oaMOB0RXzfgyjXLNA/0"
+                />
+            </view>
+            <view class="weui-grid" style="padding:0; border:0; width:22px; padding-right:30px; ">
+                <image class="weui-grid__icon" style="border:3px solid white;border-radius:28px;" src="https://wx.qlogo.cn/mmopen/vi_32/UbnPnFq4libmxNRDeS3QzXtXQUp54sVoaqIeupy7OkjJSe7pumvzPWp3Flm7ZeuRZpeYb8oaMOB0RXzfgyjXLNA/0"
+                />
+            </view>
+        </view>
+    </view>
+    <view class="weui-cell weui-cell_access" hover-class="weui-cell_active" bindtap="naviToSetting">
+        <view class="weui-cell__bd">设置</view>
+        <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+    </view>
+</view>
+
+<view class="page__bd_spacing" style="margin-top: 50rpx;margin-bottom:50rpx;padding-bottom:50rpx;">
+    <button class="weui-btn" type="warn">报名</button>
+    <button class="weui-btn" disabled="true" type="warn">签到 {{wxTimer}}</button>
+</view>

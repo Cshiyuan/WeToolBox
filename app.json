@@ -1,10 +1,11 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/logs/logs",
     "pages/activity/publishActivity/publishActivity",
     "pages/activity/punchActivity/punchActivity",
-    "pages/activity/setupPosition/setupPosition"
+    "pages/activity/setupPosition/setupPosition",
+    "pages/activity/settingActivity/settingActivity",
+    "pages/memberList/memberList"
   ],
   "window": {
     "backgroundTextStyle": "light",
