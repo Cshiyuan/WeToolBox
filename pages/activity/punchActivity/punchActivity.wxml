@@ -17,7 +17,8 @@
 </view>
 
 <view class="weui-cells">
-    <view class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+    <!-- 报名列表 -->
+    <view class="weui-cell weui-cell_access" hover-class="weui-cell_active" bindtap="naviToMemberList">
         <view class="weui-cell__bd">报名列表</view>
         <view class="weui-cell__ft weui-cell__ft_in-access">
             <view class="weui-grid" style="padding:0;border:0; width:22px;">
@@ -30,7 +31,8 @@
             </view>
         </view>
     </view>
-    <view class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+    <!-- 打卡列表 -->
+    <view class="weui-cell weui-cell_access" hover-class="weui-cell_active" bindtap="naviToMemberList">
         <view class="weui-cell__bd">打卡列表</view>
         <view class="weui-cell__ft weui-cell__ft_in-access">
             <view class="weui-grid" style="padding:0;border:0; width:22px;">
@@ -43,6 +45,7 @@
             </view>
         </view>
     </view>
+    <!-- 设置入口 -->
     <view class="weui-cell weui-cell_access" hover-class="weui-cell_active" bindtap="naviToSetting">
         <view class="weui-cell__bd">设置</view>
         <view class="weui-cell__ft weui-cell__ft_in-access"></view>
