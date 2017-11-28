@@ -1,5 +1,8 @@
 // pages/activity/publishActivity/publishActivity.js
 const util = require('../../../utils/util');
+const { insertActivityPromise } = require('../../../utils/requestPromise');
+
+
 Page({
 
   /**
@@ -12,7 +15,9 @@ Page({
     time: "12:01",
     toDay: "",
     nowTime: "",
-    position: []
+    positions: [],
+    isCanPublish: false,
+    loading: false
 
   },
 
@@ -38,6 +43,8 @@ Page({
     this.setData({
       title: e.detail.value
     });
+
+    this.judgeCanPublish();
   },
 
   //输入生命
@@ -45,27 +52,105 @@ Page({
     this.setData({
       description: e.detail.value
     });
+    this.judgeCanPublish();
   },
 
+  //跳转到设置地点的页面
   toSetUpPosition: function (e) {
     wx.navigateTo({
       url: '../setupPosition/setupPosition'
     });
   },
 
+  //设置日期
   bindDateChange: function (e) {
     this.setData({
       date: e.detail.value
     })
   },
 
-
+  //设置时间
   bindTimeChange: function (e) {
     this.setData({
       time: e.detail.value
     })
   },
 
+  //判断是否可以发布
+  judgeCanPublish: function () {
 
+    if (this.data.title.trim().length > 0 && this.data.description.trim().length) {
+
+      this.setData({
+        isCanPublish: true
+      });
+    } else {
+
+      this.setData({
+        isCanPublish: false
+      });
+    }
+  },
+
+  //创建活动
+  createActivity: function () {
+
+    if (!this.data.isCanPublish) {
+      return;
+    }
+
+    let open_id = '233554';
+    let title = this.data.title;
+    let description = this.data.description;
+    let time = this.data.time;
+    let date = this.data.date;
+    let position = '';
+
+    if (this.data.positions.length > 0) {
+      let tempObject = {
+        lat: this.data.positions[0].location.lat,
+        lng: this.data.positions[0].location.lng,
+        radius: this.data.positions[0].radius
+      }
+      position = JSON.stringify(tempObject);  //转换成JSON字符串
+    }
+
+    this.setData({
+      isCanPublish: false,
+      loading: true
+    });
+
+    let that = this;
+
+    insertActivityPromise({
+      open_id: open_id,
+      title: title,
+      description: description,
+      position: position,
+      time: time,
+      date: date
+    }).then(result => {
+
+      console.log(result);
+      if (!result.activity.activity_id) {
+
+      } else {
+        
+        util.showFailToast();
+        that.setData({
+          isCanPublish: true,
+          loading: false
+        });
+      }
+
+    }).catch(err => {
+
+      util.showFailToast();
+      that.setData({
+        isCanPublish: true,
+        loading: false
+      });
+    });
+  }
 
 })

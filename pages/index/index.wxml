@@ -20,8 +20,14 @@
     </navigator>
     <navigator url="../activity/punchActivity/punchActivity" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
       <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
-        <view class="weui-media-box__title">我的活动</view>
-        <view class="weui-media-box__desc">查看我创建的活动，和我报名的活动列表</view>
+        <view class="weui-media-box__title">我的创建活动</view>
+        <view class="weui-media-box__desc">查看我创建的活动列表</view>
+      </view>
+    </navigator>
+    <navigator url="../activity/punchActivity/punchActivity" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+      <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+        <view class="weui-media-box__title">我的参与活动</view>
+        <view class="weui-media-box__desc">查看我参与的活动列表</view>
       </view>
     </navigator>
   </view>

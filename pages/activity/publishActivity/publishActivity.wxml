@@ -10,7 +10,7 @@
         <view class="weui-cells weui-cells_after-title">
             <view class="weui-cell weui-cell_input">
                 <view class="weui-cell__bd">
-                    <input class="weui-input" placeholder="请输入活动标题" bindinput="inputTitle"/>
+                    <input class="weui-input" placeholder="请输入活动标题" bindinput="inputTitle" />
                 </view>
             </view>
         </view>
@@ -20,7 +20,8 @@
         <view class="weui-cells weui-cells_after-title">
             <view class="weui-cell">
                 <view class="weui-cell__bd">
-                    <textarea class="weui-textarea" placeholder="请输入活动说明" bindinput="inputDescrtiption" style="height: 3.3em" auto-height="true" maxlength="200" />
+                    <textarea class="weui-textarea" placeholder="请输入活动说明" bindinput="inputDescrtiption" style="height: 3.3em" auto-height="true"
+                        maxlength="200" />
                     <view class="weui-textarea-counter">{{description.length}}/200</view>
                 </view>
             </view>
@@ -36,7 +37,7 @@
                     <view class="weui-label">日期</view>
                 </view>
                 <view class="weui-cell__bd">
-                    <picker mode="date" value="{{date}}" start="{{toDay}}"  bindchange="bindDateChange">
+                    <picker mode="date" value="{{date}}" start="{{toDay}}" bindchange="bindDateChange">
                         <view class="weui-input">{{date}}</view>
                     </picker>
                 </view>
@@ -48,7 +49,7 @@
                     <view class="weui-label">时间</view>
                 </view>
                 <view class="weui-cell__bd">
-                    <picker mode="time" value="{{time}}" start="{{nowTime}}"  bindchange="bindTimeChange">
+                    <picker mode="time" value="{{time}}" start="{{nowTime}}" bindchange="bindTimeChange">
                         <view class="weui-input">{{time}}</view>
                     </picker>
                 </view>
@@ -56,19 +57,21 @@
 
             <!-- 地点picker -->
             <view class="weui-cell weui-cell_select" hover-class="weui-cell_active" bindtap="toSetUpPosition">
-                <view class="weui-cell__hd weui-cell__hd_in-select-after" >
+                <view class="weui-cell__hd weui-cell__hd_in-select-after">
                     <view class="weui-label">地点</view>
                 </view>
                 <view class="weui-cell__bd">
-                    
-                    <view wx:if="{{position.length === 0}}" class="weui-select weui-select_in-select-after">不设置</view>
-                    <view wx:else class="weui-select weui-select_in-select-after" style="height:auto;">{{position[0].name}}</view>
+
+                    <view wx:if="{{positions.length === 0}}" class="weui-select weui-select_in-select-after">不设置</view>
+                    <view wx:else class="weui-select weui-select_in-select-after" style="height:auto;">{{positions[0].name}}</view>
                 </view>
             </view>
         </view>
 
         <view class="page__bd_spacing" style="margin-top: 50rpx">
-            <button class="weui-btn" type="primary">发布活动</button>
+            <button class="weui-btn" type="primary" disabled="{{!isCanPublish}}" bindtap="createActivity">
+                <view wx:if="{{loading}}" class="weui-loading"></view>
+                发布活动</button>
         </view>
 
     </view>

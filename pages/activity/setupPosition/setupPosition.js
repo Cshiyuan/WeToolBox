@@ -198,8 +198,10 @@ Page({
     //获得页面栈
     let pageStacks = getCurrentPages();
     let prePage = pageStacks[pageStacks.length - 2];
+    let position = this.data.position;
+    position.radius = this.data.circles[0].radius;   //添加半径
     prePage.setData({
-      position: [this.data.position]
+      positions: [this.data.position]
     });
     //返回
     wx.navigateBack({
