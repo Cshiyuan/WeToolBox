@@ -17,6 +17,10 @@ const formatNumber = n => {
   return n[1] ? n : '0' + n
 }
 
+/**
+ * @description 需要打包成Promise 的小程序接口
+ * @param {wx接口} fn 
+ */
 function wxPromisify(fn) {
   return function (obj = {}) {
     return new Promise((resolve, reject) => {
@@ -31,6 +35,27 @@ function wxPromisify(fn) {
       fn(obj)
     })
   }
+}
+
+/**
+ * @description 打包后的wxRequest
+ * @param {*} object 
+ */
+function wxRequestPromise(object) {
+
+  let url = object.url || '';
+  let data = object.data || {};
+  let header = object.header || {};
+  let method = object.method || 'POST';  //默认是POST
+  let dataType = object.dataType || 'json';
+
+  return wxPromisify(wx.request)({
+    url: url,
+    data: data,
+    header: header,
+    method: method,
+    dataType: dataType
+  });
 }
 
 function showSuccessToast(object) {
@@ -66,29 +91,26 @@ function showFailToast(object) {
   });
 }
 
-function wxRequestPromise(object) {
+/**
+ * @description 生成可以导航的参数
+ * @param {*} object 
+ */
+function generateNaviParam(object) {
 
-  let url = object.url || '';
-  let data = object.data || {};
-  let header = object.header || {};
-  let method = object.method || 'POST';  //默认是POST
-  let dataType = object.dataType || 'json';
-
-  return wxPromisify(wx.request)({
-    url: url,
-    data: data,
-    header: header,
-    method: method,
-    dataType: dataType
-  });
+  let params = '?'
+  for (key in object) {
+    params = params + key.toString() + '=' + object[key].toString;
+  }
+  return params;
 }
+
 
 
 module.exports = {
 
   showSuccessToast: showSuccessToast,
   showFailToast: showFailToast,
-
+  generateNaviParam: generateNaviParam,
 
   formatTime: formatTime,  //以指定格式获取当前时间
   wxPromisify: wxPromisify,  //将原有的小程序接口替换成

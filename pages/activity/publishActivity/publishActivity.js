@@ -134,8 +134,19 @@ Page({
       console.log(result);
       if (!result.activity.activity_id) {
 
+        let url = '/pages/activity/punchActiviy';
+        let param = util.generateNaviParam({
+          activity_id: result.activity.activity_id
+        });
+
+        console.log(param);
+
+        wx.redirectTo({
+          url: 'test?id=1'
+        })
+
       } else {
-        
+
         util.showFailToast();
         that.setData({
           isCanPublish: true,
