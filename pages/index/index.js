@@ -2,6 +2,7 @@
 //获取应用实例
 const app = getApp()
 
+
 Page({
   data: {
     userInfo: {},
@@ -10,6 +11,13 @@ Page({
   },
 
   onLoad: function () {
+
+
+    
+
+
+
+
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,

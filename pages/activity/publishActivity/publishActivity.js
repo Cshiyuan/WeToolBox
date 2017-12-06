@@ -131,19 +131,16 @@ Page({
       date: date
     }).then(result => {
 
-      console.log(result);
-      if (!result.activity.activity_id) {
+      if (result.activity.activity_id) {
 
-        let url = '/pages/activity/punchActiviy';
+        let url = '/pages/activity/punchActivity/punchActivity';
         let param = util.generateNaviParam({
           activity_id: result.activity.activity_id
         });
 
-        console.log(param);
-
         wx.redirectTo({
-          url: 'test?id=1'
-        })
+          url: url + param
+        });
 
       } else {
 
@@ -156,6 +153,7 @@ Page({
 
     }).catch(err => {
 
+      console.log('catch err ' + err);
       util.showFailToast();
       that.setData({
         isCanPublish: true,

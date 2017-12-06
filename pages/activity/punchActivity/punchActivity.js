@@ -1,5 +1,8 @@
 // pages/activity/punchActivity/punchActivity.js
 const wxTimer = require('../../../libs/wxTimer');
+const { getActivityPromise } = require('../../../utils/requestPromise');
+
+
 Page({
 
   /**
@@ -44,6 +47,24 @@ Page({
    */
   onLoad: function (options) {
 
+    console.log(options);
+    let that = this;
+    if (options.activity_id) {
+      getActivityPromise({
+        activity_id: options.activity_id
+      }).then(result => {
+
+        console.log(result);
+        that.setData({
+          activity: result.activity
+        });
+      }).catch(err => {
+
+        console.log('catch err is ' + err);
+      })
+    }
+
+
     let timer = new wxTimer({
       beginTime: "00:00:59",
       complete: function () {
@@ -56,10 +77,20 @@ Page({
 
   },
 
+  /**
+   * 跳转到设置界面
+   */
   naviToSetting: function (e) {
     wx.navigateTo({
       url: '../settingActivity/settingActivity'
     });
+  },
+
+  /**
+   * 根据activity_id刷新
+   */
+  refreshActivityById: function(activityId) {
+
   }
 
 

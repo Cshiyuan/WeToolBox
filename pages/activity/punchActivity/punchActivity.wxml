@@ -7,8 +7,8 @@
 <view class="weui-panel weui-panel_access">
     <view class="weui-panel__bd">
         <view class="weui-media-box weui-media-box_text">
-            <view class="weui-media-box__title weui-media-box__title_in-text">计算机原理</view>
-            <view class="weui-media-box__desc" style="display:inline;">由各种物收水电费水电费水电费水电费是对否是对否是对否是对否是对否是对否是对否是对否质组成女i 的形状，有自己的运行轨道。</view>
+            <view class="weui-media-box__title weui-media-box__title_in-text">{{activity.title}}</view>
+            <view class="weui-media-box__desc" style="display:inline;">{{activity.description}}</view>
             <view class="weui-media-box__info">
                 <view class="weui-media-box__info__meta">开始时间：2017年11月20日 21:50</view>
             </view>

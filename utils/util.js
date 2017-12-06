@@ -1,5 +1,6 @@
 
 const Promise = require('../libs/bluebird');
+var wafer = require('../libs/wafer-client-sdk/index');
 
 const formatTime = date => {
   const year = date.getFullYear()
@@ -43,18 +44,34 @@ function wxPromisify(fn) {
  */
 function wxRequestPromise(object) {
 
+  // 登录地址，注意路径要和中间件配置的 loginPath 一直
+  wafer.setLoginUrl(`http://localhost:3000/login`);
+
   let url = object.url || '';
   let data = object.data || {};
   let header = object.header || {};
   let method = object.method || 'POST';  //默认是POST
   let dataType = object.dataType || 'json';
+  let login = object.login || true;
 
-  return wxPromisify(wx.request)({
-    url: url,
-    data: data,
-    header: header,
-    method: method,
-    dataType: dataType
+
+  return new Promise((resolve, reject) => {
+    wafer.request({
+      login: login,
+      url: url,
+      data: data,
+      header: header,
+      method: method,
+      dataType: dataType,
+      success: function (response) {
+
+        resolve(response);
+      },
+      fail: function (err) {
+
+        reject(response);
+      }
+    });
   });
 }
 
@@ -98,11 +115,12 @@ function showFailToast(object) {
 function generateNaviParam(object) {
 
   let params = '?'
-  for (key in object) {
-    params = params + key.toString() + '=' + object[key].toString;
+  for (let key in object) {
+    params = params + key.toString() + '=' + object[key].toString();
   }
   return params;
 }
+
 
 
 
