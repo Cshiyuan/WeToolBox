@@ -1,6 +1,9 @@
 
 const Promise = require('../libs/bluebird');
-var wafer = require('../libs/wafer-client-sdk/index');
+const wafer = require('../libs/wafer-client-sdk/index');
+const { LOGIN_URL } = require('./config');
+wafer.setLoginUrl(LOGIN_URL);
+
 
 const formatTime = date => {
   const year = date.getFullYear()
@@ -44,16 +47,12 @@ function wxPromisify(fn) {
  */
 function wxRequestPromise(object) {
 
-  // 登录地址，注意路径要和中间件配置的 loginPath 一直
-  wafer.setLoginUrl(`http://localhost:3000/login`);
-
   let url = object.url || '';
   let data = object.data || {};
   let header = object.header || {};
   let method = object.method || 'POST';  //默认是POST
   let dataType = object.dataType || 'json';
   let login = object.login || true;
-
 
   return new Promise((resolve, reject) => {
     wafer.request({
@@ -75,6 +74,10 @@ function wxRequestPromise(object) {
   });
 }
 
+/**
+ * @description 成功提示Toast
+ * @param {*} object 
+ */
 function showSuccessToast(object) {
 
   let title = '';
@@ -91,6 +94,10 @@ function showSuccessToast(object) {
   });
 }
 
+/**
+ * @description 失败提示Toast
+ * @param {*} object 
+ */
 function showFailToast(object) {
 
   let title = '网络错误';
@@ -108,6 +115,7 @@ function showFailToast(object) {
   });
 }
 
+
 /**
  * @description 生成可以导航的参数
  * @param {*} object 
@@ -120,7 +128,6 @@ function generateNaviParam(object) {
   }
   return params;
 }
-
 
 
 
