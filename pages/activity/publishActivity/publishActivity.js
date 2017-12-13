@@ -64,9 +64,26 @@ Page({
 
   //设置日期
   bindDateChange: function (e) {
-    this.setData({
-      date: e.detail.value
-    })
+
+    let dateTime = new Date(e.detail.value);
+    let time = new Date(this.data.toDay);
+    let number = dateTime.getTime() - time.getTime();
+    console.log(number);
+    if (number > 0) {
+
+      this.setData({
+        nowTime: {},
+        date: e.detail.value
+      });
+    } else {
+
+      let myDateString = util.formatTime(new Date());
+      let nowTime = myDateString.split(' ')[1].substring(0, 5);
+      this.setData({
+        nowTime: nowTime,
+        date: e.detail.value
+      });
+    }
   },
 
   //设置时间

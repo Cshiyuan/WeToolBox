@@ -21,6 +21,24 @@ const formatNumber = n => {
   return n[1] ? n : '0' + n
 }
 
+const formatTimeByMilliSecond = milliSecond => {
+
+  if (milliSecond <= 0)  //距离开始时间小于0，说明已经开始，返回空串 
+    return '';
+
+  var hours = Math.floor(milliSecond / (3600 * 1000))
+
+  //计算相差分钟数
+  var leave1 = milliSecond % (24 * 3600 * 1000)    //计算天数后剩余的毫秒数
+  var leave2 = leave1 % (3600 * 1000)        //计算小时数后剩余的毫秒数
+  var minutes = Math.floor(leave2 / (60 * 1000))
+  //计算相差秒数
+  var leave3 = leave2 % (60 * 1000)      //计算分钟数后剩余的毫秒数
+  var seconds = Math.round(leave3 / 1000)
+
+  return hours.toString() + ':' + minutes.toString() + ':' + seconds.toString();
+}
+
 /**
  * @description 需要打包成Promise 的小程序接口
  * @param {wx接口} fn 
@@ -68,7 +86,7 @@ function wxRequestPromise(object) {
       },
       fail: function (err) {
 
-        reject(response);
+        reject(err);
       }
     });
   });
@@ -137,8 +155,10 @@ module.exports = {
   showFailToast: showFailToast,
   generateNaviParam: generateNaviParam,
 
+  formatTimeByMilliSecond: formatTimeByMilliSecond,  //毫秒转成格式
   formatTime: formatTime,  //以指定格式获取当前时间
   wxPromisify: wxPromisify,  //将原有的小程序接口替换成
   Promise: Promise,    //以bluebird引入的Promise实现
   wxRequestPromise: wxRequestPromise  //一个简单的打包wxRquset
+
 }

@@ -10,7 +10,7 @@
             <view class="weui-media-box__title weui-media-box__title_in-text">{{activity.title}}</view>
             <view class="weui-media-box__desc" style="display:inline;">{{activity.description}}</view>
             <view class="weui-media-box__info">
-                <view class="weui-media-box__info__meta">开始时间：2017年11月20日 21:50</view>
+                <view class="weui-media-box__info__meta">开始时间：{{startTimeStr}}</view>
             </view>
         </view>
     </view>
@@ -21,28 +21,24 @@
     <view class="weui-cell weui-cell_access" hover-class="weui-cell_active" bindtap="naviToMemberList">
         <view class="weui-cell__bd">报名列表</view>
         <view class="weui-cell__ft weui-cell__ft_in-access">
-            <view class="weui-grid" style="padding:0;border:0; width:22px;">
-                <image class="weui-grid__icon" style="border:3px solid white;border-radius:28px;" src="https://wx.qlogo.cn/mmopen/vi_32/UbnPnFq4libmxNRDeS3QzXtXQUp54sVoaqIeupy7OkjJSe7pumvzPWp3Flm7ZeuRZpeYb8oaMOB0RXzfgyjXLNA/0"
-                />
-            </view>
-            <view class="weui-grid" style="padding:0; border:0; width:22px; padding-right:30px; ">
-                <image class="weui-grid__icon" style="border:3px solid white;border-radius:28px;" src="https://wx.qlogo.cn/mmopen/vi_32/UbnPnFq4libmxNRDeS3QzXtXQUp54sVoaqIeupy7OkjJSe7pumvzPWp3Flm7ZeuRZpeYb8oaMOB0RXzfgyjXLNA/0"
-                />
-            </view>
+            <block wx:for="{{activity.signUpList}}" wx:for-item="item" wx:for-index="itemIndex" wx:key="itemIndex">
+                <view class="weui-grid" style="padding:0;border:0; width:22px;">
+                    <image class="weui-grid__icon" style="border:3px solid white;border-radius:28px;" src="https://wx.qlogo.cn/mmopen/vi_32/UbnPnFq4libmxNRDeS3QzXtXQUp54sVoaqIeupy7OkjJSe7pumvzPWp3Flm7ZeuRZpeYb8oaMOB0RXzfgyjXLNA/0"
+                    />
+                </view>
+            </block>
         </view>
     </view>
     <!-- 打卡列表 -->
     <view class="weui-cell weui-cell_access" hover-class="weui-cell_active" bindtap="naviToMemberList">
         <view class="weui-cell__bd">打卡列表</view>
         <view class="weui-cell__ft weui-cell__ft_in-access">
-            <view class="weui-grid" style="padding:0;border:0; width:22px;">
-                <image class="weui-grid__icon" style="border:3px solid white;border-radius:28px;" src="https://wx.qlogo.cn/mmopen/vi_32/UbnPnFq4libmxNRDeS3QzXtXQUp54sVoaqIeupy7OkjJSe7pumvzPWp3Flm7ZeuRZpeYb8oaMOB0RXzfgyjXLNA/0"
-                />
-            </view>
-            <view class="weui-grid" style="padding:0; border:0; width:22px; padding-right:30px; ">
-                <image class="weui-grid__icon" style="border:3px solid white;border-radius:28px;" src="https://wx.qlogo.cn/mmopen/vi_32/UbnPnFq4libmxNRDeS3QzXtXQUp54sVoaqIeupy7OkjJSe7pumvzPWp3Flm7ZeuRZpeYb8oaMOB0RXzfgyjXLNA/0"
-                />
-            </view>
+            <block wx:for="{{activity.punchList}}" wx:for-item="item" wx:for-index="itemIndex" wx:key="itemIndex">
+                <view class="weui-grid" style="padding:0;border:0; width:22px;">
+                    <image class="weui-grid__icon" style="border:3px solid white;border-radius:28px;" src="https://wx.qlogo.cn/mmopen/vi_32/UbnPnFq4libmxNRDeS3QzXtXQUp54sVoaqIeupy7OkjJSe7pumvzPWp3Flm7ZeuRZpeYb8oaMOB0RXzfgyjXLNA/0"
+                    />
+                </view>
+            </block>
         </view>
     </view>
     <!-- 设置入口 -->
@@ -53,6 +49,6 @@
 </view>
 
 <view class="page__bd_spacing" style="margin-top: 50rpx;margin-bottom:50rpx;padding-bottom:50rpx;">
-    <button class="weui-btn" type="warn">报名</button>
-    <button class="weui-btn" disabled="true" type="warn">签到 {{wxTimer}}</button>
+    <button wx:if="{{!isAlreadyStart}}"  class="weui-btn" type="warn">报名 {{wxTimer}}</button>
+    <button wx:if="{{isAlreadyStart}}" class="weui-btn" disabled="true" type="warn">签到</button>
 </view>

@@ -1,6 +1,7 @@
 // pages/activity/punchActivity/punchActivity.js
-const wxTimer = require('../../../libs/wxTimer');
-const { getActivityPromise } = require('../../../utils/requestPromise');
+const wxTimer = require('../../../utils/wxTimer');
+const { getActivityPromise, signUpActivityPromise, punchActivityPromise } = require('../../../utils/requestPromise');
+const { countDown, formatTime } = require('../../../utils/util');
 
 
 Page({
@@ -39,7 +40,8 @@ Page({
       fillColor: '#FFFFE0AA',
       radius: 100
     }],
-    wxTimerList: {}
+    wxTimerList: {},
+    isAlreadyStart: false
   },
 
   /**
@@ -50,32 +52,18 @@ Page({
     console.log(options);
     let that = this;
     if (options.activity_id) {
-      getActivityPromise({
-        activity_id: options.activity_id
-      }).then(result => {
-
-        console.log(result);
-        that.setData({
-          activity: result.activity
-        });
-      }).catch(err => {
-
-        console.log('catch err is ' + err);
-      })
+      this.refreshActivityById(options.activity_id);
     }
-
-
-    let timer = new wxTimer({
-      beginTime: "00:00:59",
-      complete: function () {
-        console.log("完成了")
-      }
-    });
-    this.timer = timer;
-    timer.start(this);
-    // timer.stop();
-
   },
+
+  onShow: function (options) {
+    if (this.timer) {
+      this.timer.calibration();
+    }
+  },
+
+
+
 
   /**
    * 跳转到设置界面
@@ -89,7 +77,77 @@ Page({
   /**
    * 根据activity_id刷新
    */
-  refreshActivityById: function(activityId) {
+  refreshActivityById: function (activityId) {
+
+    let that = this;
+    getActivityPromise({
+      activity_id: activityId
+    }).then(result => {
+
+      console.log(result);
+
+      let time = result.activity.date + ' ' + result.activity.time;
+      let date = new Date(time);
+
+      let startTimeStr = date.getFullYear().toString() + '年' + (date.getMonth() + 1).toString() + '月'
+        + date.getDate().toString() + '日' + ' ' + date.getHours().toString() + ':' + date.getMinutes().toString();
+
+      console.log(startTimeStr);
+
+      that.setData({
+        activity: result.activity,
+        startTimeStr: startTimeStr
+      });
+
+      //开始计时器
+      if (date) {
+
+        let timer = new wxTimer({
+          endTime: date,
+          complete: function () {
+            console.log("倒计时结束了")
+            that.setData({
+              isAlreadyStart: true
+            });
+          }
+        });
+        that.timer = timer;
+        timer.start(that);
+      }
+
+    }).catch(err => {
+
+      console.log('catch err is ' + err);
+    })
+
+  },
+
+  /**
+   * 报名活动
+   */
+  signUpActivity: function (e) {
+
+    signUpActivityPromise({
+
+      activity_id: activity.activity_id
+    }).then((result) => {
+
+      console.log(result);
+    });
+  },
+
+  /**
+   * 打开活动
+   */
+  punchActivity: function (e) {
+
+    punchActivityPromise({
+
+      activity_id: activity.activity_id
+    }).then((result) => {
+
+      console.log(result);
+    });
 
   }
 
