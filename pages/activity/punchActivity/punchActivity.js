@@ -1,8 +1,9 @@
 // pages/activity/punchActivity/punchActivity.js
 const wxTimer = require('../../../utils/wxTimer');
+const bmap = require('../../../libs/bmap-wx');
 const { getActivityPromise, signUpActivityPromise, punchActivityPromise } = require('../../../utils/requestPromise');
-const { countDown, formatTime } = require('../../../utils/util');
-
+const { countDown, formatTime, getDistance, wxPromisify, formatNumber } = require('../../../utils/util');
+const getLocationPromise = wxPromisify(wx.getLocation);
 
 Page({
 
@@ -41,7 +42,8 @@ Page({
       radius: 100
     }],
     wxTimerList: {},
-    isAlreadyStart: false
+    isAlreadyStart: false,
+    myLocation: {}
   },
 
   /**
@@ -54,15 +56,31 @@ Page({
     if (options.activity_id) {
       this.refreshActivityById(options.activity_id);
     }
+
+    //新建百度地图对象
+    let BMap = new bmap.BMapWX({
+      ak: 'hOfa0G8FQM2LgYxmqSVsu7rUyeS043Np'
+    });
+    this.BMap = BMap;
+
+    // if (!map) {
+    //   map = wx.createMapContext('map');
+    // }
+
+
+
+
+
   },
 
+  /**
+   * 生命周期函数--监听页面显示
+   */
   onShow: function (options) {
     if (this.timer) {
       this.timer.calibration();
     }
   },
-
-
 
 
   /**
@@ -86,22 +104,50 @@ Page({
 
       console.log(result);
 
-      let time = result.activity.date + ' ' + result.activity.time;
-      let date = new Date(time);
+      let time = result.activity.date + ' ' + result.activity.time + ':00';
+      let position = result.activity.position === '' ? {} : JSON.parse(result.activity.position);
+      console.log(time.replace(/-/g, "/"))
+      let date = new Date(time.replace(/-/g, "/"));
 
-      let startTimeStr = date.getFullYear().toString() + '年' + (date.getMonth() + 1).toString() + '月'
-        + date.getDate().toString() + '日' + ' ' + date.getHours().toString() + ':' + date.getMinutes().toString();
+      console.log('start time is ' + date);
 
-      console.log(startTimeStr);
+      let startTimeStr = formatNumber(date.getFullYear()) + '年' + formatNumber((date.getMonth() + 1)) + '月'
+        + formatNumber(date.getDate()) + '日' + ' ' + formatNumber(date.getHours()) + ':' + formatNumber(date.getMinutes())
+
+      if (position.lat && position.lng) {
+        that.BMap.regeocoding({
+          location: position.lat.toString() + ',' + position.lng.toString(),
+          success: function (res) {
+            console.log(res);
+            let wxMarkerData = res.wxMarkerData[0];
+
+            let circle = that.data.circles[0];
+            let marker = that.data.markers[0];
+            circle.latitude = position.lat;
+            circle.longitude = position.lng;
+            circle.radius = position.radius;
+            marker.latitude = position.lat;
+            marker.longitude = position.lng;
+            marker.callout.content = wxMarkerData.address;
+            marker.label.content = '(' + wxMarkerData.latitude.toString() + ',' + wxMarkerData.longitude.toString() + ')';
+            that.setData({
+              circles: [circle],
+              markers: [marker],
+            });
+          }
+        });
+      }
+
+
 
       that.setData({
         activity: result.activity,
-        startTimeStr: startTimeStr
+        startTimeStr: startTimeStr,
+        position: position
       });
 
       //开始计时器
       if (date) {
-
         let timer = new wxTimer({
           endTime: date,
           complete: function () {
@@ -127,26 +173,67 @@ Page({
    */
   signUpActivity: function (e) {
 
+    let that = this;
     signUpActivityPromise({
 
-      activity_id: activity.activity_id
+      activity_id: this.data.activity.activity_id
     }).then((result) => {
 
-      console.log(result);
+      that.setData({
+        'activity.signUpList': result,
+        'activity.isSignUp': true
+      });
+    }).catch(error => {
+
+      console.log('catch err is ' + err);
     });
   },
 
   /**
-   * 打开活动
+   * 打卡活动
    */
   punchActivity: function (e) {
 
+    let that = this;
+    getLocationPromise({
+      type: 'gcj02'
+    }).then(res => {
+
+      //计算出当前距离
+      let distance = getDistance(res.latitude, res.longitude, that.data.position.lat, that.data.position.lng);
+      console.log('distance is ' + distance);
+
+      wx.showModal({
+        title: '提示',
+        content: 'distance is ' + distance.toString() + ' ' + JSON.stringify(res),
+        success: function (res) {
+          if (res.confirm) {
+            console.log('用户点击确定')
+          } else if (res.cancel) {
+            console.log('用户点击取消')
+          }
+        }
+      })
+
+    }).catch(err => {
+      console.log(err);
+    });
+
+    return;
+
     punchActivityPromise({
 
-      activity_id: activity.activity_id
+      activity_id: this.data.activity.activity_id
     }).then((result) => {
 
-      console.log(result);
+      that.setData({
+        'activity.punchList': result,
+        'activity.isPunch': true
+      });
+
+    }).catch(error => {
+
+      console.log('catch err is ' + err);
     });
 
   }

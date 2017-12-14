@@ -47,7 +47,7 @@ Page({
     this.judgeCanPublish();
   },
 
-  //输入生命
+  //输入说明
   inputDescrtiption: function (e) {
     this.setData({
       description: e.detail.value

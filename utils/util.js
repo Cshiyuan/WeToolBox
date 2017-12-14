@@ -148,6 +148,22 @@ function generateNaviParam(object) {
 }
 
 
+/**
+ * @description 计算两个经纬度点的距离
+ * @param 
+ */
+function getDistance(lat1, lng1, lat2, lng2) {
+  var radLat1 = lat1 * Math.PI / 180.0;
+  var radLat2 = lat2 * Math.PI / 180.0;
+  var a = radLat1 - radLat2;
+  var b = lng1 * Math.PI / 180.0 - lng2 * Math.PI / 180.0;
+  var s = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(a / 2), 2) +
+    Math.cos(radLat1) * Math.cos(radLat2) * Math.pow(Math.sin(b / 2), 2)));
+  s = s * 6378.137;// EARTH_RADIUS;
+  s = Math.round(s * 10000) / 10000;
+  return s;
+}
+
 
 module.exports = {
 
@@ -155,8 +171,12 @@ module.exports = {
   showFailToast: showFailToast,
   generateNaviParam: generateNaviParam,
 
+  getDistance: getDistance,
+
   formatTimeByMilliSecond: formatTimeByMilliSecond,  //毫秒转成格式
   formatTime: formatTime,  //以指定格式获取当前时间
+  formatNumber: formatNumber,
+
   wxPromisify: wxPromisify,  //将原有的小程序接口替换成
   Promise: Promise,    //以bluebird引入的Promise实现
   wxRequestPromise: wxRequestPromise  //一个简单的打包wxRquset

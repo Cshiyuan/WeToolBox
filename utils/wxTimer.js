@@ -21,8 +21,13 @@ wxTimer.prototype = {
 		if (this.endTime) {
 
 			let countDown = this.endTime.getTime() - Date.now();
-			if (countDown <= 0)  //距离结束时间小于0，说明已经开始，返回空串 
-				return '';
+			if (countDown <= 0) {//距离结束时间小于0，说明已经开始，返回空串 
+				if (this.complete) {
+					this.complete();
+				}
+				this.stop();
+				return;
+			}
 			countDownSeconds = Math.round(countDown / 1000)  //计算出倒数秒数
 		}
 
@@ -33,9 +38,9 @@ wxTimer.prototype = {
 
 		function begin() {
 
-			count ++;
+			count++;
 			var wxTimerSecond = that.countDownSeconds;
-			that.countDownSeconds --;
+			that.countDownSeconds--;
 			var tmpTimeStr = formatTimeByMilliSecond(wxTimerSecond * 1000);
 			var wxTimerList = self.data.wxTimerList;
 
