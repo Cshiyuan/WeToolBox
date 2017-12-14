@@ -149,7 +149,7 @@ function generateNaviParam(object) {
 
 
 /**
- * @description 计算两个经纬度点的距离
+ * @description 计算两个经纬度点的距离 距离单位为m
  * @param 
  */
 function getDistance(lat1, lng1, lat2, lng2) {
@@ -161,7 +161,30 @@ function getDistance(lat1, lng1, lat2, lng2) {
     Math.cos(radLat1) * Math.cos(radLat2) * Math.pow(Math.sin(b / 2), 2)));
   s = s * 6378.137;// EARTH_RADIUS;
   s = Math.round(s * 10000) / 10000;
-  return s;
+  return s * 1000;
+}
+
+/**
+ * @description 显示一些重要的提示
+ * @param 
+ */
+function showTips(title, content) {
+
+  let myTitle = title || '提示';
+  let myContent = content || '';
+
+  wx.showModal({
+    title: myTitle,
+    content: myContent,
+    showCancel: false,
+    success: function (res) {
+      if (res.confirm) {
+        // console.log('用户点击确定')
+      } else if (res.cancel) {
+        // console.log('用户点击取消')
+      }
+    }
+  })
 }
 
 
@@ -169,6 +192,8 @@ module.exports = {
 
   showSuccessToast: showSuccessToast,
   showFailToast: showFailToast,
+  showTips: showTips,
+
   generateNaviParam: generateNaviParam,
 
   getDistance: getDistance,

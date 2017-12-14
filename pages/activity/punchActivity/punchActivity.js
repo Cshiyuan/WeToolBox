@@ -1,8 +1,10 @@
 // pages/activity/punchActivity/punchActivity.js
+const Promise = require('../../../libs/bluebird');
 const wxTimer = require('../../../utils/wxTimer');
 const bmap = require('../../../libs/bmap-wx');
 const { getActivityPromise, signUpActivityPromise, punchActivityPromise } = require('../../../utils/requestPromise');
-const { countDown, formatTime, getDistance, wxPromisify, formatNumber } = require('../../../utils/util');
+const { countDown, formatTime, getDistance, wxPromisify, formatNumber, showTips } = require('../../../utils/util');
+const { setGlobalPromise, getGlobalPromise } = require('../../../utils/globalPromiseList');
 const getLocationPromise = wxPromisify(wx.getLocation);
 
 Page({
@@ -63,14 +65,7 @@ Page({
     });
     this.BMap = BMap;
 
-    // if (!map) {
-    //   map = wx.createMapContext('map');
-    // }
-
-
-
-
-
+    this.map = wx.createMapContext('map');
   },
 
   /**
@@ -93,17 +88,30 @@ Page({
   },
 
   /**
+   * 跳转到人员界面
+   */
+  naviToMemberList: function (e) {
+
+    setGlobalPromise({
+      promise: Promise.resolve(this.data.activity.signUpList)
+    })
+    wx.navigateTo({
+      url: '../../memberList/memberList'
+    });
+  },
+
+  /**
    * 根据activity_id刷新
    */
   refreshActivityById: function (activityId) {
 
     let that = this;
     getActivityPromise({
+
       activity_id: activityId
     }).then(result => {
 
       console.log(result);
-
       let time = result.activity.date + ' ' + result.activity.time + ':00';
       let position = result.activity.position === '' ? {} : JSON.parse(result.activity.position);
       console.log(time.replace(/-/g, "/"))
@@ -139,12 +147,13 @@ Page({
       }
 
 
-
       that.setData({
         activity: result.activity,
         startTimeStr: startTimeStr,
         position: position
       });
+
+      that.judgeMapScale(); //调整地图scale
 
       //开始计时器
       if (date) {
@@ -201,6 +210,19 @@ Page({
 
       //计算出当前距离
       let distance = getDistance(res.latitude, res.longitude, that.data.position.lat, that.data.position.lng);
+
+      that.map.includePoints({
+        padding: [40, 40, 40, 40],
+        points: [{
+          latitude: res.latitude,
+          longitude: res.longitude,
+        }, {
+          latitude: that.data.position.lat,
+          longitude: that.data.position.lng,
+        }]
+      })
+
+
       console.log('distance is ' + distance);
 
       wx.showModal({
@@ -235,6 +257,39 @@ Page({
 
       console.log('catch err is ' + err);
     });
+
+  },
+
+  /**
+   * 根据定位和
+   */
+  judgeMapScale: function () {
+
+    let that = this;
+    let position = this.data.position;
+
+    if (position.lat && position.lng) {
+
+      getLocationPromise({
+        type: 'gcj02'
+      }).then(res => {
+
+        that.map.includePoints({
+          padding: [40, 40, 40, 40],
+          points: [{
+            latitude: res.latitude,
+            longitude: res.longitude,
+          }, {
+            latitude: that.data.position.lat,
+            longitude: that.data.position.lng,
+          }]
+        })
+
+      }).catch(err => {
+        console.log(err);
+        showTips('提示', '请确认一下网络和定位服务是否开启了哦。')
+      });
+    }
 
   }
 
