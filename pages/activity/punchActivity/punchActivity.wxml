@@ -23,7 +23,7 @@
         <view class="weui-cell__ft weui-cell__ft_in-access" style="padding-right:50rpx;">
             <block wx:for="{{activity.signUpList}}" wx:for-item="item" wx:for-index="itemIndex" wx:key="itemIndex">
                 <view class="weui-grid" style="padding:0;border:0; width:22px;">
-                    <image class="weui-grid__icon" style="border:3px solid white;border-radius:28px;" src="https://wx.qlogo.cn/mmopen/vi_32/UbnPnFq4libmxNRDeS3QzXtXQUp54sVoaqIeupy7OkjJSe7pumvzPWp3Flm7ZeuRZpeYb8oaMOB0RXzfgyjXLNA/0"
+                    <image class="weui-grid__icon" style="border:3px solid white;border-radius:28px;" src="{{item.avatar_url}}"
                     />
                 </view>
             </block>
@@ -35,7 +35,7 @@
         <view class="weui-cell__ft weui-cell__ft_in-access" style="padding-right:50rpx;">
             <block wx:for="{{activity.punchList}}" wx:for-item="item" wx:for-index="itemIndex" wx:key="itemIndex">
                 <view class="weui-grid" style="padding:0;border:0; width:22px;">
-                    <image class="weui-grid__icon" style="border:3px solid white;border-radius:28px;" src="https://wx.qlogo.cn/mmopen/vi_32/UbnPnFq4libmxNRDeS3QzXtXQUp54sVoaqIeupy7OkjJSe7pumvzPWp3Flm7ZeuRZpeYb8oaMOB0RXzfgyjXLNA/0"
+                    <image class="weui-grid__icon" style="border:3px solid white;border-radius:28px;" src="{{item.avatar_url}}"
                     />
                 </view>
             </block>

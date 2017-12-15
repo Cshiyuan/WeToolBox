@@ -1,0 +1,20 @@
+<!--listActivity.wxml-->
+<view class="weui-panel">
+
+    <view class="weui-panel__hd">文字列表附来源</view>
+    <view class="weui-panel__bd">
+        <block wx:for="{{activityList}}" wx:for-item="activity" wx:for-index="activityIndex" wx:key="activity_id">
+            <view class="weui-media-box weui-media-box_text" data-index="{{activityIndex}}" bindtap="naviToActivity">
+                <view class="weui-media-box__title weui-media-box__title_in-text">{{activity.title}}</view>
+                <view class="weui-media-box__desc">{{activity.description}}</view>
+                <view class="weui-media-box__info">
+                    <view class="weui-media-box__info__meta">文字来源</view>
+                    <view class="weui-media-box__info__meta">{{activity.create_time}}</view>
+                    <view class="weui-media-box__info__meta weui-media-box__info__meta_extra">其它信息</view>
+                </view>
+            </view>
+        </block>
+    </view>
+
+
+</view>

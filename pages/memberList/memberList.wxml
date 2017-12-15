@@ -1,19 +1,24 @@
 <!--pages/memberList/memberList.wxml-->
 <view class="weui-panel">
-    <view class="weui-panel__hd">报名人数</view>
+    <view class="weui-panel__hd">报名人数 {{memberList.length}} 人</view>
     <view class="weui-panel__bd">
-        <view class="weui-media-box weui-media-box_small-appmsg">
-            <view class="weui-cells weui-cells_in-small-appmsg">
-                <view  class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-                    <view class="weui-cell__hd">
-                        <image src="{{icon20}}" style="width: 20px;height: 20px;margin-right: 5px" />
+
+        <block wx:for="{{memberList}}" wx:for-item="member" wx:for-index="memberIndex" wx:key="open_id">
+
+            <view class="weui-media-box weui-media-box_small-appmsg">
+                <view class="weui-cells weui-cells_in-small-appmsg">
+                    <view class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+                        <view class="weui-cell__hd">
+                            <image src="{{member.avatar_url}}" style="width: 20px;height: 20px;margin-right: 5px" />
+                        </view>
+                        <view class="weui-cell__bd weui-cell_primary">
+                            <view>{{member.nick_name}}</view>
+                        </view>
+                        <!-- <view class="weui-cell__ft weui-cell__ft_in-access"></view> -->
                     </view>
-                    <view class="weui-cell__bd weui-cell_primary">
-                        <view>文字标题</view>
-                    </view>
-                    <!-- <view class="weui-cell__ft weui-cell__ft_in-access"></view> -->
                 </view>
             </view>
-        </view>
+
+        </block>
     </view>
 </view>

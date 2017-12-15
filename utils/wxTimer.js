@@ -79,8 +79,19 @@ wxTimer.prototype = {
 
 	//校准
 	calibration: function () {
-		let countDown = this.endTime.getTime() - nowTime.getTime();
-		// this.endTime = this.endSystemTime - Date.now();
+
+		if (this.endTime) {
+			let countDown = this.endTime.getTime() - Date.now();
+			if (countDown <= 0) {//距离结束时间小于0，说明已经开始，返回空串 
+				if (this.complete) {
+					this.complete();
+				}
+				this.stop();
+				return;
+			}
+			countDownSeconds = Math.round(countDown / 1000)  //计算出倒数秒数
+			this.countDownSeconds = countDownSeconds;
+		}
 	}
 }
 

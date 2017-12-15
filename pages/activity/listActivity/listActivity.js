@@ -1,12 +1,14 @@
-// pages/memberList/memberList.js
-const { setGlobalPromise, getGlobalPromise } = require('../../utils/globalPromiseList');
+// listActivity.js
+
+const { getUserActivityListPromise } = require('../../../utils/requestPromise');
+const util = require('../../../utils/util')
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    activityList: []
   },
 
   /**
@@ -15,17 +17,36 @@ Page({
   onLoad: function (options) {
 
     let that = this;
-    let promise = getGlobalPromise();
-    promise.then(result => {
+    getUserActivityListPromise().then(result => {
 
       console.log(result);
       that.setData({
-        memberList: result
+        activityList: result
       });
-    }).catch(error => {
 
-      console.log(error);
+    }).then(error => {
+
     });
+  },
+
+  /**
+   * 跳转到活动页面
+   */
+  naviToActivity: function (e) {
+
+    console.log(e);
+    let activityIndex = e.currentTarget.dataset.index;
+    let activity_id = this.data.activityList[activityIndex].activity_id;
+    if (activity_id) {
+      let url = '/pages/activity/punchActivity/punchActivity';
+      let param = util.generateNaviParam({
+        activity_id: activity_id
+      });
+
+      wx.navigateTo({
+        url: url + param
+      });
+    }
 
   },
 
