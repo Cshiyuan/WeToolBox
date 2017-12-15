@@ -137,7 +137,7 @@ Page({
             marker.latitude = position.lat;
             marker.longitude = position.lng;
             marker.callout.content = wxMarkerData.address;
-            marker.label.content = '(' + wxMarkerData.latitude + ',' + wxMarkerData.longitude + ')';
+            marker.label.content = '(' + position.lat.toFixed(3) + ',' + position.lng.toFixed(3) + ')';
             that.setData({
               circles: [circle],
               markers: [marker],
