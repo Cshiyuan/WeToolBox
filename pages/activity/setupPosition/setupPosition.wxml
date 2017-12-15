@@ -22,7 +22,7 @@
 <!-- 搜索结果 -->
 <scroll-view scroll-y style="height: 350rpx;" wx:if="{{inputVal.length > 0 && sugData.length > 0}}">
     <view class="weui-cells searchbar-result">
-        <block wx:for="{{sugData}}" wx:for-item="item" wx:for-index="itemIndex">
+        <block wx:for="{{sugData}}" wx:for-item="item" wx:for-index="itemIndex" wx:key="uid">
             <view url="" class="weui-cell" hover-class="weui-cell_active" data-index="{{itemIndex}}" bindtap="tapPositionItem">
                 <view class="weui-cell__bd">
                     <view>{{item.name}} ({{item.city}})</view>
@@ -34,7 +34,7 @@
 
 <!-- 地图 -->
 <map id="map" longitude="{{markers[0].longitude}}" latitude="{{markers[0].latitude}}" scale="17" markers="{{markers}}" circles="{{circles}}"
-     style="width: 100%; height: 300px;"></map>
+     style="width: 100%; height: 300px;" show-location="true"></map>
 
 <!-- 范围 -->
 <view class="weui-cells__title">允许打卡范围</view>

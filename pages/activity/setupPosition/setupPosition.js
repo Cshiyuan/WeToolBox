@@ -1,6 +1,6 @@
 // pages/activity/setupPosition/setupPosition.js
 const bmap = require('../../../libs/bmap-wx');
-const { wxPromisify } = require('../../../utils/util');
+const { wxPromisify, showTips } = require('../../../utils/util');
 const getLocationPromise = wxPromisify(wx.getLocation);
 
 
@@ -51,10 +51,13 @@ Page({
     });
     this.BMap = BMap;
 
+    this.map = wx.createMapContext('map');
+
     let that = this;
     getLocationPromise({
       type: 'gcj02'
     }).then(res => {
+
       let circle = that.data.circles[0];
       let marker = that.data.markers[0];
       circle.latitude = res.latitude;
@@ -62,25 +65,28 @@ Page({
       marker.latitude = res.latitude;
       marker.longitude = res.longitude;
 
-
       that.BMap.regeocoding({
         location: res.latitude.toString() + ',' + res.longitude.toString(),
         success: function (res) {
           console.log(res);
           let wxMarkerData = res.wxMarkerData[0];
           marker.callout.content = wxMarkerData.address;
-          marker.label.content = '(' + wxMarkerData.latitude.toString() + ',' + wxMarkerData.longitude.toString() + ')';
+          marker.label.content = '(' + wxMarkerData.latitude + ',' + wxMarkerData.longitude + ')';
           that.setData({
             circles: [circle],
             markers: [marker],
             position: that.translateToPoition(res)
           });
+          that.judgeMapScale();
         }
       });
 
     }).catch(err => {
       console.log(err);
     });
+
+
+
   },
 
   //调整范围
@@ -160,7 +166,7 @@ Page({
     marker.latitude = item.location.lat;
     marker.longitude = item.location.lng;
     marker.callout.content = item.name;
-    marker.label.content = '(' + item.location.lat.toString() + ',' + item.location.lng.toString() + ')';
+    marker.label.content = '(' + item.location.lat.toFixed(3) + ',' + item.location.lng.toFixed(3) + ')';
     if (item) {
       this.setData({
         sugData: [],
@@ -177,7 +183,8 @@ Page({
         inputShowed: false
       });
     }
-    console.log(e);
+    // console.log(e);
+    this.judgeMapScale();
   },
 
   translateToPoition: function (res) {
@@ -221,6 +228,41 @@ Page({
     wx.navigateBack({
       delta: 1
     });
-  }
+  },
+
+
+  /**
+   * 根据定位和
+   */
+  judgeMapScale: function () {
+
+    let that = this;
+    let position = this.data.position.location;
+
+    if (position.lat && position.lng) {
+
+      getLocationPromise({
+
+        type: 'gcj02'
+      }).then(res => {
+
+        that.map.includePoints({
+          padding: [40, 40, 40, 40],
+          points: [{
+            latitude: res.latitude,
+            longitude: res.longitude,
+          }, {
+            latitude: position.lat,
+            longitude: position.lng,
+          }]
+        })
+
+      }).catch(err => {
+        console.log(err);
+        showTips('提示', '请确认一下网络和定位服务是否开启了哦。')
+      });
+    }
+
+  },
 
 })

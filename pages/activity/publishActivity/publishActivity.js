@@ -9,6 +9,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+
     title: '',
     description: '',
     date: "2016-09-01",
@@ -18,7 +19,6 @@ Page({
     positions: [],
     isCanPublish: false,
     loading: false
-
   },
 
   /**
@@ -116,7 +116,6 @@ Page({
       return;
     }
 
-    let open_id = '233554';
     let title = this.data.title;
     let description = this.data.description;
     let time = this.data.time;
@@ -140,7 +139,6 @@ Page({
     let that = this;
 
     insertActivityPromise({
-      open_id: open_id,
       title: title,
       description: description,
       position: position,

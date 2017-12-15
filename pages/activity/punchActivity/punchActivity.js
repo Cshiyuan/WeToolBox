@@ -137,7 +137,7 @@ Page({
             marker.latitude = position.lat;
             marker.longitude = position.lng;
             marker.callout.content = wxMarkerData.address;
-            marker.label.content = '(' + wxMarkerData.latitude.toString() + ',' + wxMarkerData.longitude.toString() + ')';
+            marker.label.content = '(' + wxMarkerData.latitude + ',' + wxMarkerData.longitude + ')';
             that.setData({
               circles: [circle],
               markers: [marker],
@@ -227,7 +227,7 @@ Page({
 
       wx.showModal({
         title: '提示',
-        content: 'distance is ' + distance.toString() + ' ' + JSON.stringify(res),
+        content: '您距离活动目的地的距离是 ' + distance.toString() + ' 米 ',
         success: function (res) {
           if (res.confirm) {
             console.log('用户点击确定')
@@ -239,6 +239,7 @@ Page({
 
     }).catch(err => {
       console.log(err);
+      showTips('提示', '请确认一下网络和定位服务是否开启了哦。')
     });
 
     return;
@@ -254,7 +255,7 @@ Page({
       });
 
     }).catch(error => {
-
+      showTips('提示', '网络出错')
       console.log('catch err is ' + err);
     });
 
@@ -291,6 +292,27 @@ Page({
       });
     }
 
+  },
+
+  /**
+   * 分享逻辑
+   */
+  onShareAppMessage: function (res) {
+
+    let nickName = getApp().globalData.userInfo.nickName;
+    let title = this.data.activity.title;
+    let activity_id = this.data.activity.activity_id;
+
+    return {
+      title: nickName + '发来了一个活动 ' + title,
+      path: '/pages/activity/punchActivity/punchActivity?activity_id=' + activity_id,
+      success: function (res) {
+        // 转发成功
+      },
+      fail: function (res) {
+        // 转发失败
+      }
+    }
   }
 
 
