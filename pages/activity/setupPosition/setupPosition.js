@@ -207,8 +207,9 @@ Page({
     let prePage = pageStacks[pageStacks.length - 2];
     let position = this.data.position;
     position.radius = this.data.circles[0].radius;   //添加半径
+    position.address = this.data.markers[0].callout.content;
     prePage.setData({
-      positions: [this.data.position]
+      positions: [position]
     });
     //返回
     wx.navigateBack({
@@ -241,7 +242,7 @@ Page({
 
     if (position.lat && position.lng) {
 
-      getLocationPromise({
+      return getLocationPromise({
 
         type: 'gcj02'
       }).then(res => {

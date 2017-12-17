@@ -1,6 +1,6 @@
 // listActivity.js
 
-const { getUserActivityListPromise } = require('../../../utils/requestPromise');
+const { getUserActivityListPromise, getUserSignUpActivityListPromise } = require('../../../utils/requestPromise');
 const util = require('../../../utils/util')
 Page({
 
@@ -17,16 +17,69 @@ Page({
   onLoad: function (options) {
 
     let that = this;
-    getUserActivityListPromise().then(result => {
 
-      console.log(result);
-      that.setData({
-        activityList: result
+    if (options.myCreateActivityList) {
+      wx.setTopBarText({
+        text: '我创建的活动'
+      })
+      getUserActivityListPromise().then(result => {
+
+        console.log(result);
+        let array = result.map(item => {
+          item.create_time = item.create_time.slice(0, 10);
+          if (item.position !== '') {
+            item.position = JSON.parse(item.position);
+          } else {
+            item.position = {
+              // lng: 
+              lat: -1,
+              lng: -1,
+              address: '',
+              radius: 0
+            }
+          }
+
+          return item;
+        });
+        that.setData({
+          activityList: array
+        });
+
+      }).then(error => {
+
+      });
+    } else {
+      wx.setTopBarText({
+        text: '我参与的活动'
       });
 
-    }).then(error => {
+      getUserSignUpActivityListPromise().then(result => {
 
-    });
+        console.log(result);
+        let array = result.map(item => {
+          item.create_time = item.create_time.slice(0, 10);
+          if (item.position !== '') {
+            item.position = JSON.parse(item.position);
+          } else {
+            item.position = {
+              // lng: 
+              lat: -1,
+              lng: -1,
+              address: '',
+              radius: 0
+            }
+          }
+
+          return item;
+        });
+        that.setData({
+          activityList: array
+        });
+      });
+
+    }
+
+
   },
 
   /**

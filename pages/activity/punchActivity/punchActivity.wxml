@@ -7,8 +7,16 @@
 <view class="weui-panel weui-panel_access">
     <view class="weui-panel__bd">
         <view class="weui-media-box weui-media-box_text">
-            <view class="weui-media-box__title weui-media-box__title_in-text">{{activity.title}}</view>
-            <view class="weui-media-box__desc" style="display:inline;">{{activity.description}}</view>
+            <view class="weui-media-box__title weui-media-box__title_in-text">
+                <text selectable>
+                    {{activity.title}}
+                </text>
+            </view>
+            <view class="weui-media-box__desc" style="display:inline;">
+                <text selectable>
+                    {{activity.description}}
+                </text>
+            </view>
             <view class="weui-media-box__info">
                 <view class="weui-media-box__info__meta">开始时间：{{startTimeStr}}</view>
             </view>
@@ -23,8 +31,7 @@
         <view class="weui-cell__ft weui-cell__ft_in-access" style="padding-right:50rpx;">
             <block wx:for="{{activity.signUpList}}" wx:for-item="item" wx:for-index="itemIndex" wx:key="itemIndex">
                 <view class="weui-grid" style="padding:0;border:0; width:22px;">
-                    <image class="weui-grid__icon" style="border:3px solid white;border-radius:28px;" src="{{item.avatar_url}}"
-                    />
+                    <image class="weui-grid__icon" style="border:3px solid white;border-radius:28px;" src="{{item.avatar_url}}" />
                 </view>
             </block>
         </view>
@@ -35,8 +42,7 @@
         <view class="weui-cell__ft weui-cell__ft_in-access" style="padding-right:50rpx;">
             <block wx:for="{{activity.punchList}}" wx:for-item="item" wx:for-index="itemIndex" wx:key="itemIndex">
                 <view class="weui-grid" style="padding:0;border:0; width:22px;">
-                    <image class="weui-grid__icon" style="border:3px solid white;border-radius:28px;" src="{{item.avatar_url}}"
-                    />
+                    <image class="weui-grid__icon" style="border:3px solid white;border-radius:28px;" src="{{item.avatar_url}}" />
                 </view>
             </block>
         </view>
@@ -49,6 +55,6 @@
 </view>
 
 <view class="page__bd_spacing" style="margin-top: 50rpx;margin-bottom:50rpx;padding-bottom:50rpx;">
-    <button wx:if="{{!activity.isSignUp}}"  class="weui-btn" type="warn" bindtap="signUpActivity">报名 {{wxTimer}}</button>
+    <button wx:if="{{!activity.isSignUp}}" class="weui-btn" type="warn" bindtap="signUpActivity">报名 {{wxTimer}}</button>
     <button wx:if="{{activity.isSignUp && ! activity.isPunch}}" class="weui-btn" disabled="{{!isAlreadyStart}}" type="warn" bindtap="punchActivity">签到 {{wxTimer}}</button>
 </view>

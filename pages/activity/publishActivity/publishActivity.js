@@ -126,7 +126,8 @@ Page({
       let tempObject = {
         lat: this.data.positions[0].location.lat,
         lng: this.data.positions[0].location.lng,
-        radius: this.data.positions[0].radius
+        radius: this.data.positions[0].radius,
+        address: this.data.positions[0].address
       }
       position = JSON.stringify(tempObject);  //转换成JSON字符串
     }

@@ -2,6 +2,7 @@
 const Promise = require('../../../libs/bluebird');
 const wxTimer = require('../../../utils/wxTimer');
 const bmap = require('../../../libs/bmap-wx');
+const util = require('../../../utils/util');
 const { getActivityPromise, signUpActivityPromise, punchActivityPromise } = require('../../../utils/requestPromise');
 const { countDown, formatTime, getDistance, wxPromisify, formatNumber, showTips } = require('../../../utils/util');
 const { setGlobalPromise, getGlobalPromise } = require('../../../utils/globalPromiseList');
@@ -45,6 +46,7 @@ Page({
     }],
     wxTimerList: {},
     isAlreadyStart: false,
+    isOwner: false,
     myLocation: {}
   },
 
@@ -82,8 +84,15 @@ Page({
    * 跳转到设置界面
    */
   naviToSetting: function (e) {
+
+
+    let url = '/pages/activity/settingActivity/settingActivity';
+    let param = util.generateNaviParam({
+      activity_id: this.data.activity.activity_id
+    });
+
     wx.navigateTo({
-      url: '../settingActivity/settingActivity'
+      url: url + param
     });
   },
 
@@ -146,11 +155,14 @@ Page({
         });
       }
 
+      let isOwner = result.activity.open_id === getApp().globalData.userInfo.openId ? true : false;
 
       that.setData({
         activity: result.activity,
         startTimeStr: startTimeStr,
-        position: position
+        position: position,
+        isOwner: isOwner,
+        
       });
 
       that.judgeMapScale(); //调整地图scale
@@ -271,7 +283,7 @@ Page({
 
     if (position.lat && position.lng) {
 
-      getLocationPromise({
+      return getLocationPromise({
         type: 'gcj02'
       }).then(res => {
 
