@@ -1,0 +1,5 @@
+{
+    "usingComponents": {
+        "toptips": "/pages/component/toptips/toptips"
+    }
+}

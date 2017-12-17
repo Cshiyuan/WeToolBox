@@ -1,0 +1,6 @@
+<!-- 组件模板 -->
+<view class="zan-toptips {{ zanTopTips.show ? 'zan-toptips--show' : '' }}">
+    {{zanTopTips.content}}
+</view>
+<button bindtap="tap">asd</button>
+<slot></slot>

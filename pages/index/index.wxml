@@ -1,6 +1,7 @@
 <!--index.wxml-->
+<toptips></toptips>
 <view class="container">
-  <view class="userinfo">
+  <view class="userinfo" bindtap="tapUserInfo">
     <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
     <block wx:else>
       <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
