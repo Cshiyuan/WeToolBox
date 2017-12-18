@@ -1,10 +1,12 @@
 <!--index.wxml-->
-<toptips></toptips>
+<toptips id="toptips">
+</toptips>
+
 <view class="container">
   <view class="userinfo" bindtap="tapUserInfo">
     <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
     <block wx:else>
-      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+      <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
       <text class="userinfo-nickname">{{userInfo.nickName}}</text>
     </block>
   </view>
@@ -19,7 +21,8 @@
         <view class="weui-media-box__desc">发布活动，发布后，提供报名、位置定位、打卡签到、统计、到时提醒等简单实用功能。</view>
       </view>
     </navigator>
-    <navigator url="../activity/listActivity/listActivity?myCreateActivityList=true" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+    <navigator url="../activity/listActivity/listActivity?myCreateActivityList=true" class="weui-media-box weui-media-box_appmsg"
+      hover-class="weui-cell_active">
       <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
         <view class="weui-media-box__title">我的创建活动</view>
         <view class="weui-media-box__desc">查看我创建的活动列表</view>

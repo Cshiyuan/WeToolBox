@@ -41,32 +41,29 @@ Component({
 
             // 设置定时器，定时关闭topTips
             let timer = setTimeout(() => {
+                clearTimeout(this.timer);
                 this.setData({
-                    'zanTopTips.show': false,
-                    'zanTopTips.timer': undefined
+                    show: false,
                 });
+                console.log('show false')
             }, options.duration);
 
             // 展示出topTips
+            this.timer = timer;
             this.setData({
-                zanTopTips: {
-                    show: true,
-                    content,
-                    options,
-                    timer
-                }
+                show: true,
+                content,
+                options,
             });
         },
 
-        tap() {
-            this.showTopTips('asdasd');
-        },
 
         onMyButtonTap: function () {
             this.setData({
                 // 更新属性和数据的方法与更新页面数据的方法类似
             })
         },
+        
         _myPrivateMethod: function () {
             // 内部方法建议以下划线开头
             this.replaceDataOnPath(['A', 0, 'B'], 'myPrivateData') // 这里将 data.A[0].B 设为 'myPrivateData'

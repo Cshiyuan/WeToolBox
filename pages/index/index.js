@@ -42,8 +42,14 @@ Page({
     }
   },
 
+  onReady: function() {
+    
+    this.toptips = this.selectComponent("#toptips");
+  },
+
   tapUserInfo: function(e) {
     console.log(e);
+    this.toptips.showTopTips('asdasd');
   },
 
 
