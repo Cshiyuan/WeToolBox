@@ -1,0 +1,8 @@
+<!--pages/component/noticeBar/noticeBar.wxml-->
+<view class="noticebar">
+    <view id="content-wrap" style="height: 18px; overflow: hidden; position: relative;">
+        <view animation="{{ animationData }}" id="content" style="position: absolute; white-space: nowrap;">
+            {{ content }}
+        </view>
+    </view>
+</view>

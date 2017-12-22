@@ -1,6 +1,8 @@
 <!--index.wxml-->
-<toptips id="toptips">
-</toptips>
+<topTips id="toptips">
+</topTips>
+
+<noticeBar id="noticeBar"></noticeBar>
 
 <view class="container">
   <view class="userinfo" bindtap="tapUserInfo">

@@ -1,0 +1,9 @@
+/* pages/component/noticeBar/noticeBar.wxss */
+
+.noticebar {
+    color: #f60;
+    padding: 9px 10px;
+    font-size: 12px;
+    line-height: 1.5;
+    background-color: #fff7cc
+}

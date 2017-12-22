@@ -45,11 +45,13 @@ Page({
   onReady: function() {
     
     this.toptips = this.selectComponent("#toptips");
+    this.noticeBar = this.selectComponent("#noticeBar");
+    this.noticeBar.setContent('任何问题可以加交流群反馈。');
   },
 
   tapUserInfo: function(e) {
     console.log(e);
-    this.toptips.showTopTips('asdasd');
+    this.toptips.showTopTips('');
   },
 
 
