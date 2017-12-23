@@ -1,6 +1,6 @@
 
 const { wxRequestPromise } = require('./util');
-const { 
+const {
     INSERT_ACTIVITY_URL,
     GET_ACTIVITY_URL,
     DELETE_ACTIVITY_URL,
@@ -10,6 +10,7 @@ const {
     GET_USER_SIGNUP_ACTIVITY_URL,
     GET_ACTIVITY_SIGNUP_LIST_URL,
     GET_ACTIVITY_PUNCH_LIST_URL,
+    CHANGE_ACTIVITY_TYPE_URL
 } = require('./config');
 
 
@@ -27,6 +28,24 @@ function insertActivityPromise(data) {
         return response.data;
     });
 }
+
+/**
+ * @description 改变活动类型
+ * @param {{activity_id:String, type:Int}} data 
+ */
+function changeActivityTypePromise(data) {
+
+    return wxRequestPromise({
+        url: CHANGE_ACTIVITY_TYPE_URL,
+        data: data
+    }).then(response => {
+
+        return response.data;
+    });
+}
+
+
+
 
 /**
  * @description 获得活动
@@ -152,6 +171,9 @@ module.exports = {
 
     insertActivityPromise: insertActivityPromise,  //创建活动
     getActivityPromise: getActivityPromise,    //获得活动
+    changeActivityTypePromise: changeActivityTypePromise,  // 改变活动类型
+
+
     deleteActivityPromise: deleteActivityPromise,  //删除活动
     signUpActivityPromise: signUpActivityPromise,  //报名活动
     punchActivityPromise: punchActivityPromise,  //打卡活动

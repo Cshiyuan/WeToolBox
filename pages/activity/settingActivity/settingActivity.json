@@ -1,1 +1,5 @@
-{}
+{
+    "usingComponents": {
+        "asynSwitch": "/component/asynSwitch/asynSwitch"
+    }
+}

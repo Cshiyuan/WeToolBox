@@ -8,7 +8,10 @@ Page({
    * 页面的初始数据
    */
   data: {
-    activityList: []
+    activityList: [],
+    loading: false,
+    end: 0,   //请求参数
+    length: 10,
   },
 
   /**
@@ -16,70 +19,109 @@ Page({
    */
   onLoad: function (options) {
 
-    let that = this;
-
     if (options.myCreateActivityList) {
+
       wx.setTopBarText({
         text: '我创建的活动'
       })
-      getUserActivityListPromise().then(result => {
-
-        console.log(result);
-        let array = result.map(item => {
-          item.create_time = item.create_time.slice(0, 10);
-          if (item.position !== '') {
-            item.position = JSON.parse(item.position);
-          } else {
-            item.position = {
-              // lng: 
-              lat: -1,
-              lng: -1,
-              address: '',
-              radius: 0
-            }
-          }
-
-          return item;
-        });
-        that.setData({
-          activityList: array
-        });
-
-      }).then(error => {
-
+      this.setData({
+        title: '我创建的活动'
       });
+      this.refreshListForMyActivity();
+
     } else {
+
       wx.setTopBarText({
         text: '我参与的活动'
       });
-
-      getUserSignUpActivityListPromise().then(result => {
-
-        console.log(result);
-        let array = result.map(item => {
-          item.create_time = item.create_time.slice(0, 10);
-          if (item.position !== '') {
-            item.position = JSON.parse(item.position);
-          } else {
-            item.position = {
-              // lng: 
-              lat: -1,
-              lng: -1,
-              address: '',
-              radius: 0
-            }
-          }
-
-          return item;
-        });
-        that.setData({
-          activityList: array
-        });
+      this.setData({
+        title: '我参与的活动'
       });
+      this.refreshListForMySignUpActivity();
 
     }
+  },
 
+  refreshListForMyActivity: function () {
 
+    let that = this;
+    this.setData({
+      loading: true
+    });
+    getUserActivityListPromise({
+      start: this.data.end,  //分页查询
+      length: this.data.length
+    }).then(result => {
+
+      console.log(result);
+      let array = result.map(item => {
+        item.create_time = util.formatTime(new Date(item.create_time));
+        // console.log(item.create_time);
+        // item.create_time = item.create_time.slice(0, 10);
+        if (item.position !== '') {
+          item.position = JSON.parse(item.position);
+        } else {
+          item.position = {
+            lat: -1,
+            lng: -1,
+            address: '',
+            radius: 0
+          }
+        }
+
+        return item;
+      });
+      that.setData({
+        activityList: that.data.activityList.concat(array),
+        end: that.data.end + that.data.length,
+        loading: false
+      });
+
+    }).catch(error => {
+      console.log('error is ');
+      console.log(error)
+      util.showFailToast();
+    });
+
+  },
+
+  refreshListForMySignUpActivity: function () {
+
+    let that = this;
+    this.setData({
+      loading: true
+    });
+    getUserSignUpActivityListPromise({
+      start: this.data.end,  //分页查询
+      length: this.data.length
+    }).then(result => {
+
+      console.log(result);
+      let array = result.map(item => {
+        item.create_time = util.formatTime(new Date(item.create_time));
+        if (item.position !== '') {
+          item.position = JSON.parse(item.position);
+        } else {
+          item.position = {
+            lat: -1,
+            lng: -1,
+            address: '',
+            radius: 0
+          }
+        }
+
+        return item;
+      });
+      that.setData({
+        activityList: that.data.activityList.concat(array),
+        end: that.data.end + that.data.length,
+        loading: false
+      });
+    }).catch(error => {
+      console.log('error is ');
+      console.log(error)
+      util.showFailToast();
+    });
   },
 
   /**
@@ -135,7 +177,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    console.log('refresh!');
   },
 
   /**
@@ -143,12 +185,14 @@ Page({
    */
   onReachBottom: function () {
 
+    console.log('onReachBottom!');
+    if(this.data.title === '我创建的活动') {
+      this.refreshListForMyActivity();
+    }
+    if(this.data.title === '我参与的活动') {
+      this.refreshListForMySignUpActivity();
+    }
+    
   },
 
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })

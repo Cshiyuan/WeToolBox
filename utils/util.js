@@ -142,7 +142,7 @@ function generateNaviParam(object) {
 
   let params = '?'
   for (let key in object) {
-    params = params + key.toString() + '=' + object[key].toString();
+    params = params + key.toString() + '=' + object[key].toString() + '&';
   }
   return params;
 }

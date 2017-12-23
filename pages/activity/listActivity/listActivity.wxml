@@ -1,20 +1,32 @@
 <!--listActivity.wxml-->
 <view class="weui-panel">
 
-    <view class="weui-panel__hd">文字列表附来源</view>
+    <view class="weui-panel__hd">{{title}}</view>
     <view class="weui-panel__bd">
         <block wx:for="{{activityList}}" wx:for-item="activity" wx:for-index="activityIndex" wx:key="activity_id">
             <view class="weui-media-box weui-media-box_text" data-index="{{activityIndex}}" bindtap="naviToActivity">
                 <view class="weui-media-box__title weui-media-box__title_in-text">{{activity.title}}</view>
                 <view class="weui-media-box__desc">{{activity.description}}</view>
                 <view class="weui-media-box__info">
-                    <view class="weui-media-box__info__meta">发布时间</view>
-                    <view class="weui-media-box__info__meta">{{activity.create_time}}</view>
-                    <view class="weui-media-box__info__meta weui-media-box__info__meta_extra">{{activity.position.address}}</view>
+                    <view class="weui-media-box__info__meta">时间 : {{activity.date}} {{activity.time}}</view>
+                    <view class="weui-media-box__info__meta">地点: {{activity.position.address}}</view>
                 </view>
             </view>
         </block>
     </view>
 
 
+</view>
+
+<view wx:if="{{loading}}" class="weui-loadmore">
+    <view class="weui-loading"></view>
+    <view class="weui-loadmore__tips">正在加载</view>
+</view>
+
+<view wx:if="{{activity.length === 0}}" class="weui-loadmore weui-loadmore_line">
+    <view class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无数据</view>
+</view>
+
+<view wx:if="{{!loading}}" class="weui-loadmore weui-loadmore_line weui-loadmore_dot">
+    <view class="weui-loadmore__tips weui-loadmore__tips_in-line weui-loadmore__tips_in-dot"></view>
 </view>

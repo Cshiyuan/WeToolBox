@@ -1,5 +1,6 @@
 // pages/memberList/memberList.js
 const { setGlobalPromise, getGlobalPromise } = require('../../utils/globalPromiseList');
+const util = require('../../utils/util');
 Page({
 
   /**
@@ -19,6 +20,14 @@ Page({
     promise.then(result => {
 
       console.log(result);
+
+
+      let array = result.map(item => {
+
+        item.create_time = util.formatTime(new Date(item.create_time));
+        return item;
+      });
+
       that.setData({
         memberList: result
       });

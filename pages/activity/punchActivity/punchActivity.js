@@ -79,36 +79,6 @@ Page({
     }
   },
 
-
-  /**
-   * 跳转到设置界面
-   */
-  naviToSetting: function (e) {
-
-
-    let url = '/pages/activity/settingActivity/settingActivity';
-    let param = util.generateNaviParam({
-      activity_id: this.data.activity.activity_id
-    });
-
-    wx.navigateTo({
-      url: url + param
-    });
-  },
-
-  /**
-   * 跳转到人员界面
-   */
-  naviToMemberList: function (e) {
-
-    setGlobalPromise({
-      promise: Promise.resolve(this.data.activity.signUpList)
-    })
-    wx.navigateTo({
-      url: '../../memberList/memberList'
-    });
-  },
-
   /**
    * 根据activity_id刷新
    */
@@ -155,14 +125,12 @@ Page({
         });
       }
 
-      let isOwner = result.activity.open_id === getApp().globalData.userInfo.openId ? true : false;
-
       that.setData({
         activity: result.activity,
         startTimeStr: startTimeStr,
         position: position,
-        isOwner: isOwner,
-        
+        isOwner: result.isOwner,
+
       });
 
       that.judgeMapScale(); //调整地图scale
@@ -187,6 +155,37 @@ Page({
       console.log('catch err is ' + err);
     })
 
+  },
+
+
+  /**
+   * 跳转到设置界面
+   */
+  naviToSetting: function (e) {
+
+
+    let url = '/pages/activity/settingActivity/settingActivity';
+    let param = util.generateNaviParam({
+      activity_id: this.data.activity.activity_id,
+      type: this.data.activity.type
+    });
+
+    wx.navigateTo({
+      url: url + param
+    });
+  },
+
+  /**
+   * 跳转到人员界面
+   */
+  naviToMemberList: function (e) {
+
+    setGlobalPromise({
+      promise: Promise.resolve(this.data.activity.signUpList)
+    })
+    wx.navigateTo({
+      url: '../../memberList/memberList'
+    });
   },
 
   /**
@@ -254,17 +253,23 @@ Page({
       showTips('提示', '请确认一下网络和定位服务是否开启了哦。')
     });
 
-    return;
+    // return;
 
     punchActivityPromise({
 
       activity_id: this.data.activity.activity_id
     }).then((result) => {
 
-      that.setData({
-        'activity.punchList': result,
-        'activity.isPunch': true
-      });
+      if (result.ret === -1) {
+
+        showTips('提示', '创建者关闭打卡入口啦。')
+      } else {
+
+        that.setData({
+          'activity.punchList': result.data,
+          'activity.isPunch': true
+        });
+      }
 
     }).catch(error => {
       showTips('提示', '网络出错')

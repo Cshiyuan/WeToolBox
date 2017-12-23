@@ -1,12 +1,13 @@
 // pages/activity/settingActivity/settingActivity.js
-const { deleteActivityPromise } = require('../../../utils/requestPromise');
+const { deleteActivityPromise, changeActivityTypePromise } = require('../../../utils/requestPromise');
+const util = require('../../../utils/util');
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    isStopPunch: false
   },
 
   /**
@@ -15,13 +16,53 @@ Page({
   onLoad: function (options) {
 
     let activity_id = options.activity_id;
+    let isStopPunch = options.type === "0" ? false : true;
     if (activity_id) {
       this.setData({
-        activity_id: activity_id
+        activity_id: activity_id,
+        isStopPunch: isStopPunch
       });
     }
 
   },
+
+
+  stopPunchActivity: function(e) {
+
+    let value = e.detail.value;
+    if(value) {  //说明关闭打卡允许
+
+      changeActivityTypePromise({
+        activity_id: this.data.activity_id,
+        type: 1
+      }).then(result => {
+
+        console.log(result);
+      }).catch(error => {
+
+        util.showFailToast();
+        console.log('error is ');
+        console.log(error);
+      });
+    } else {
+
+      changeActivityTypePromise({
+        activity_id: this.data.activity_id,
+        type: 0
+      }).then(result => {
+
+        console.log(result);
+      }).catch(error => {
+        
+        util.showFailToast();
+        console.log('error is ');
+        console.log(error);
+      });
+
+    }
+
+  },
+
 
   deleteActivity: function (e) {
 
@@ -77,10 +118,6 @@ Page({
         }
       }
     })
-
-
-
-
   },
 
   /**

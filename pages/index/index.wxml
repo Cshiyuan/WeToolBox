@@ -15,7 +15,7 @@
 </view>
 
 <view class="weui-panel weui-panel_access">
-  <view class="weui-panel__hd">活动模块</view>
+  <view class="weui-panel__hd">活动打卡模块</view>
   <view class="weui-panel__bd">
     <navigator url="../activity/publishActivity/publishActivity" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
       <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">

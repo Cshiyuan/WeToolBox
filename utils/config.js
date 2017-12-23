@@ -17,6 +17,8 @@ const GET_USER_SIGNUP_ACTIVITY_URL = HOST + '/activity/getUserSignUpActivity';  
 const GET_ACTIVITY_SIGNUP_LIST_URL = HOST + '/activity/getActivitySignList';  //获得活动报名列表
 const GET_ACTIVITY_PUNCH_LIST_URL = HOST + '/activity/getActivityPunchList';  //获得活动打卡列表
 
+const CHANGE_ACTIVITY_TYPE_URL = HOST + '/activity/changeActivityType';  //改变活动类型接口
+
 module.exports = {
 
     LOGIN_URL,
@@ -29,4 +31,6 @@ module.exports = {
     GET_USER_SIGNUP_ACTIVITY_URL,
     GET_ACTIVITY_SIGNUP_LIST_URL,
     GET_ACTIVITY_PUNCH_LIST_URL,
+
+    CHANGE_ACTIVITY_TYPE_URL
 }

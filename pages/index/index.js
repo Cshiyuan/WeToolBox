@@ -46,7 +46,7 @@ Page({
     
     this.toptips = this.selectComponent("#toptips");
     this.noticeBar = this.selectComponent("#noticeBar");
-    this.noticeBar.setContent('任何问题可以加交流群反馈。');
+    this.noticeBar.setContent('只是单纯凭借兴趣制作的工具，任何问题可以加交流群反馈。咩哈哈哈哈哈哈哈哈哈哈哈哈。');
   },
 
   tapUserInfo: function(e) {
