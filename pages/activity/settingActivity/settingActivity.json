@@ -1,4 +1,7 @@
 {
+    "window": {
+        "navigationBarTitleText": "活动设置"
+    },
     "usingComponents": {
         "asynSwitch": "/component/asynSwitch/asynSwitch"
     }
