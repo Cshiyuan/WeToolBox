@@ -189,8 +189,10 @@ Page({
 
   translateToPoition: function (res) {
     // lat lng
+    console.log('translateToPoition');
+    console.log(res);
     return {
-      name: res.originalData.result.poiRegions[0].name,
+      name: res.originalData.result.formatted_address,
       location: res.originalData.result.location,
       uid: 'none',
       city: res.originalData.result.addressComponent.city,

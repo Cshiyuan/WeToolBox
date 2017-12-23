@@ -28,26 +28,31 @@ Component({
    */
   methods: {
 
+    //内部事件触发
     _handleSwitchChange(e) {
 
       //如果加载中，或者disable了就直接停止
       if (this.data.loading || this.data.disabled) {
         return;
       }
-
       let checked = !this.data.checked;
-
-
       this.setData({
         loading: true
       });
-      setTimeout(() => {
-        this.setData({
-          loading: false,
-          checked: checked
-        });
-      }, 500);
 
+      var myEventDetail = { value: checked } // detail对象，提供给事件监听函数
+      var myEventOption = {} // 触发事件的选项
+      this.triggerEvent('switch', myEventDetail, myEventOption) // 只会触发 pageEventListener2
+
+    },
+
+    //调整确认状态
+    setSwitchStatus(checked) {
+      this.setData({
+        loading: false,
+        checked: checked
+      });
     }
+
   }
 })

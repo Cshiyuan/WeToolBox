@@ -89,7 +89,7 @@ wxTimer.prototype = {
 				this.stop();
 				return;
 			}
-			countDownSeconds = Math.round(countDown / 1000)  //计算出倒数秒数
+			let countDownSeconds = Math.round(countDown / 1000)  //计算出倒数秒数
 			this.countDownSeconds = countDownSeconds;
 		}
 	}

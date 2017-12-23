@@ -1,6 +1,6 @@
 
-const HOST = 'http://localhost:3001';
-// const HOST = 'https://vendor.chenshyiuan.me';
+// const HOST = 'http://localhost:3001';
+const HOST = 'https://vendor.chenshyiuan.me';
 
 
 const LOGIN_URL = HOST + '/login' //登陆地址

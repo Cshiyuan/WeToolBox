@@ -8,8 +8,8 @@
                 <view class="weui-media-box__title weui-media-box__title_in-text">{{activity.title}}</view>
                 <view class="weui-media-box__desc">{{activity.description}}</view>
                 <view class="weui-media-box__info">
-                    <view class="weui-media-box__info__meta">时间 : {{activity.date}} {{activity.time}}</view>
-                    <view class="weui-media-box__info__meta">地点: {{activity.position.address}}</view>
+                    <view class="weui-media-box__info__meta">时间: {{activity.date}} {{activity.time}}</view>
+                    <view wx:if="{{activity.position.address}}" class="weui-media-box__info__meta">地点: {{activity.position.address}}</view>
                 </view>
             </view>
         </block>
@@ -23,10 +23,10 @@
     <view class="weui-loadmore__tips">正在加载</view>
 </view>
 
-<view wx:if="{{activity.length === 0}}" class="weui-loadmore weui-loadmore_line">
+<view wx:if="{{!loading && activityList.length === 0}}" class="weui-loadmore weui-loadmore_line">
     <view class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无数据</view>
 </view>
 
-<view wx:if="{{!loading}}" class="weui-loadmore weui-loadmore_line weui-loadmore_dot">
+<view wx:if="{{!loading && activityList.length !== 0}}" class="weui-loadmore weui-loadmore_line weui-loadmore_dot">
     <view class="weui-loadmore__tips weui-loadmore__tips_in-line weui-loadmore__tips_in-dot"></view>
 </view>

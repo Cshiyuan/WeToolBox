@@ -27,41 +27,6 @@ Page({
   },
 
 
-  stopPunchActivity: function(e) {
-
-    let value = e.detail.value;
-    if(value) {  //说明关闭打卡允许
-
-      changeActivityTypePromise({
-        activity_id: this.data.activity_id,
-        type: 1
-      }).then(result => {
-
-        console.log(result);
-      }).catch(error => {
-
-        util.showFailToast();
-        console.log('error is ');
-        console.log(error);
-      });
-    } else {
-
-      changeActivityTypePromise({
-        activity_id: this.data.activity_id,
-        type: 0
-      }).then(result => {
-
-        console.log(result);
-      }).catch(error => {
-        
-        util.showFailToast();
-        console.log('error is ');
-        console.log(error);
-      });
-
-    }
-
-  },
 
 
   deleteActivity: function (e) {
@@ -120,10 +85,43 @@ Page({
     })
   },
 
+  stopPunchActivity: function (e) {
+
+    let that = this;
+    let value = e.detail.value;
+    let type = value ? 1 : 0;
+    changeActivityTypePromise({
+      activity_id: this.data.activity_id,
+      type: type
+    }).then(result => {
+
+      console.log(result);
+      that.asynSwitch.setSwitchStatus(value);
+      let pageStacks = getCurrentPages();
+      let prePage = pageStacks[pageStacks.length - 2];
+      console.log(prePage);
+      prePage.setData({
+        'activity.type': type
+      });
+
+    }).catch(error => {
+
+      that.asynSwitch.setSwitchStatus(!value);
+      util.showFailToast();
+      console.log('error is ');
+      console.log(error);
+    });
+    console.log(e);
+  },
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
+
+    //初始化组件
+    this.asynSwitch = this.selectComponent("#asynswitch");
+    this.asynSwitch.setSwitchStatus(this.data.isStopPunch);
 
   },
 
@@ -162,10 +160,4 @@ Page({
 
   },
 
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })

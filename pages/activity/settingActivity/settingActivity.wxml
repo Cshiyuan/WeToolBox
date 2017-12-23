@@ -5,7 +5,7 @@
         <view class="weui-cell__bd">停止打卡</view>
         <view class="weui-cell__ft">
             <!-- <switch disable checked="{{isStopPunch}}" bindchange="stopPunchActivity" /> -->
-            <asynSwitch></asynSwitch>
+            <asynSwitch id="asynswitch" bindswitch="stopPunchActivity"></asynSwitch>
         </view>
     </view>
 </view>

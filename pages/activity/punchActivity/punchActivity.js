@@ -102,26 +102,19 @@ Page({
         + formatNumber(date.getDate()) + '日' + ' ' + formatNumber(date.getHours()) + ':' + formatNumber(date.getMinutes())
 
       if (position.lat && position.lng) {
-        that.BMap.regeocoding({
-          location: position.lat.toString() + ',' + position.lng.toString(),
-          success: function (res) {
-            console.log(res);
-            let wxMarkerData = res.wxMarkerData[0];
 
-            let circle = that.data.circles[0];
-            let marker = that.data.markers[0];
-            circle.latitude = position.lat;
-            circle.longitude = position.lng;
-            circle.radius = position.radius;
-            marker.latitude = position.lat;
-            marker.longitude = position.lng;
-            marker.callout.content = wxMarkerData.address;
-            marker.label.content = '(' + position.lat.toFixed(3) + ',' + position.lng.toFixed(3) + ')';
-            that.setData({
-              circles: [circle],
-              markers: [marker],
-            });
-          }
+        let circle = that.data.circles[0];
+        let marker = that.data.markers[0];
+        circle.latitude = position.lat;
+        circle.longitude = position.lng;
+        circle.radius = position.radius;
+        marker.latitude = position.lat;
+        marker.longitude = position.lng;
+        marker.callout.content = position.address;
+        marker.label.content = '(' + position.lat.toFixed(3) + ',' + position.lng.toFixed(3) + ')';
+        that.setData({
+          circles: [circle],
+          markers: [marker],
         });
       }
 
@@ -130,10 +123,7 @@ Page({
         startTimeStr: startTimeStr,
         position: position,
         isOwner: result.isOwner,
-
       });
-
-      that.judgeMapScale(); //调整地图scale
 
       //开始计时器
       if (date) {
@@ -150,11 +140,41 @@ Page({
         timer.start(that);
       }
 
+      return that.judgeMapScale(); //调整地图scale
+
     }).catch(err => {
 
       console.log('catch err is ' + err);
     })
 
+  },
+
+  /**
+   * 打卡Activity
+   */
+  punchActivityById: function (activityId) {
+
+    let that = this;
+    return punchActivityPromise({
+
+      activity_id: activityId
+    }).then((result) => {
+
+      if (result.ret === -1) {
+
+        showTips('提示', '创建者关闭打卡入口啦。')
+      } else {
+
+        that.setData({
+          'activity.punchList': result.data,
+          'activity.isPunch': true
+        });
+      }
+
+    }).catch(error => {
+      showTips('提示', '网络出错')
+      console.log('catch err is ' + err);
+    });
   },
 
 
@@ -233,47 +253,18 @@ Page({
         }]
       })
 
-
       console.log('distance is ' + distance);
+      console.log('您距离活动目的地的距离是 ' + distance.toString() + ' 米 ')
+      if (distance < that.data.position.radius) {   //处在允许打卡的范围内
+        return that.punchActivityById(that.data.activity.activity_id);
+      } else {
+        showTips('提示', '没进入可以打卡的范围哦。')
+      }
 
-      wx.showModal({
-        title: '提示',
-        content: '您距离活动目的地的距离是 ' + distance.toString() + ' 米 ',
-        success: function (res) {
-          if (res.confirm) {
-            console.log('用户点击确定')
-          } else if (res.cancel) {
-            console.log('用户点击取消')
-          }
-        }
-      })
 
     }).catch(err => {
       console.log(err);
       showTips('提示', '请确认一下网络和定位服务是否开启了哦。')
-    });
-
-    // return;
-
-    punchActivityPromise({
-
-      activity_id: this.data.activity.activity_id
-    }).then((result) => {
-
-      if (result.ret === -1) {
-
-        showTips('提示', '创建者关闭打卡入口啦。')
-      } else {
-
-        that.setData({
-          'activity.punchList': result.data,
-          'activity.isPunch': true
-        });
-      }
-
-    }).catch(error => {
-      showTips('提示', '网络出错')
-      console.log('catch err is ' + err);
     });
 
   },

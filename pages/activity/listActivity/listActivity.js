@@ -79,7 +79,10 @@ Page({
 
     }).catch(error => {
       console.log('error is ');
-      console.log(error)
+      console.log(error);
+      that.setData({
+        loading: false
+      });
       util.showFailToast();
     });
 
@@ -118,6 +121,9 @@ Page({
         loading: false
       });
     }).catch(error => {
+      that.setData({
+        loading: false
+      });
       console.log('error is ');
       console.log(error)
       util.showFailToast();
