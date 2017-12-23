@@ -1,7 +1,5 @@
 {
-    "window": {
-        "navigationBarTitleText": "WeToolBox"
-    },
+    "navigationBarTitleText": "WeToolBox",
     "usingComponents": {
         "topTips": "/component/topTips/topTips",
         "noticeBar": "/component/noticeBar/noticeBar"

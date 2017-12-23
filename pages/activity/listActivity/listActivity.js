@@ -22,7 +22,13 @@ Page({
     if (options.myCreateActivityList) {
 
       wx.setTopBarText({
-        text: '我创建的活动'
+        text: '我创建的活动',
+        success: function (result) {
+          console.log(result);
+        },
+        fail: function (result) {
+          console.log(result);
+        }
       })
       this.setData({
         title: '我创建的活动'
@@ -32,7 +38,13 @@ Page({
     } else {
 
       wx.setTopBarText({
-        text: '我参与的活动'
+        text: '我参与的活动',
+        success: function (result) {
+          console.log(result);
+        },
+        fail: function (result) {
+          console.log(result);
+        }
       });
       this.setData({
         title: '我参与的活动'
@@ -192,13 +204,13 @@ Page({
   onReachBottom: function () {
 
     console.log('onReachBottom!');
-    if(this.data.title === '我创建的活动') {
+    if (this.data.title === '我创建的活动') {
       this.refreshListForMyActivity();
     }
-    if(this.data.title === '我参与的活动') {
+    if (this.data.title === '我参与的活动') {
       this.refreshListForMySignUpActivity();
     }
-    
+
   },
 
 })
