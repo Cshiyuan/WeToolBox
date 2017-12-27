@@ -39,10 +39,11 @@ Component({
                 duration: 3000
             }, options);
 
+            let that = this;
             // 设置定时器，定时关闭topTips
             let timer = setTimeout(() => {
-                clearTimeout(this.timer);
-                this.setData({
+                clearTimeout(that.timer);
+                that.setData({
                     show: false,
                 });
                 console.log('show false')

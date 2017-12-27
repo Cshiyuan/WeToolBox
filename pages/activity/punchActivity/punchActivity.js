@@ -70,6 +70,12 @@ Page({
     this.map = wx.createMapContext('map');
   },
 
+  onReady: function () {
+
+    this.toptips = this.selectComponent("#toptips");
+  },
+
+
   /**
    * 生命周期函数--监听页面显示
    */
@@ -125,12 +131,18 @@ Page({
         isOwner: result.isOwner,
       });
 
-      //开始计时器
-      if (date) {
+
+      let countDown = date.getTime() - Date.now();
+      if (countDown <= 0) {//距离结束时间小于0，说明已经开始，返回空串
+        that.toptips.showTopTips('活动已经开始了哦。');
+      } else if (date) {  //开始计时器 
+        that.toptips.showTopTips('活动还没开始，你不能打卡哦。');
+        
         let timer = new wxTimer({
           endTime: date,
           complete: function () {
-            console.log("倒计时结束了")
+            console.log("倒计时结束了");
+            
             that.setData({
               isAlreadyStart: true
             });
@@ -235,6 +247,7 @@ Page({
   punchActivity: function (e) {
 
     let that = this;
+    // console.log(e);
     getLocationPromise({
       type: 'gcj02'
     }).then(res => {
