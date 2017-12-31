@@ -44,6 +44,12 @@
 					"name": "settingActivity",
 					"pathName": "pages/activity/settingActivity/settingActivity",
 					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "emptyTips",
+					"pathName": "pages/emptyTips/emptyTips",
+					"query": ""
 				}
 			]
 		}

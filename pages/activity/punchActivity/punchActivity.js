@@ -98,6 +98,11 @@ Page({
     }).then(result => {
 
       console.log(result);
+      if (!result.activity) {
+        wx.redirectTo({
+          url: '/pages/emptyTips/emptyTips'
+        });
+      }
       let time = result.activity.date + ' ' + result.activity.time + ':00';
       let position = result.activity.position === '' ? {} : JSON.parse(result.activity.position);
       console.log(time.replace(/-/g, "/"))
@@ -155,11 +160,12 @@ Page({
         that.timer = timer;
         timer.start(that);
       }
-
+      wx.stopPullDownRefresh();
       return that.judgeMapScale(); //调整地图scale
+      
 
     }).catch(err => {
-
+      wx.stopPullDownRefresh();
       console.log('catch err is ' + err);
     })
 
@@ -321,6 +327,13 @@ Page({
       });
     }
 
+  },
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function () {
+    this.refreshActivityById(this.data.activity.activity_id);
   },
 
   /**

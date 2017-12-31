@@ -40,9 +40,9 @@
 
 
 
-<view class="weui-footer" style="margin-top: 50px;">
+<view class="weui-footer" style="position: fixed; bottom: 20px; width:100%;">
   <view class="weui-footer__links">
-    <view class="weui-footer__link" bindtap="lookGroup">交流群二维码。</view>
+    <view class="weui-footer__link" bindtap="lookGroup">交流群二维码</view>
   </view>
-  <view class="weui-footer__text">No Copyright</view>
+  <!-- <view class="weui-footer__text">No Copyright</view> -->
 </view>

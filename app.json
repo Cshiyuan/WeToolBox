@@ -6,7 +6,8 @@
     "pages/activity/punchActivity/punchActivity",
     "pages/activity/setupPosition/setupPosition",
     "pages/activity/settingActivity/settingActivity",
-    "pages/memberList/memberList"
+    "pages/memberList/memberList",
+    "pages/emptyTips/emptyTips"
   ],
   "window": {
     "backgroundTextStyle": "light",

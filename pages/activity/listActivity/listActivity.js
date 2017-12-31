@@ -12,6 +12,7 @@ Page({
     loading: false,
     end: 0,   //请求参数
     length: 10,
+    isCreateList: false
   },
 
   /**
@@ -31,7 +32,8 @@ Page({
         }
       })
       this.setData({
-        title: '我创建的活动'
+        title: '我创建的活动',
+        isCreateList: true
       });
       this.refreshListForMyActivity();
 
@@ -195,7 +197,62 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
+
     console.log('refresh!');
+    let that = this;
+    this.setData({
+      loading: true
+    });
+    let refreshPromise;
+    if (this.data.isCreateList) {  //属于刷新自我的列表
+
+      refreshPromise = getUserActivityListPromise({
+        start: 0,  //分页查询
+        length: 10
+      });
+    } else {
+
+      refreshPromise = getUserSignUpActivityListPromise({
+        start: 0,  //分页查询
+        length: 10
+      });
+    }
+
+    refreshPromise.then(result => {
+
+      console.log(result);
+      let array = result.map(item => {
+        item.create_time = util.formatTime(new Date(item.create_time));
+        if (item.position !== '') {
+          item.position = JSON.parse(item.position);
+        } else {
+          item.position = {
+            lat: -1,
+            lng: -1,
+            address: '',
+            radius: 0
+          }
+        }
+
+        return item;
+      });
+      that.setData({
+        activityList: array,
+        end: array.length,
+        loading: false
+      });
+      wx.stopPullDownRefresh();
+    }).catch(error => {
+      that.setData({
+        loading: false
+      });
+      wx.stopPullDownRefresh();
+      console.log('error is ');
+      console.log(error)
+      util.showFailToast();
+    });
+
+
   },
 
   /**
