@@ -5,7 +5,7 @@
 <noticeBar id="noticeBar"></noticeBar>
 
 <view class="container">
-  <view class="userinfo" bindtap="tapUserInfo">
+  <view class="userinfo">
     <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
     <block wx:else>
       <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
@@ -17,25 +17,24 @@
 <view class="weui-panel weui-panel_access">
   <view class="weui-panel__hd">活动打卡模块</view>
   <view class="weui-panel__bd">
-    <navigator url="../activity/publishActivity/publishActivity" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+    <view class="weui-media-box weui-media-box_appmsg" data-type="toCreateActivity" hover-class="weui-cell_active" bindtap="naviTo">
       <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
         <view class="weui-media-box__title">发布活动</view>
         <view class="weui-media-box__desc">发布活动，发布后，提供报名、位置定位、打卡签到、统计、到时提醒等简单实用功能。</view>
       </view>
-    </navigator>
-    <navigator url="../activity/listActivity/listActivity?myCreateActivityList=true" class="weui-media-box weui-media-box_appmsg"
-      hover-class="weui-cell_active">
+    </view>
+    <view class="weui-media-box weui-media-box_appmsg" data-type="myCreateActivity" hover-class="weui-cell_active" bindtap="naviTo">
       <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
         <view class="weui-media-box__title">我的创建活动</view>
         <view class="weui-media-box__desc">查看我创建的活动列表</view>
       </view>
-    </navigator>
-    <navigator url="../activity/listActivity/listActivity" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+    </view>
+    <view class="weui-media-box weui-media-box_appmsg" data-type="mySignUpActivity" hover-class="weui-cell_active" bindtap="naviTo">
       <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
         <view class="weui-media-box__title">我的参与活动</view>
         <view class="weui-media-box__desc">查看我参与的活动列表</view>
       </view>
-    </navigator>
+    </view>
   </view>
 </view>
 

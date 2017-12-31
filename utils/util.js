@@ -36,7 +36,7 @@ const formatTimeByMilliSecond = milliSecond => {
   var leave3 = leave2 % (60 * 1000)      //计算分钟数后剩余的毫秒数
   var seconds = Math.round(leave3 / 1000)
 
-  return hours.toString() + ':' + minutes.toString() + ':' + seconds.toString();
+  return formatNumber(hours) + ':' + formatNumber(minutes) + ':' + formatNumber(seconds);
 }
 
 /**

@@ -36,7 +36,7 @@ wxTimer.prototype = {
 		//开始倒计时
 		var count = 0;//这个count在这里应该是表示s数，js中获得时间是ms，所以下面*1000都换成ms
 
-		function begin() {
+		const begin = function () {
 
 			count++;
 			var wxTimerSecond = that.countDownSeconds;

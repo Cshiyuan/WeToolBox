@@ -21,15 +21,18 @@ Page({
 
       console.log(result);
 
+      let array = [], hash = {};
+      result.forEach(item => {
 
-      let array = result.map(item => {
-
-        item.create_time = util.formatTime(new Date(item.create_time));
-        return item;
+        if (!hash[item.open_id]) {
+          item.create_time = util.formatTime(new Date(item.create_time));
+          array.push(item);
+          hash[item.open_id] = true;
+        }
       });
 
       that.setData({
-        memberList: result
+        memberList: array
       });
     }).catch(error => {
 

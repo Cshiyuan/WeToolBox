@@ -47,6 +47,7 @@ Page({
     wxTimerList: {},
     isAlreadyStart: false,
     isOwner: false,
+    commitLoading: false,
     myLocation: {}
   },
 
@@ -135,14 +136,17 @@ Page({
       let countDown = date.getTime() - Date.now();
       if (countDown <= 0) {//距离结束时间小于0，说明已经开始，返回空串
         that.toptips.showTopTips('活动已经开始了哦。');
+        that.setData({
+          isAlreadyStart: true
+        });
       } else if (date) {  //开始计时器 
         that.toptips.showTopTips('活动还没开始，你不能打卡哦。');
-        
+
         let timer = new wxTimer({
           endTime: date,
           complete: function () {
             console.log("倒计时结束了");
-            
+
             that.setData({
               isAlreadyStart: true
             });
@@ -167,26 +171,39 @@ Page({
   punchActivityById: function (activityId) {
 
     let that = this;
-    return punchActivityPromise({
+    if (!this.data.commitLoading) {
+      this.setData({
+        commitLoading: true
+      });
+      return punchActivityPromise({
 
-      activity_id: activityId
-    }).then((result) => {
+        activity_id: activityId
+      }).then((result) => {
 
-      if (result.ret === -1) {
+        if (result.ret === -1) {
+          that.setData({
+            commitLoading: false
+          });
+          showTips('提示', '创建者关闭打卡入口啦。');
 
-        showTips('提示', '创建者关闭打卡入口啦。')
-      } else {
+        } else {
 
+          that.setData({
+            'activity.punchList': result.data,
+            'activity.isPunch': true,
+            commitLoading: false
+          });
+        }
+
+      }).catch(error => {
         that.setData({
-          'activity.punchList': result.data,
-          'activity.isPunch': true
+          commitLoading: false
         });
-      }
+        showTips('提示', '网络出错')
+        console.log('catch err is ' + err);
+      });
+    }
 
-    }).catch(error => {
-      showTips('提示', '网络出错')
-      console.log('catch err is ' + err);
-    });
   },
 
 
@@ -212,9 +229,22 @@ Page({
    */
   naviToMemberList: function (e) {
 
-    setGlobalPromise({
-      promise: Promise.resolve(this.data.activity.signUpList)
-    })
+    // console.log(e);
+    let type = e.currentTarget.dataset.type;
+    console.log(type);
+    if (type === "punchList") {
+      setGlobalPromise({
+        promise: Promise.resolve(this.data.activity.punchList)
+      })
+
+    }
+    if (type === 'signUpList') {
+      setGlobalPromise({
+        promise: Promise.resolve(this.data.activity.signUpList)
+      })
+    }
+
+
     wx.navigateTo({
       url: '../../memberList/memberList'
     });
@@ -226,19 +256,27 @@ Page({
   signUpActivity: function (e) {
 
     let that = this;
-    signUpActivityPromise({
-
-      activity_id: this.data.activity.activity_id
-    }).then((result) => {
-
-      that.setData({
-        'activity.signUpList': result,
-        'activity.isSignUp': true
+    if (!this.data.commitLoading) {
+      this.setData({
+        commitLoading: true
       });
-    }).catch(error => {
+      signUpActivityPromise({
 
-      console.log('catch err is ' + err);
-    });
+        activity_id: this.data.activity.activity_id
+      }).then((result) => {
+
+        that.setData({
+          'activity.signUpList': result,
+          'activity.isSignUp': true,
+          commitLoading: false
+        });
+      }).catch(error => {
+        that.setData({
+          commitLoading: false
+        })
+        console.log('catch err is ' + err);
+      });
+    }
   },
 
   /**
@@ -248,37 +286,40 @@ Page({
 
     let that = this;
     // console.log(e);
-    getLocationPromise({
-      type: 'gcj02'
-    }).then(res => {
+    if (!this.data.commitLoading) {
+      getLocationPromise({
+        type: 'gcj02'
+      }).then(res => {
 
-      //计算出当前距离
-      let distance = getDistance(res.latitude, res.longitude, that.data.position.lat, that.data.position.lng);
+        //计算出当前距离
+        // console.log()
+        let distance = getDistance(res.latitude, res.longitude, that.data.position.lat, that.data.position.lng);
 
-      that.map.includePoints({
-        padding: [40, 40, 40, 40],
-        points: [{
-          latitude: res.latitude,
-          longitude: res.longitude,
-        }, {
-          latitude: that.data.position.lat,
-          longitude: that.data.position.lng,
-        }]
-      })
+        that.map.includePoints({
+          padding: [40, 40, 40, 40],
+          points: [{
+            latitude: res.latitude,
+            longitude: res.longitude,
+          }, {
+            latitude: that.data.position.lat,
+            longitude: that.data.position.lng,
+          }]
+        })
 
-      console.log('distance is ' + distance);
-      console.log('您距离活动目的地的距离是 ' + distance.toString() + ' 米 ')
-      if (distance < that.data.position.radius) {   //处在允许打卡的范围内
-        return that.punchActivityById(that.data.activity.activity_id);
-      } else {
-        showTips('提示', '没进入可以打卡的范围哦。')
-      }
+        console.log('distance is ' + distance);
+        console.log('您距离活动目的地的距离是 ' + distance.toString() + ' 米 ')
+        if (distance < that.data.position.radius || !that.data.position.radius) {   //处在允许打卡的范围内,或者并没有设定地点
+          return that.punchActivityById(that.data.activity.activity_id);
+        } else {
+          showTips('提示', '没进入可以打卡的范围哦。')
+        }
 
 
-    }).catch(err => {
-      console.log(err);
-      showTips('提示', '请确认一下网络和定位服务是否开启了哦。')
-    });
+      }).catch(err => {
+        console.log(err);
+        showTips('提示', '请确认一下网络和定位服务是否开启了哦。')
+      });
+    }
 
   },
 

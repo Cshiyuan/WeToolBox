@@ -58,9 +58,26 @@ Page({
     });
   },
 
-  tapUserInfo: function (e) {
+  naviTo: function (e) {
+
     console.log(e);
-    this.toptips.showTopTips('');
+    let type = e.currentTarget.dataset.type;
+    console.log(type);
+    if (type === 'toCreateActivity') {
+      wx.navigateTo({
+        url: '/pages/activity/publishActivity/publishActivity'
+      });
+    }
+    if (type === 'myCreateActivity') {
+      wx.navigateTo({
+        url: '/pages/activity/listActivity/listActivity?myCreateActivityList=true'
+      });
+    }
+    if (type === 'mySignUpActivity') {
+      wx.navigateTo({
+        url: '/pages/activity/listActivity/listActivity'
+      });
+    }
   },
 
 

@@ -3,8 +3,8 @@
 <topTips id="toptips">
 </topTips>
 
-<map wx:if="{{position.radius}}" id="map" longitude="{{markers[0].longitude}}" latitude="{{markers[0].latitude}}" scale="17" markers="{{markers}}" circles="{{circles}}"
-    style="width: 100%; height: 300px;" show-location="true"></map>
+<map wx:if="{{position.radius}}" id="map" longitude="{{markers[0].longitude}}" latitude="{{markers[0].latitude}}" scale="17"
+    markers="{{markers}}" circles="{{circles}}" style="width: 100%; height: 300px;" show-location="true"></map>
 
 
 <view class="weui-panel weui-panel_access">
@@ -30,7 +30,7 @@
 
 <view class="weui-cells">
     <!-- 报名列表 -->
-    <view class="weui-cell weui-cell_access" hover-class="weui-cell_active" bindtap="naviToMemberList">
+    <view class="weui-cell weui-cell_access" hover-class="weui-cell_active" data-type="signUpList" bindtap="naviToMemberList">
         <view class="weui-cell__bd">活动报名列表</view>
         <view class="weui-cell__ft weui-cell__ft_in-access" style="padding-right:50rpx;">
             <block wx:for="{{activity.signUpList}}" wx:for-item="item" wx:for-index="itemIndex" wx:key="itemIndex">
@@ -41,7 +41,7 @@
         </view>
     </view>
     <!-- 打卡列表 -->
-    <view class="weui-cell weui-cell_access" hover-class="weui-cell_active" bindtap="naviToMemberList">
+    <view class="weui-cell weui-cell_access" hover-class="weui-cell_active" data-type="punchList" bindtap="naviToMemberList">
         <view class="weui-cell__bd">活动已打卡列表</view>
         <view class="weui-cell__ft weui-cell__ft_in-access" style="padding-right:50rpx;">
             <block wx:for="{{activity.punchList}}" wx:for-item="item" wx:for-index="itemIndex" wx:key="itemIndex">
@@ -59,6 +59,7 @@
 </view>
 
 <view class="page__bd_spacing" style="margin-top: 50rpx;margin-bottom:50rpx;padding-bottom:50rpx;">
-    <button wx:if="{{!activity.isSignUp}}" class="weui-btn" type="warn" bindtap="signUpActivity">报名 {{wxTimer}}</button>
-    <button wx:if="{{activity.isSignUp && ! activity.isPunch}}" class="weui-btn" disabled="{{!isAlreadyStart}}" type="warn" bindtap="punchActivity">打卡 {{wxTimer}}</button>
+    <button wx:if="{{!activity.isSignUp}}" class="weui-btn {{commitLoading ? 'zan-btn--loading' : ''}}" disabled="{{commitLoading}}" type="warn" bindtap="signUpActivity">报名 {{wxTimer}}</button>
+    <button wx:if="{{activity.isSignUp && !activity.isPunch}}" class="weui-btn {{commitLoading ? 'zan-btn--loading' : ''}}" disabled="{{!isAlreadyStart || commitLoading}}" type="warn" bindtap="punchActivity">打卡 {{wxTimer}}</button>
+    <button wx:if="{{activity.isPunch}}" class="weui-btn " disabled="true" type="warn" bindtap="punchActivity">已打卡</button>
 </view>

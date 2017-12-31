@@ -1,5 +1,5 @@
 {
-    "navigationBarTitleText": "WeToolBox",
+    "navigationBarTitleText": "微工具盒",
     "usingComponents": {
         "topTips": "/component/topTips/topTips",
         "noticeBar": "/component/noticeBar/noticeBar"
