@@ -1,6 +1,6 @@
 
-const HOST = 'http://localhost:3001';
-// const HOST = 'https://vendor.chenshyiuan.me';
+// const HOST = 'http://localhost:3001';
+const HOST = 'https://vendor.chenshyiuan.me';
 
 
 const LOGIN_URL = HOST + '/login' //登陆地址
@@ -17,7 +17,7 @@ const GET_ACTIVITY_SIGNUP_LIST_URL = HOST + '/activity/getActivitySignList';  //
 const GET_ACTIVITY_PUNCH_LIST_URL = HOST + '/activity/getActivityPunchList';  //获得活动打卡列表
 const CHANGE_ACTIVITY_TYPE_URL = HOST + '/activity/changeActivityType';  //改变活动类型接口
 
-
+const PICGZ_URL = 'http://wetoolbox-1252042156.picgz.myqcloud.com/' //处理图片的URL
 const CosConfig = {
     AppId: '1252042156',
     SecretId: 'AKIDxlU4QclKq68yYvgsSlna6ML3Yquk3o0x',
@@ -41,6 +41,6 @@ module.exports = {
 
     CHANGE_ACTIVITY_TYPE_URL,
 
-
+    PICGZ_URL,
     CosConfig
 }

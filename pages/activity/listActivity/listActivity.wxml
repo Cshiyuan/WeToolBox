@@ -1,15 +1,36 @@
 <!--listActivity.wxml-->
+
 <view class="weui-panel">
 
     <view class="weui-panel__hd">{{title}}</view>
-    <view class="weui-panel__bd">
+    <view style="padding: 0 10rpx">
         <block wx:for="{{activityList}}" wx:for-item="activity" wx:for-index="activityIndex" wx:key="activity_id">
-            <view class="weui-media-box weui-media-box_text" data-index="{{activityIndex}}" bindtap="naviToActivity">
-                <view class="weui-media-box__title weui-media-box__title_in-text">{{activity.title}}</view>
-                <view class="weui-media-box__desc">{{activity.description}}</view>
-                <view class="weui-media-box__info">
-                    <view class="weui-media-box__info__meta">时间: {{activity.date}} {{activity.time}}</view>
-                    <view wx:if="{{activity.position.address}}" class="weui-media-box__info__meta">地点: {{activity.position.address}}</view>
+            <view class="example--box" hover-class="example-box-hover" data-index="{{activityIndex}}" bindtap="naviToActivity">
+                <view class="example--demo demo">
+                    <view class="demo-inner">
+                        <view class="user" style="display: inline-block">
+                            <image class="user__avatar" src="{{activity.avatar_url}}"></image>
+                            <view class="user__un-read-msg-count">
+                                <view class="badge badge__type--{{type}} badge__system--{{_system_}}">
+                                    {{activity.signUpList.length}}
+                                </view>
+                            </view>
+                        </view>
+
+                        <view class="weui-media-box weui-media-box_text">
+                            <view class="weui-media-box__title weui-media-box__title_in-text">{{activity.title}}</view>
+                            <view class="weui-media-box__desc">{{activity.description}}</view>
+                        </view>
+
+                    </view>
+
+                </view>
+                <view class="example--meta meta">
+                    <view class="meta-title">{{activity.position.address}}</view>
+                    <view class="meta-desc">{{activity.nick_name}}</view>
+                </view>
+                <view class="example--source">
+                    <view class="view-btn">{{activity.date}} {{activity.time}}</view>
                 </view>
             </view>
         </block>

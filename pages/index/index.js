@@ -3,6 +3,7 @@
 // const Cos = require('../../libs/cos-wx-sdk-v4')
 const { uploadFile } = require('../../utils/cos')
 const app = getApp()
+const { chooseAndUploadImage } = require('../../utils/cos')
 
 var successCallback = function (result) {
   console.log('success', result);
@@ -72,28 +73,11 @@ Page({
 
   naviTo: function (e) {
 
-    wx.chooseImage({
-      count: 1,
-      sizeType: ['original', 'compressed'],
-      sourceType: ['album', 'camera'],
-      success: function (res) {
-        if (res.tempFilePaths && res.tempFilePaths.length) {
-          var tempFilePath = res.tempFilePaths[0];
-          wx.showToast({ title: '正在上传...', icon: 'loading', duration: 60000 });
-          uploadFile({
-            success: successCallback,
-            error: errorCallback,
-            // onProgress: progressCallback, // 返回 info 对象，带有 loaded、total、percent、speed 四个字段
-            filePath: tempFilePath,
-            // bucket: 'wetoolbox',
-            // insertOnly: 0, // insertOnly==0 表示允许覆盖文件 1表示不允许覆盖
-            // bizAttr: 'test-biz-val'
-          });
-        }
-      }
-    });
+    // chooseAndUploadImage().then(results => {
 
-    return
+    //   console.log(results);
+    // });
+    // return
 
     console.log(e);
     let type = e.currentTarget.dataset.type;

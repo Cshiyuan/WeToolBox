@@ -1,7 +1,7 @@
 <!--pages/activity/punchActivity/punchActivity.wxml-->
 <!-- 地图 -->
-<topTips id="toptips">
-</topTips>
+<!-- <topTips id="toptips">
+</topTips> -->
 
 <map wx:if="{{position.radius}}" id="map" longitude="{{markers[0].longitude}}" latitude="{{markers[0].latitude}}" scale="17"
     markers="{{markers}}" circles="{{circles}}" style="width: 100%; height: 300px;" show-location="true"></map>

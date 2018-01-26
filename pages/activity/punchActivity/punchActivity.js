@@ -73,7 +73,7 @@ Page({
 
   onReady: function () {
 
-    this.toptips = this.selectComponent("#toptips");
+    // this.toptips = this.selectComponent("#toptips");
   },
 
 
@@ -140,12 +140,12 @@ Page({
 
       let countDown = date.getTime() - Date.now();
       if (countDown <= 0) {//距离结束时间小于0，说明已经开始，返回空串
-        that.toptips.showTopTips('活动已经开始了哦。');
+        // that.toptips.showTopTips('活动已经开始了哦。');
         that.setData({
           isAlreadyStart: true
         });
       } else if (date) {  //开始计时器 
-        that.toptips.showTopTips('活动还没开始，你不能打卡哦。');
+        // that.toptips.showTopTips('活动还没开始，你不能打卡哦。');
 
         let timer = new wxTimer({
           endTime: date,

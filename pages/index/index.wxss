@@ -1,4 +1,5 @@
 /**index.wxss**/
+
 .userinfo {
   display: flex;
   flex-direction: column;
@@ -18,4 +19,40 @@
 
 .usermotto {
   margin-top: 200px;
+}
+
+.example-menu__item {
+  margin: 20rpx 0;
+  background-color: #FFFFFF;
+  border-radius: 4rpx;
+  overflow: hidden
+}
+
+.example-hover {
+  opacity: .3
+}
+
+.example-menu__item:first-child {
+  margin-top: 0
+}
+
+.example-menu__head {
+  padding: 30rpx;
+  display: flex;
+  align-items: center;
+  transition: opacity .3s
+}
+
+.example-menu__title {
+  flex: 1
+}
+
+.example-menu__image {
+  width: 60rpx;
+  height: 60rpx
+}
+
+.index-bd {
+  padding: 0 30rpx 40rpx;
+  padding-top: 30rpx
 }

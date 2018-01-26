@@ -1,4 +1,22 @@
 {
+  "tabBar": {
+    "color": "#5F5F5F",
+    "selectedColor": "#2CA8A8",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "个人中心",
+        "iconPath": "images/person.png",
+        "selectedIconPath": "images/person_selected.png"
+      },
+      {
+        "pagePath": "pages/activity/listActivity/listActivity",
+        "text": "活动列表",
+        "iconPath": "images/list.png",
+        "selectedIconPath": "images/list_selected.png"
+      }
+    ]
+  },
   "pages": [
     "pages/index/index",
     "pages/activity/listActivity/listActivity",

@@ -14,35 +14,26 @@
   </view>
 </view>
 
-<view class="weui-panel weui-panel_access">
-  <view class="weui-panel__hd">活动打卡模块</view>
-  <view class="weui-panel__bd">
-    <view class="weui-media-box weui-media-box_appmsg" data-type="toCreateActivity" hover-class="weui-cell_active" bindtap="naviTo">
-      <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
-        <view class="weui-media-box__title">发布活动</view>
-        <view class="weui-media-box__desc">发布活动，发布后，提供报名、位置定位、打卡签到、统计、到时提醒等简单实用功能。</view>
-      </view>
-    </view>
-    <view class="weui-media-box weui-media-box_appmsg" data-type="myCreateActivity" hover-class="weui-cell_active" bindtap="naviTo">
-      <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
-        <view class="weui-media-box__title">我的创建活动</view>
-        <view class="weui-media-box__desc">查看我创建的活动列表</view>
-      </view>
-    </view>
-    <view class="weui-media-box weui-media-box_appmsg" data-type="mySignUpActivity" hover-class="weui-cell_active" bindtap="naviTo">
-      <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
-        <view class="weui-media-box__title">我的参与活动</view>
-        <view class="weui-media-box__desc">查看我参与的活动列表</view>
+
+<view class="index-bd">
+  <view>
+    <view class="example-menu__item" hover-class="example-hover" data-type="toCreateActivity" bindtap="naviTo">
+      <view class="example-menu__head">
+        <view class="example-menu__title">创建活动</view>
+        <image class="example-menu__image" src="/images/create.png"></image>
       </view>
     </view>
   </view>
-</view>
 
 
-
-<view class="weui-footer" style="position: fixed; bottom: 20px; width:100%;">
-  <view class="weui-footer__links">
-    <view class="weui-footer__link" bindtap="lookGroup">交流群二维码</view>
+  <view bindtap="lookGroup">
+    <view class="example-menu__item" hover-class="example-hover">
+      <view class="example-menu__head ">
+        <view class="example-menu__title">获得帮助</view>
+        <image class="example-menu__image" src="/images/help.png"></image>
+      </view>
+    </view>
   </view>
-  <!-- <view class="weui-footer__text">No Copyright</view> -->
+
+
 </view>

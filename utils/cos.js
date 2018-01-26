@@ -1,8 +1,8 @@
+const Promise = require('../libs/bluebird');
 const { CosConfig } = require('../utils/config')
 const CryptoJS = require('../libs/crypto');
 const { formatNumber } = require('../utils/util');
 const uuidv4 = require('../libs/we-uuidv4')
-// const uuid = require('../libs/uuid.modified')
 
 let appId = CosConfig.AppId;
 let bucket = CosConfig.Bucket;
@@ -95,22 +95,75 @@ let uploadFile = function (opts) {
     if (bizAttr) {
         data['biz_attr'] = bizAttr;
     }
-    let uploadTask = wx.uploadFile({
-        url: url,
-        filePath: filePath,
-        name: 'fileContent',
-        header: { 'Authorization': sign },
-        formData: data,
-        success: function (result) {
-            result.data = JSON.parse(result.data);
-            success.call(this, result);
-        },
-        fail: error
-    });
-    onProgress && uploadTask && uploadTask.onProgressUpdate && uploadTask.onProgressUpdate(onProgress);
+    return new Promise((resolve, reject) => {
+
+        let uploadTask = wx.uploadFile({
+            url: url,
+            filePath: filePath,
+            name: 'fileContent',
+            header: { 'Authorization': sign },
+            formData: data,
+            success: function (result) {
+                result.data = JSON.parse(result.data);
+                if (result.data.code === 0) {  //有错误码
+
+                    resolve(result)
+                } else {
+
+                    reject(result)
+                }
+            },
+            fail: function (err) {
+
+                reject(err)
+            }
+        });
+    })
+    // onProgress && uploadTask && uploadTask.onProgressUpdate && uploadTask.onProgressUpdate(onProgress);
 };
+
+let chooseAndUploadImage = function (opts) {
+
+    let count = opts && opts.count || 9;
+    let sizeType = opts && opts.sizeType || ['original', 'compressed'];
+    let sourceType = opts && opts.sourceType || ['album', 'camera'];
+
+    return new Promise((resolve, reject) => {
+        wx.chooseImage({
+            count: count,
+            sizeType: sizeType,
+            sourceType: sourceType,
+            success: function (res) {
+                if (res.tempFilePaths && res.tempFilePaths.length) {
+
+                    let promiseArray = []
+                    res.tempFilePaths.forEach(item => {
+                        promiseArray.push(uploadFile({
+                            filePath: item
+                        }))
+                    })
+                    Promise.all(promiseArray).then(results => {
+
+                        let paths = results.map(item => {
+                            let tmpArray = item.data.data.resource_path.split('wetoolbox');
+                            let path = tmpArray[1]
+                            return path
+                        })
+                        console.log(paths);
+                        resolve(paths)
+                    }).catch(err => {
+
+                        reject(err);
+                    })
+                }
+            }
+        });
+    })
+}
+
 
 module.exports = {
 
-    uploadFile: uploadFile
+    uploadFile: uploadFile,
+    chooseAndUploadImage: chooseAndUploadImage
 }
