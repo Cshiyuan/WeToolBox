@@ -59,7 +59,58 @@
 </view>
 
 <view class="page__bd_spacing" style="margin-top: 50rpx;margin-bottom:50rpx;padding-bottom:50rpx;">
-    <button wx:if="{{!activity.isSignUp}}" class="weui-btn {{commitLoading ? 'zan-btn--loading' : ''}}" disabled="{{commitLoading}}" type="warn" bindtap="signUpActivity">报名 {{wxTimer}}</button>
-    <button wx:if="{{activity.isSignUp && !activity.isPunch}}" class="weui-btn {{commitLoading ? 'zan-btn--loading' : ''}}" disabled="{{!isAlreadyStart || commitLoading}}" type="warn" bindtap="punchActivity">打卡 {{wxTimer}}</button>
+    <button wx:if="{{!activity.isSignUp}}" class="weui-btn {{commitLoading ? 'zan-btn--loading' : ''}}" disabled="{{commitLoading}}"
+        type="warn" bindtap="signUpActivity">报名 {{wxTimer}}</button>
+    <button wx:if="{{activity.isSignUp && !activity.isPunch}}" class="weui-btn {{commitLoading ? 'zan-btn--loading' : ''}}" disabled="{{!isAlreadyStart || commitLoading}}"
+        type="warn" bindtap="punchActivity">打卡 {{wxTimer}}</button>
     <button wx:if="{{activity.isPunch}}" class="weui-btn " disabled="true" type="warn" bindtap="punchActivity">已打卡</button>
+</view>
+
+
+
+<view class="commentlistwrap">
+    <view class="wx-view_8NFuqw">
+        <text class="wx-text_t7lDiK">2人点评</text>
+    </view>
+    <view class="commentlistitem">
+        <navigator class="nav_userlink">
+            <view class="likeuser">
+                <image class="useravatar" mode="aspectFill" src="http://imgcdn.guoku.com/avatar/50/681eb4e30ac36d9481ea421c3fc61c6b.jpg"
+                    style="background-size: cover; background-position: center center; background-repeat: no-repeat; background-image: url(http://imgcdn.guoku.com/avatar/50/681eb4e30ac36d9481ea421c3fc61c6b.jpg); "
+                />
+            </view>
+        </navigator>
+        <view class="wx-view_WnUrtw">
+            <view class="wx-view_F9ISUC">
+                <navigator >
+                    <text class="wx-text_71u3gA">木芽</text>
+                </navigator>
+                <view class="wx-view_wrkAD7">
+                    <image class="wx-image_YoXk15" src="http://qty83k.creatby.com/materials/origin/53a095f5786a4f0e1e50eea5ec5c84bc_origin.png"
+                    />
+                </view>
+            </view>
+            <text class="wx-text_kGXxsa">在植觉买过东西，每一件都是用心之作。很喜欢植觉的调调，不争不抢。今天在这个app上无意中也看到了植觉小物，小确幸顿时溢满心间</text>
+            <view class="comment_operate">
+                <view class="wx-view_h6iSr9">
+                    <view class="commentlikebtn">
+                        <image class="wx-image_YoXk15" src="http://qty83k.creatby.com/materials/origin/2459ad45d8071985f1cf7f91f3b3df66_origin.png"
+                        />
+                    </view>
+                    <view class="commentreplybtn">
+                        <image class="wx-image_YoXk15" src="http://qty83k.creatby.com/materials/origin/0564a45ab780222757935674e13d6919_origin.png"
+                        />
+                    </view>
+                </view>
+                <text class="listitem_creattime">2016.10.29</text>
+            </view>
+        </view>
+    </view>
+
+
+
+    <button bindtap="tap_3013baf2" class="wx-button_KajNFH" data-c_act_id="M_c9c3eaf9a5124a1b" data-c_e_id="wx_button86aaad14"
+        hover-class="button-hover" size="default" type="default">
+        写点评
+    </button>
 </view>
