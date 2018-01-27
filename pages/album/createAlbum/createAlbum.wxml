@@ -1,0 +1,48 @@
+<!--pages/activity/publishActivity/publishActivity.wxml-->
+
+
+<view class="page">
+
+    <view class="page__bd ">
+
+        <!-- 标题 -->
+        <!-- <view class="weui-cells__title">活动标题</view>
+        <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell weui-cell_input">
+                <view class="weui-cell__bd">
+                    <input class="weui-input" placeholder="请输入活动标题" bindinput="inputTitle" />
+                </view>
+            </view>
+        </view> -->
+
+        <!-- 说明 -->
+        <view class="weui-cells__title">相册说明</view>
+        <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell">
+                <view class="weui-cell__bd">
+                    <textarea class="weui-textarea" placeholder="请输入相册说明" bindinput="inputDescrtiption" style="min-height:250rpx; max-height:450rpx"
+                        auto-height="true" maxlength="200" />
+                    <view class="weui-textarea-counter">{{description.length}}/200</view>
+                </view>
+            </view>
+        </view>
+
+        <!-- 设置 -->
+        <view class="weui-cells__title">设置</view>
+        <view class="weui-cells weui-cells_after-title">
+            <view class="wrap">
+                <view class="flex wrap--wrap">
+                    <image class="item" src="http://qty83k.creatby.com/materials/origin/a67f2e79e6ed8ae5bf46237d4f88a4e7_origin.png"></image>
+                    <image class="item" src="http://qty83k.creatby.com/materials/origin/a67f2e79e6ed8ae5bf46237d4f88a4e7_origin.png"></image>
+                    <image class="item" src="http://qty83k.creatby.com/materials/origin/a67f2e79e6ed8ae5bf46237d4f88a4e7_origin.png"></image>
+                    <image class="item" src="http://qty83k.creatby.com/materials/origin/a67f2e79e6ed8ae5bf46237d4f88a4e7_origin.png"></image>
+                    <image class="item" src="http://qty83k.creatby.com/materials/origin/a67f2e79e6ed8ae5bf46237d4f88a4e7_origin.png"></image>
+                    <image class="item" src="http://qty83k.creatby.com/materials/origin/a67f2e79e6ed8ae5bf46237d4f88a4e7_origin.png"></image>
+                </view>
+            </view>
+
+        </view>
+
+    </view>
+
+</view>

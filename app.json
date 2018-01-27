@@ -25,7 +25,9 @@
     "pages/activity/setupPosition/setupPosition",
     "pages/activity/settingActivity/settingActivity",
     "pages/memberList/memberList",
-    "pages/emptyTips/emptyTips"
+    "pages/emptyTips/emptyTips",
+    "pages/album/listPhoto/listPhoto",
+    "pages/album/createAlbum/createAlbum"
   ],
   "window": {
     "backgroundTextStyle": "light",

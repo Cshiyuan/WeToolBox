@@ -66,23 +66,38 @@
     <button wx:if="{{activity.isPunch}}" class="weui-btn " disabled="true" type="warn" bindtap="punchActivity">已打卡</button>
 </view>
 
+<view class="likelist">
+    <navigator class="nav_likelistmore" hover-class="navigator-hover">
+        <text class="c-block wx-text_t7lDiK">相册</text>
+        <text class="c-block wx-text_t7lDiK2">❯</text>
+    </navigator>
+    <view class="uselinklist">
+        <navigator class="nav_userlink" hover-class="navigator-hover">
+            <view class="likeuser" data-c_e_id="wx_view2a69167c">
+                <image class="useravatar" data-c_e_id="wx_image96c6f1ad" mode="aspectFill" src="http://imgcdn.guoku.com/avatar/large/e1786c6ae7425a1dff35caf9612e2130"
+                    style="background-size: cover; background-position: center center; background-repeat: no-repeat; background-image: url(http://imgcdn.guoku.com/avatar/large/e1786c6ae7425a1dff35caf9612e2130); "
+                />
+            </view>
+        </navigator>
+    </view>
+</view>
 
 
-<view class="commentlistwrap">
+<view class="commentlistwrap" style="border-top:1px solid rgb(237, 237, 237);">
     <view class="wx-view_8NFuqw">
-        <text class="wx-text_t7lDiK">2人点评</text>
+        <text class="c-block wx-text_t7lDiK">2人点评</text>
     </view>
     <view class="commentlistitem">
-        <navigator class="nav_userlink">
-            <view class="likeuser">
+        <navigator>
+            <view class="likeuser fm2">
                 <image class="useravatar" mode="aspectFill" src="http://imgcdn.guoku.com/avatar/50/681eb4e30ac36d9481ea421c3fc61c6b.jpg"
                     style="background-size: cover; background-position: center center; background-repeat: no-repeat; background-image: url(http://imgcdn.guoku.com/avatar/50/681eb4e30ac36d9481ea421c3fc61c6b.jpg); "
                 />
             </view>
         </navigator>
-        <view class="wx-view_WnUrtw">
+        <view class="c-minheight wx-view_WnUrtw">
             <view class="wx-view_F9ISUC">
-                <navigator >
+                <navigator>
                     <text class="wx-text_71u3gA">木芽</text>
                 </navigator>
                 <view class="wx-view_wrkAD7">
@@ -90,7 +105,7 @@
                     />
                 </view>
             </view>
-            <text class="wx-text_kGXxsa">在植觉买过东西，每一件都是用心之作。很喜欢植觉的调调，不争不抢。今天在这个app上无意中也看到了植觉小物，小确幸顿时溢满心间</text>
+            <text class="c-block wx-text_kGXxsa">在植觉买过东西，每一件都是用心之作。很喜欢植觉的调调，不争不抢。今天在这个app上无意中也看到了植觉小物，小确幸顿时溢满心间</text>
             <view class="comment_operate">
                 <view class="wx-view_h6iSr9">
                     <view class="commentlikebtn">
@@ -108,9 +123,7 @@
     </view>
 
 
-
-    <button bindtap="tap_3013baf2" class="wx-button_KajNFH" data-c_act_id="M_c9c3eaf9a5124a1b" data-c_e_id="wx_button86aaad14"
-        hover-class="button-hover" size="default" type="default">
+    <button class="wx-button_KajNFH" size="default" type="default">
         写点评
     </button>
 </view>
