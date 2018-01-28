@@ -1,5 +1,5 @@
 // pages/activity/settingActivity/settingActivity.js
-const { deleteActivityPromise, changeActivityTypePromise } = require('../../../utils/requestPromise');
+const { deleteActivityPromise, changeActivityTypePromise } = require('../../../utils/activityRequestPromise');
 const util = require('../../../utils/util');
 Page({
 

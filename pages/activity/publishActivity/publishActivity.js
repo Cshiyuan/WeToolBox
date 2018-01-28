@@ -1,6 +1,6 @@
 // pages/activity/publishActivity/publishActivity.js
 const util = require('../../../utils/util');
-const { insertActivityPromise } = require('../../../utils/requestPromise');
+const { insertActivityPromise } = require('../../../utils/activityRequestPromise');
 
 
 Page({

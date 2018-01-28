@@ -6,21 +6,21 @@
     <view class="page__bd ">
 
         <!-- 标题 -->
-        <!-- <view class="weui-cells__title">活动标题</view>
+        <view class="weui-cells__title">相册名称</view>
         <view class="weui-cells weui-cells_after-title">
             <view class="weui-cell weui-cell_input">
                 <view class="weui-cell__bd">
-                    <input class="weui-input" placeholder="请输入活动标题" bindinput="inputTitle" />
+                    <input class="weui-input" placeholder="请输入相册名称" bindinput="inputTitle" />
                 </view>
             </view>
-        </view> -->
+        </view>
 
         <!-- 说明 -->
         <view class="weui-cells__title">相册说明</view>
         <view class="weui-cells weui-cells_after-title">
             <view class="weui-cell">
                 <view class="weui-cell__bd">
-                    <textarea class="weui-textarea" placeholder="请输入相册说明" bindinput="inputDescrtiption" style="min-height:250rpx; max-height:450rpx"
+                    <textarea class="weui-textarea" placeholder="请输入相册说明" bindinput="inputDescrtiption" style="min-height:150rpx; max-height:350rpx"
                         auto-height="true" maxlength="200" />
                     <view class="weui-textarea-counter">{{description.length}}/200</view>
                 </view>
@@ -28,21 +28,38 @@
         </view>
 
         <!-- 设置 -->
-        <view class="weui-cells__title">设置</view>
+        <view class="weui-cells__title">添加图片</view>
         <view class="weui-cells weui-cells_after-title">
-            <view class="wrap">
-                <view class="flex wrap--wrap">
-                    <image class="item" src="http://qty83k.creatby.com/materials/origin/a67f2e79e6ed8ae5bf46237d4f88a4e7_origin.png"></image>
-                    <image class="item" src="http://qty83k.creatby.com/materials/origin/a67f2e79e6ed8ae5bf46237d4f88a4e7_origin.png"></image>
-                    <image class="item" src="http://qty83k.creatby.com/materials/origin/a67f2e79e6ed8ae5bf46237d4f88a4e7_origin.png"></image>
-                    <image class="item" src="http://qty83k.creatby.com/materials/origin/a67f2e79e6ed8ae5bf46237d4f88a4e7_origin.png"></image>
-                    <image class="item" src="http://qty83k.creatby.com/materials/origin/a67f2e79e6ed8ae5bf46237d4f88a4e7_origin.png"></image>
-                    <image class="item" src="http://qty83k.creatby.com/materials/origin/a67f2e79e6ed8ae5bf46237d4f88a4e7_origin.png"></image>
+            <view class="weui-cell">
+                <view class="weui-cell__bd">
+                    <view class="weui-uploader">
+                        <view class="weui-uploader__bd">
+                            <view class="weui-uploader__files" id="uploaderFiles">
+                                <block wx:for="{{images}}" wx:key="*this" wx:for-index="index">
+                                    <view class="weui-uploader__file" >
+                                        <image class="weui-uploader__img" src="{{item}}" mode="aspectFill" data-index="{{index}}"  bindtap="previewImages"/>
+                                        <view class="delete-gray-view" hover-class="hover-delete-gary-view" data-index="{{index}}" bindtap="deletePhoto">
+                                            <image class="icon-delete" src="/images/trach.png"></image>
+                                        </view>
+                                    </view>
+                                </block>
+                            </view>
+                            <view class="weui-uploader__input-box">
+                                <view class="weui-uploader__input" bindtap="chooseImage"></view>
+                            </view>
+                        </view>
+                    </view>
                 </view>
             </view>
-
         </view>
 
+    </view>
+
+
+    <view class="page__bd_spacing" style="margin-top: 50rpx">
+        <button class="weui-btn" hover-class="weui-btn-hover" bindtap="createAlbum">
+            <view wx:if="{{loading}}" class="weui-loading"></view>
+            发布相册</button>
     </view>
 
 </view>

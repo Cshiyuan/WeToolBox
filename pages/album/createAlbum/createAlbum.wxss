@@ -1,32 +1,48 @@
-/* pages/album/createAlbum/createAlbum.wxss */
-
-.wrap {
-    display: block;
-    padding: 2%;
-    /* background: #696969; */
-}
-
-.item {
-    width: 30%;
-    height: 220rpx;
-    margin: 1.5%;
-    flex-grow: 0;
-}
-
-/* .item:nth-of-type(odd) {
-    background: #afdde3
-}
-
-.item:nth-of-type(2n) {
-    background: #f397b2
-} */
-
-.flex {
-    display: flex;
+.wx-view_9TxaXG {
+    position: absolute;
     width: 100%;
-    height: 100%;
-  }
+    bottom: 0px;
+    background-color: rgba(0, 0, 0, 0.81);
+    display: flex;
+    justify-content: space-between;
+    height: 30px;
+    align-items: center;
+    padding-left: 10px;
+    padding-right: 10px;
+}
 
-.wrap--wrap {
-    flex-wrap: wrap;
-  }
+.weui-btn {
+    background-color: #2CA8A8;
+    color: #fff
+}
+
+.weui-btn-hover {
+    opacity: .6
+}
+
+.weui-btn-disable {
+    opacity: .6
+}
+
+.icon-delete {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    color: #fff;
+    height: 16px;
+    width: 16px;
+}
+
+.delete-gray-view {
+    background-color: rgba(0, 0, 0, 0.6);
+    position: relative;
+    width: 79px;
+    height: 17px;
+    bottom: 17px;
+}
+
+.hover-delete-gary-view {
+    opacity: .5
+}

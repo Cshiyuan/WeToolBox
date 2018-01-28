@@ -17,6 +17,10 @@ const GET_ACTIVITY_SIGNUP_LIST_URL = HOST + '/activity/getActivitySignList';  //
 const GET_ACTIVITY_PUNCH_LIST_URL = HOST + '/activity/getActivityPunchList';  //获得活动打卡列表
 const CHANGE_ACTIVITY_TYPE_URL = HOST + '/activity/changeActivityType';  //改变活动类型接口
 
+
+const INSERT_ALBUM_URL = HOST + '/album/insertAlbum';  //创建相册
+const GET_ALBUM_URL = HOST + '/album/getAlbum';  //获得相册
+
 const PICGZ_URL = 'http://wetoolbox-1252042156.picgz.myqcloud.com/' //处理图片的URL
 const CosConfig = {
     AppId: '1252042156',
@@ -40,6 +44,9 @@ module.exports = {
     GET_ACTIVITY_PUNCH_LIST_URL,
 
     CHANGE_ACTIVITY_TYPE_URL,
+
+    INSERT_ALBUM_URL,
+    GET_ALBUM_URL,
 
     PICGZ_URL,
     CosConfig

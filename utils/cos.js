@@ -122,6 +122,33 @@ let uploadFile = function (opts) {
     // onProgress && uploadTask && uploadTask.onProgressUpdate && uploadTask.onProgressUpdate(onProgress);
 };
 
+
+let uploadImages = function (opts) {
+
+    if (opts.images && opts.images.length) {
+
+        let images = opts.images;
+        let promiseArray = []
+        images.forEach(item => {
+            promiseArray.push(uploadFile({
+                filePath: item
+            }))
+        })
+        return Promise.all(promiseArray).then(results => {
+
+            let paths = results.map(item => {
+                let tmpArray = item.data.data.resource_path.split('wetoolbox');
+                let path = tmpArray[1]
+                return path
+            })
+            console.log(paths);
+            return paths;
+        })
+    } else {
+        return Promise.reject('param err')
+    }
+}
+
 let chooseAndUploadImage = function (opts) {
 
     let count = opts && opts.count || 9;
@@ -165,5 +192,6 @@ let chooseAndUploadImage = function (opts) {
 module.exports = {
 
     uploadFile: uploadFile,
-    chooseAndUploadImage: chooseAndUploadImage
+    chooseAndUploadImage: chooseAndUploadImage,
+    uploadImages: uploadImages
 }

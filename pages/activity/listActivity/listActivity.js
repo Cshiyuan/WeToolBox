@@ -1,6 +1,6 @@
 // listActivity.js
 
-const { getUserActivityListPromise, getUserSignUpActivityListPromise } = require('../../../utils/requestPromise');
+const { getUserActivityListPromise, getUserSignUpActivityListPromise } = require('../../../utils/activityRequestPromise');
 const util = require('../../../utils/util')
 Page({
 
