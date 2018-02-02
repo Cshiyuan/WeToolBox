@@ -56,7 +56,6 @@
 .nav_userlink{align-self: flex-start; }
 .likeuser{width: 36px; height: 36px; background-position: 50% 50%; background-size: cover; border-radius: 48px; margin-bottom: 5px; }
 .useravatar{width: 100%; height: 100%; border-radius: 48px; border-bottom-right-radius: 48px; border-bottom-left-radius: 48px; border-top-right-radius: 48px; border-top-left-radius: 48px; }
-.wx-view_wrkAD7{width: 16px; height: 16px;}
 .wx-image_YoXk15{width: 100%; height: 100%; display: block; background-color: transparent; }
 .commentreplybtn{width: 16px; height: 16px;}
 .listitem_creattime{font-size: 12px; color: rgb(186, 186, 186); padding-right: 2px; }

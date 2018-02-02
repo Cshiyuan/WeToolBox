@@ -1,5 +1,6 @@
 
-const HOST = 'http://localhost:3001';
+// const HOST = 'http://localhost:3001';
+const HOST ='http://192.168.31.148:3001'
 // const HOST = 'https://vendor.chenshyiuan.me';
 
 
@@ -20,8 +21,11 @@ const CHANGE_ACTIVITY_TYPE_URL = HOST + '/activity/changeActivityType';  //改�
 
 const INSERT_ALBUM_URL = HOST + '/album/insertAlbum';  //创建相册
 const GET_ALBUM_URL = HOST + '/album/getAlbum';  //获得相册
+const INSERT_PHOTO_URL = HOST + '/album/insertPhotoToAlbum';  //插入相册
+const DELETE_PHOTO_URL = HOST + '/album/deletePhoto';  //删除特定图片
 
-const PICGZ_URL = 'http://wetoolbox-1252042156.picgz.myqcloud.com/' //处理图片的URL
+const PICGZ_URL = 'http://wetoolbox-1252042156.picgz.myqcloud.com' //处理图片的URL
+
 const CosConfig = {
     AppId: '1252042156',
     SecretId: 'AKIDxlU4QclKq68yYvgsSlna6ML3Yquk3o0x',
@@ -47,6 +51,8 @@ module.exports = {
 
     INSERT_ALBUM_URL,
     GET_ALBUM_URL,
+    INSERT_PHOTO_URL,
+    DELETE_PHOTO_URL,
 
     PICGZ_URL,
     CosConfig

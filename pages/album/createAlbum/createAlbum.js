@@ -1,6 +1,8 @@
 // pages/album/createAlbum/createAlbum.js
 const { uploadImages } = require('../../../utils/cos')
-const { insertAlbumPromise } = require('../../../utils/albumRequestPromise')
+const { insertAlbumPromise } = require('../../../utils/albumRequestPromise');
+const { setGlobalPromise, getGlobalPromise } = require('../../../utils/globalPromiseList');
+const util = require('../../../utils/util');
 Page({
 
   /**
@@ -95,15 +97,27 @@ Page({
             extra: ''
           });
         })
-        return insertAlbumPromise({
+        return insertAlbumPromise({   //提交服务器
           title: that.data.title,
           description: that.data.description,
           photos: photos
         })
 
       }).then(result => {
+        
 
         console.log(result)
+        setGlobalPromise({
+          promise: Promise.resolve(result)
+        });
+        let url = '/pages/album/listPhoto/listPhoto';
+        let param = util.generateNaviParam({
+          album_id: result.album.album_id
+        });
+
+        wx.redirectTo({
+          url: url + param
+        });
 
       }).catch(err => {
 

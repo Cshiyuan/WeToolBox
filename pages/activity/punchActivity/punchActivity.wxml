@@ -85,27 +85,23 @@
 
 <view class="commentlistwrap" style="border-top:1px solid rgb(237, 237, 237);">
     <view class="wx-view_8NFuqw">
-        <text class="c-block wx-text_t7lDiK">2人点评</text>
+        <text class="c-block wx-text_t7lDiK">动态</text>
     </view>
     <view class="commentlistitem">
-        <navigator>
-            <view class="likeuser fm2">
-                <image class="useravatar" mode="aspectFill" src="http://imgcdn.guoku.com/avatar/50/681eb4e30ac36d9481ea421c3fc61c6b.jpg"
-                    style="background-size: cover; background-position: center center; background-repeat: no-repeat; background-image: url(http://imgcdn.guoku.com/avatar/50/681eb4e30ac36d9481ea421c3fc61c6b.jpg); "
-                />
-            </view>
-        </navigator>
+        <view class="likeuser fm2">
+            <image class="useravatar" mode="aspectFill" src="http://imgcdn.guoku.com/avatar/50/681eb4e30ac36d9481ea421c3fc61c6b.jpg"
+                style="background-size: cover; background-position: center center; background-repeat: no-repeat; background-image: url(http://imgcdn.guoku.com/avatar/50/681eb4e30ac36d9481ea421c3fc61c6b.jpg); "
+            />
+        </view>
         <view class="c-minheight wx-view_WnUrtw">
             <view class="wx-view_F9ISUC">
-                <navigator>
-                    <text class="wx-text_71u3gA">木芽</text>
-                </navigator>
-                <view class="wx-view_wrkAD7">
-                    <image class="wx-image_YoXk15" src="http://qty83k.creatby.com/materials/origin/53a095f5786a4f0e1e50eea5ec5c84bc_origin.png"
-                    />
-                </view>
+                <text class="wx-text_71u3gA">木芽</text>
             </view>
-            <text class="c-block wx-text_kGXxsa">在植觉买过东西，每一件都是用心之作。很喜欢植觉的调调，不争不抢。今天在这个app上无意中也看到了植觉小物，小确幸顿时溢满心间</text>
+            <text class="c-block wx-text_kGXxsa">在植觉买过东西，每一件都是用心之作。很喜欢植觉的调调，不争不抢。今天在这个app上无意中也看到了植觉小物，小确幸顿时溢满心间 天shdkfnsdjfnsdlhjfkbjnlwkmefwkjlnfwkjd fsdkf sdf
+                在这个app上无意中也看到了植觉小物，小确幸顿时溢满心间</text>
+            <view class="weui-flex" style="flex-wrap: wrap;  background-color:aqua;justify-content: flex-start;margin-bottom:20px">
+                <view style="width:150rpx;height:150rpx;background-color:antiquewhite;margin:4px;">weui</view>
+            </view>
             <view class="comment_operate">
                 <view class="wx-view_h6iSr9">
                     <view class="commentlikebtn">
@@ -119,8 +115,10 @@
                 </view>
                 <text class="listitem_creattime">2016.10.29</text>
             </view>
+
         </view>
     </view>
+
 
 
     <button class="wx-button_KajNFH" size="default" type="default">

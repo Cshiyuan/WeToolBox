@@ -1,5 +1,5 @@
 const Promise = require('../libs/bluebird');
-const { CosConfig } = require('../utils/config')
+const { PICGZ_URL, CosConfig } = require('../utils/config')
 const CryptoJS = require('../libs/crypto');
 const { formatNumber } = require('../utils/util');
 const uuidv4 = require('../libs/we-uuidv4')
@@ -189,9 +189,27 @@ let chooseAndUploadImage = function (opts) {
 }
 
 
+let imageView2UrlFormat = function (url, opts) {
+
+    if (url.indexOf(PICGZ_URL) === -1) {  //未拼接开始拼接
+        url = PICGZ_URL + url;
+    }
+
+    if (opts) {
+        let width = (opts.width && opts.width.toString()) || '';
+        let height = (opts.height && opts.height.toString()) || '';
+        let quality = (opts.quality && opts.quality.toString()) || '';
+        url = url + '?imageView2' + '/' + '0' + '/w/' + width + '/h/' + height + '/q/' + quality;
+    }
+    return url;
+}
+
+
 module.exports = {
 
     uploadFile: uploadFile,
     chooseAndUploadImage: chooseAndUploadImage,
-    uploadImages: uploadImages
+    uploadImages: uploadImages,
+
+    imageView2UrlFormat: imageView2UrlFormat
 }
