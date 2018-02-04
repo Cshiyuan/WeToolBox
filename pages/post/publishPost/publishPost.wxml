@@ -1,11 +1,10 @@
-<!--pages/album/createAlbum/createAlbum.wxml-->
-
+<!--pages/post/publishPost/publishPost.wxml-->
 
 <view class="page">
 
     <view class="page__bd ">
 
-        <!-- 标题 -->
+        <!-- 标题
         <view class="weui-cells__title">相册名称</view>
         <view class="weui-cells weui-cells_after-title">
             <view class="weui-cell weui-cell_input">
@@ -13,16 +12,16 @@
                     <input class="weui-input" placeholder="请输入相册名称" bindinput="inputTitle" />
                 </view>
             </view>
-        </view>
+        </view> -->
 
         <!-- 说明 -->
         <view class="weui-cells__title">相册说明</view>
         <view class="weui-cells weui-cells_after-title">
             <view class="weui-cell">
                 <view class="weui-cell__bd">
-                    <textarea class="weui-textarea" placeholder="请输入相册说明" bindinput="inputDescrtiption" style="min-height:150rpx; max-height:350rpx"
+                    <textarea class="weui-textarea" placeholder="请输入相册说明" bindinput="inputContent" style="min-height:150rpx; max-height:350rpx"
                         auto-height="true" maxlength="200" />
-                    <view class="weui-textarea-counter">{{description.length}}/200</view>
+                    <view class="weui-textarea-counter">{{content.length}}/200</view>
                 </view>
             </view>
         </view>
@@ -36,8 +35,8 @@
                         <view class="weui-uploader__bd">
                             <view class="weui-uploader__files" id="uploaderFiles">
                                 <block wx:for="{{images}}" wx:key="*this" wx:for-index="index">
-                                    <view class="weui-uploader__file" >
-                                        <image class="weui-uploader__img" src="{{item}}" mode="aspectFill" data-index="{{index}}"  bindtap="previewImages"/>
+                                    <view class="weui-uploader__file">
+                                        <image class="weui-uploader__img" src="{{item}}" mode="aspectFill" data-index="{{index}}" bindtap="previewImages" />
                                         <view class="delete-gray-view" hover-class="hover-delete-gary-view" data-index="{{index}}" bindtap="deletePhoto">
                                             <image class="icon-delete" src="/images/trach.png"></image>
                                         </view>
@@ -57,7 +56,7 @@
 
 
     <view class="page__bd_spacing" style="margin-top: 50rpx">
-        <button class="weui-btn" hover-class="weui-btn-hover" bindtap="createAlbum">
+        <button class="weui-btn" hover-class="weui-btn-hover" bindtap="publishPost">
             <view wx:if="{{loading}}" class="weui-loading"></view>
             发布相册</button>
     </view>

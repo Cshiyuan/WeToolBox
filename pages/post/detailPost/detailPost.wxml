@@ -1,0 +1,31 @@
+<view class="c-minheight wx-view_JbWxfk" >
+    <view class="c-minheight carditem01">
+        <view class="wx-view_QvvUkU2" >
+            <navigator class="wx-navigator_rv4BGW"  hover-class="navigator-hover">
+                <image class="wx-image_tBcdCT"  mode="aspectFill" src="http://qty83k.creatby.com/materials/origin/e08b7f406c49e68a972a05518afe2e9a_origin.jpg" style="background-size: cover; background-position: center center; background-repeat: no-repeat; background-image: url(http://qty83k.creatby.com/materials/origin/e08b7f406c49e68a972a05518afe2e9a_origin.jpg); "/>
+                <view class="wx-view_cPj0ok" >
+                    <text class="c-block wx-text_TvHPc9" >Angela</text>
+                    <text class="c-block wx-text_LS2Jup" >November 5, 1955</text>
+                </view>
+            </navigator>
+        </view>
+        <navigator class="wx-navigator_PNd8QQ"  hover-class="navigator-hover">
+            <view class="wx-view_KedDbI" >
+                <text class="c-block wx-text_6zTs4l" >Coolsite360推出国内第一款微信小程序可视化设计工具 360推出国内第一款微信小程序可视化设计工具 集成小程序所有组件，在线进360推出国内第一款微信小程序可视化设计工具 集成小程序所有组件，在线进360推出国内第一款微信小程序可视化设计工具 集成小程序所有组件，在线进360推出国内第一款微信小程序可视化设计工具 集成小程序所有组件，在线进360推出国内第一款微信小程序可视化设计工具 集成小程序所有组件，在线进360推出国内第一款微信小程序可视化设计工具 集成小程序所有组件，在线进360推出国内第一款微信小程序可视化设计工具 集成小程序所有组件，在线进360推出国内第一款微信小程序可视化设计工具 集成小程序所有组件，在线进360推出国内第一款微信小程序可视化设计工具 集成小程序所有组件，在线进360推出国内第一款微信小程序可视化设计工具 集成小程序所有组件，在线进360推出国内第一款微信小程序可视化设计工具 集成小程序所有组件，在线进360推出国内第一款微信小程序可视化设计工具 集成小程序所有组件，在线进集成小程序所有组件，在线进行小程序UI设计，支持Flex布局，可导出符合小程序标准的代码供后续开发。</text>
+            </view>
+        </navigator>
+        <view class="wx-view_adF7Mw" >
+            <view class="wx-view_2gazUr" >
+                <view class="wx-view_DKe6UT" >
+                    <image class="wx-image_6E2A1o"  mode="aspectFit" src="http://qty83k.creatby.com/materials/origin/a67f2e79e6ed8ae5bf46237d4f88a4e7_origin.png" style="background-size: contain; background-position: center center; background-repeat: no-repeat; background-image: url(http://qty83k.creatby.com/materials/origin/a67f2e79e6ed8ae5bf46237d4f88a4e7_origin.png); "/>
+                    <text class="c-block wx-text_id0VJj" >235</text>
+                </view>
+                <view class="wx-view_DKe6UT" >
+                    <image class="wx-image_6E2A1o"  mode="aspectFit" src="http://qty83k.creatby.com/materials/origin/0564a45ab780222757935674e13d6919_origin.png" style="background-size: contain; background-position: center center; background-repeat: no-repeat; background-image: url(http://qty83k.creatby.com/materials/origin/0564a45ab780222757935674e13d6919_origin.png); "/>
+                    <text class="c-block wx-text_id0VJj" >143</text>
+                </view>
+            </view>
+            <text class="c-block wx-text_9Wn0Di" >1小时前</text>
+        </view>
+    </view>
+</view>

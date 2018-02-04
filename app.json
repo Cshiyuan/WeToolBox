@@ -27,7 +27,9 @@
     "pages/memberList/memberList",
     "pages/emptyTips/emptyTips",
     "pages/album/listPhoto/listPhoto",
-    "pages/album/createAlbum/createAlbum"
+    "pages/album/createAlbum/createAlbum",
+    "pages/post/detailPost/detailPost",
+    "pages/post/publishPost/publishPost"
   ],
   "window": {
     "backgroundTextStyle": "light",

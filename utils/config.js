@@ -24,6 +24,9 @@ const GET_ALBUM_URL = HOST + '/album/getAlbum';  //获得相册
 const INSERT_PHOTO_URL = HOST + '/album/insertPhotoToAlbum';  //插入相册
 const DELETE_PHOTO_URL = HOST + '/album/deletePhoto';  //删除特定图片
 
+const INSERT_POST_URL = HOST + '/post/insertPost'; //创建帖子
+const GET_POSTLIST_URL = HOST + '/post/getPostList';  //拉取帖子的列表
+
 const PICGZ_URL = 'http://wetoolbox-1252042156.picgz.myqcloud.com' //处理图片的URL
 
 const CosConfig = {
@@ -49,10 +52,15 @@ module.exports = {
 
     CHANGE_ACTIVITY_TYPE_URL,
 
+    //相册相关URL
     INSERT_ALBUM_URL,
     GET_ALBUM_URL,
     INSERT_PHOTO_URL,
     DELETE_PHOTO_URL,
+
+    // 帖子相关URL
+    INSERT_POST_URL,
+    GET_POSTLIST_URL,
 
     PICGZ_URL,
     CosConfig

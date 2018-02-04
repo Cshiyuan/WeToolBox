@@ -2,11 +2,13 @@
 const Promise = require('../../../libs/bluebird');
 const wxTimer = require('../../../utils/wxTimer');
 const bmap = require('../../../libs/bmap-wx');
-const util = require('../../../utils/util');
+const { timestampFormat } = require('../../../utils/util');
+const { imageView2UrlFormat } = require('../../../utils/cos')
 const { getActivityPromise, signUpActivityPromise, punchActivityPromise } = require('../../../utils/activityRequestPromise');
 const { countDown, formatTime, getDistance, wxPromisify, formatNumber, showTips } = require('../../../utils/util');
 const { setGlobalPromise, getGlobalPromise } = require('../../../utils/globalPromiseList');
 const getLocationPromise = wxPromisify(wx.getLocation);
+const { getPostListPromise } = require('../../../utils/postRequestPromise');
 
 Page({
 
@@ -48,7 +50,8 @@ Page({
     isAlreadyStart: false,
     isOwner: false,
     commitLoading: false,
-    myLocation: {}
+    myLocation: {},
+    postList: []
   },
 
   /**
@@ -60,6 +63,7 @@ Page({
     let that = this;
     if (options.activity_id) {
       this.refreshActivityById(options.activity_id);
+      this.refreshPostList(options.activity_id);
     }
 
     //新建百度地图对象
@@ -67,12 +71,11 @@ Page({
       ak: 'hOfa0G8FQM2LgYxmqSVsu7rUyeS043Np'
     });
     this.BMap = BMap;
-
     this.map = wx.createMapContext('map');
   },
 
   onReady: function () {
-
+    // this.refreshPostList();
     // this.toptips = this.selectComponent("#toptips");
   },
 
@@ -162,13 +165,70 @@ Page({
       }
       wx.stopPullDownRefresh();
       return that.judgeMapScale(); //调整地图scale
-      
+
 
     }).catch(err => {
       wx.stopPullDownRefresh();
       console.log('catch err is ' + err);
     })
 
+  },
+
+  /**
+   * 刷新动态列表
+   */
+  refreshPostList: function (activityId) {
+
+    let start = 0;
+    let length = 10;
+    let activity_id = activityId;  //帖子id
+    let that = this;
+    getPostListPromise({
+      start: start,
+      length: 10,
+      activity_id: activity_id
+    }).then(result => {
+      console.log(result);
+
+      result.forEach(post => {
+        post.time = timestampFormat(Date.parse(post.create_time) / 1000)
+        post.thumbnailUrls = [];
+        post.originUrls = [];
+        post.images.forEach(item => {
+
+          post.thumbnailUrls.push(imageView2UrlFormat(item, {
+            width: 200,
+            height: 200
+          }));
+          post.originUrls.push(imageView2UrlFormat(item))
+
+        })
+      });
+      console.log(result)
+      that.setData({
+        postList: result
+      });
+
+    }).catch(err => {
+      console.log(err);
+    });
+
+  },
+
+  previewImage: function (e) {
+
+    console.log('previewImages', e)
+    let postIndex = e.currentTarget.dataset.postindex;
+    let imageIndex = e.currentTarget.dataset.imageindex;
+    if (postIndex !== undefined && imageIndex !== undefined) {
+      let post = this.data.postList[postIndex];
+      // let image = this.data.images[index];
+      let current = post.originUrls[imageIndex];
+      wx.previewImage({
+        current: current, // 当前显示图片的http链接
+        urls: post.originUrls // 需要预览的图片http链接列表
+      })
+    }
   },
 
   /**
@@ -255,6 +315,22 @@ Page({
       url: '../../memberList/memberList'
     });
   },
+
+  /**
+   * 跳转到帖子发布器
+   */
+  naviToPublishPost: function (e) {
+
+    let url = '/pages/post/publishPost/publishPost';
+    let param = util.generateNaviParam({
+      activity_id: this.data.activity.activity_id,
+    });
+
+    wx.navigateTo({
+      url: url + param
+    });
+  },
+
 
   /**
    * 报名活动

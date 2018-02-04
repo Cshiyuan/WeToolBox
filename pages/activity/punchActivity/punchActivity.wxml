@@ -73,9 +73,8 @@
     </navigator>
     <view class="uselinklist">
         <navigator class="nav_userlink" hover-class="navigator-hover">
-            <view class="likeuser" data-c_e_id="wx_view2a69167c">
-                <image class="useravatar" data-c_e_id="wx_image96c6f1ad" mode="aspectFill" src="http://imgcdn.guoku.com/avatar/large/e1786c6ae7425a1dff35caf9612e2130"
-                    style="background-size: cover; background-position: center center; background-repeat: no-repeat; background-image: url(http://imgcdn.guoku.com/avatar/large/e1786c6ae7425a1dff35caf9612e2130); "
+            <view class="likeuser">
+                <image class="useravatar" mode="aspectFill" src="http://imgcdn.guoku.com/avatar/large/e1786c6ae7425a1dff35caf9612e2130" style="background-size: cover; background-position: center center; background-repeat: no-repeat; background-image: url(http://imgcdn.guoku.com/avatar/large/e1786c6ae7425a1dff35caf9612e2130); "
                 />
             </view>
         </navigator>
@@ -83,45 +82,60 @@
 </view>
 
 
+
+
+
+
 <view class="commentlistwrap" style="border-top:1px solid rgb(237, 237, 237);">
     <view class="wx-view_8NFuqw">
         <text class="c-block wx-text_t7lDiK">动态</text>
     </view>
-    <view class="commentlistitem">
-        <view class="likeuser fm2">
-            <image class="useravatar" mode="aspectFill" src="http://imgcdn.guoku.com/avatar/50/681eb4e30ac36d9481ea421c3fc61c6b.jpg"
-                style="background-size: cover; background-position: center center; background-repeat: no-repeat; background-image: url(http://imgcdn.guoku.com/avatar/50/681eb4e30ac36d9481ea421c3fc61c6b.jpg); "
-            />
-        </view>
-        <view class="c-minheight wx-view_WnUrtw">
-            <view class="wx-view_F9ISUC">
-                <text class="wx-text_71u3gA">木芽</text>
+
+    <block wx:for="{{postList}}" wx:for-item="post" wx:for-index="postIndex" wx:key="post_id">
+
+        <view class="commentlistitem">
+            <view class="likeuser fm2">
+                <image class="useravatar" mode="aspectFill" src="{{post.avatar_url}}" style="background-size: cover; background-position: center center; background-repeat: no-repeat; background-image: url(http://imgcdn.guoku.com/avatar/50/681eb4e30ac36d9481ea421c3fc61c6b.jpg); "
+                />
             </view>
-            <text class="c-block wx-text_kGXxsa">在植觉买过东西，每一件都是用心之作。很喜欢植觉的调调，不争不抢。今天在这个app上无意中也看到了植觉小物，小确幸顿时溢满心间 天shdkfnsdjfnsdlhjfkbjnlwkmefwkjlnfwkjd fsdkf sdf
-                在这个app上无意中也看到了植觉小物，小确幸顿时溢满心间</text>
-            <view class="weui-flex" style="flex-wrap: wrap;  background-color:aqua;justify-content: flex-start;margin-bottom:20px">
-                <view style="width:150rpx;height:150rpx;background-color:antiquewhite;margin:4px;">weui</view>
-            </view>
-            <view class="comment_operate">
-                <view class="wx-view_h6iSr9">
-                    <view class="commentlikebtn">
-                        <image class="wx-image_YoXk15" src="http://qty83k.creatby.com/materials/origin/2459ad45d8071985f1cf7f91f3b3df66_origin.png"
-                        />
-                    </view>
-                    <view class="commentreplybtn">
-                        <image class="wx-image_YoXk15" src="http://qty83k.creatby.com/materials/origin/0564a45ab780222757935674e13d6919_origin.png"
-                        />
-                    </view>
+            <view class="c-minheight wx-view_WnUrtw">
+                <view class="wx-view_F9ISUC">
+                    <text class="wx-text_71u3gA">{{post.nick_name}}</text>
                 </view>
-                <text class="listitem_creattime">2016.10.29</text>
+                <text class="c-block wx-text_kGXxsa">{{post.content}}</text>
+                <view class="weui-flex" style="flex-wrap: wrap; justify-content: flex-start;">
+                    <block wx:for="{{post.thumbnailUrls}}" wx:for-item="image" wx:for-index="imageIndex" wx:key="*this">
+                        <image bindtap="previewImage" data-postIndex="{{postIndex}}" data-imageIndex="{{imageIndex}}" src="{{image}}" mode="aspectFill"
+                            style="width:150rpx;height:150rpx;background-color:antiquewhite;margin:4px;" />
+                    </block>
+                </view>
+                <view class="wx-view_adF7Mw" style="padding:0px; margin-top:10px">
+                    <view class="wx-view_2gazUr" style="padding-left:0px">
+                        <view class="wx-view_DKe6UT" style="-webkit-box-flex:1;-webkit-flex:1;flex:1;flex-grow:1">
+                            <image class="wx-image_6E2A1o" mode="aspectFit" src="http://qty83k.creatby.com/materials/origin/a67f2e79e6ed8ae5bf46237d4f88a4e7_origin.png"
+                                style="background-size: contain; background-position: center center; background-repeat: no-repeat; background-image: url(http://qty83k.creatby.com/materials/origin/a67f2e79e6ed8ae5bf46237d4f88a4e7_origin.png); "
+                            />
+                            <text class="c-block wx-text_id0VJj">235</text>
+                        </view>
+                        <view class="wx-view_DKe6UT" style="-webkit-box-flex:1;-webkit-flex:1;flex:1;flex-grow:1">
+                            <image class="wx-image_6E2A1o" mode="aspectFit" src="http://qty83k.creatby.com/materials/origin/0564a45ab780222757935674e13d6919_origin.png"
+                                style="background-size: contain; background-position: center center; background-repeat: no-repeat; background-image: url(http://qty83k.creatby.com/materials/origin/0564a45ab780222757935674e13d6919_origin.png); "
+                            />
+                            <text class="c-block wx-text_id0VJj">143</text>
+                        </view>
+                    </view>
+                    <text class="c-block wx-text_9Wn0Di" style="-webkit-box-flex:1;-webkit-flex:1;flex:1;flex-grow:1;text-align:right">{{post.time}}</text>
+                </view>
+
             </view>
-
         </view>
-    </view>
+
+    </block>
 
 
 
-    <button class="wx-button_KajNFH" size="default" type="default">
-        写点评
+
+    <button class="wx-button_KajNFH" size="default" type="default" bindtap="naviToPublishPost">
+        写动态
     </button>
 </view>
