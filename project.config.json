@@ -80,6 +80,12 @@
 					"name": "publishPost",
 					"pathName": "pages/post/publishPost/publishPost",
 					"query": "activity_id=ACec01371e-bc33-4446-82b0-0d0971370651"
+				},
+				{
+					"id": -1,
+					"name": "listAlbum",
+					"pathName": "pages/album/listAlbum/listAlbum",
+					"query": ""
 				}
 			]
 		}

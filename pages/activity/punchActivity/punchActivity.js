@@ -2,7 +2,7 @@
 const Promise = require('../../../libs/bluebird');
 const wxTimer = require('../../../utils/wxTimer');
 const bmap = require('../../../libs/bmap-wx');
-const { timestampFormat } = require('../../../utils/util');
+const { timestampFormat, generateNaviParam} = require('../../../utils/util');
 const { imageView2UrlFormat } = require('../../../utils/cos')
 const { getActivityPromise, signUpActivityPromise, punchActivityPromise } = require('../../../utils/activityRequestPromise');
 const { countDown, formatTime, getDistance, wxPromisify, formatNumber, showTips } = require('../../../utils/util');
@@ -215,6 +215,9 @@ Page({
 
   },
 
+  /**
+   * 图片预览
+   */
   previewImage: function (e) {
 
     console.log('previewImages', e)
@@ -280,7 +283,7 @@ Page({
 
 
     let url = '/pages/activity/settingActivity/settingActivity';
-    let param = util.generateNaviParam({
+    let param = generateNaviParam({
       activity_id: this.data.activity.activity_id,
       type: this.data.activity.type
     });
@@ -322,7 +325,40 @@ Page({
   naviToPublishPost: function (e) {
 
     let url = '/pages/post/publishPost/publishPost';
-    let param = util.generateNaviParam({
+    let param = generateNaviParam({
+      activity_id: this.data.activity.activity_id,
+    });
+
+    wx.navigateTo({
+      url: url + param
+    });
+  },
+
+  /**
+   * 跳转到帖子发布器
+   */
+  naviToDetailPost: function (e) {
+
+    console.log('naviToDetailPost ', e);
+    let postIndex = e.currentTarget.dataset.postindex;
+    let post = this.data.postList[postIndex];
+    console.log(post)
+    setGlobalPromise({
+      promise: Promise.resolve(post)
+    })
+
+    wx.navigateTo({
+      url: '/pages/post/detailPost/detailPost'
+    });
+  },
+
+  /**
+   * 跳转到相册界面 
+   */
+  naviToAlbumList: function (e) {
+
+    let url = '/pages/album/listAlbum/listAlbum';
+    let param = generateNaviParam({
       activity_id: this.data.activity.activity_id,
     });
 

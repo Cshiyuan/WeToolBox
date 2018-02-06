@@ -1,66 +1,61 @@
 // pages/post/detailPost/detailPost.js
+const { setGlobalPromise, getGlobalPromise } = require('../../../utils/globalPromiseList');
+const { insertCommentPromise, getCommentListPromise } = require('../../../utils/postRequestPromise');
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-  
+
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-  
+
+    let that = this;
+    let promise = getGlobalPromise();
+    promise.then(result => {
+
+      console.log(result);
+
+      that.setData({
+        post: result
+      });
+
+      return getCommentListPromise({
+        post_id: result.post_id
+      });
+
+
+    }).then(result => {
+
+      console.log(result);
+      that.setData({
+        comments: result
+      });
+
+    }).catch(error => {
+
+      console.log(error);
+    });
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-  
-  },
+  commitComment: function (e) {
+    console.log('commitComment', e);
+    let inputValue = e.detail.value;
+    insertCommentPromise({
+      content: inputValue,
+      post_id: this.data.post.post_id
+    }).then(result => {
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-  
-  },
+      console.log(result);
+    }).catch(err => {
+      console.log(err)
+    })
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-  
-  },
 
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-  
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-  
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-  
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-  
   }
 })

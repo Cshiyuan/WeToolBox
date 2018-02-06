@@ -34,10 +34,7 @@ Page({
         });
       })
       that.setData(result);
-      // let photos = result.photos.map(item => {
-      //   return imageView2UrlFormat(item.url)
-      // })
-      // console.log(photos)
+
 
     }).catch(error => {
 
@@ -50,14 +47,6 @@ Page({
         });
       })
       that.setData(result);
-      // that.setData(data)
-      // that.setData({
-      //   photos: [
-      //     {
-
-      //     }
-      //   ]
-      // })
       console.log(error);
     });
   },

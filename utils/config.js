@@ -1,6 +1,6 @@
 
 // const HOST = 'http://localhost:3001';
-const HOST ='http://192.168.31.148:3001'
+const HOST = 'http://192.168.31.148:3001'
 // const HOST = 'https://vendor.chenshyiuan.me';
 
 
@@ -21,11 +21,14 @@ const CHANGE_ACTIVITY_TYPE_URL = HOST + '/activity/changeActivityType';  //改�
 
 const INSERT_ALBUM_URL = HOST + '/album/insertAlbum';  //创建相册
 const GET_ALBUM_URL = HOST + '/album/getAlbum';  //获得相册
+const GET_ALBUMLIST_URL = HOST + '/album/getAlbumList'; //获得相册列表
 const INSERT_PHOTO_URL = HOST + '/album/insertPhotoToAlbum';  //插入相册
 const DELETE_PHOTO_URL = HOST + '/album/deletePhoto';  //删除特定图片
 
 const INSERT_POST_URL = HOST + '/post/insertPost'; //创建帖子
 const GET_POSTLIST_URL = HOST + '/post/getPostList';  //拉取帖子的列表
+const INSERT_COMMENT_URL = HOST + '/post/insertComment';  //创建评论
+const GET_COMMENTLIST_URL = HOST + '/post/getCommentList'; //拉取评论
 
 const PICGZ_URL = 'http://wetoolbox-1252042156.picgz.myqcloud.com' //处理图片的URL
 
@@ -57,10 +60,13 @@ module.exports = {
     GET_ALBUM_URL,
     INSERT_PHOTO_URL,
     DELETE_PHOTO_URL,
+    GET_ALBUMLIST_URL,
 
     // 帖子相关URL
     INSERT_POST_URL,
     GET_POSTLIST_URL,
+    INSERT_COMMENT_URL,
+    GET_COMMENTLIST_URL,
 
     PICGZ_URL,
     CosConfig

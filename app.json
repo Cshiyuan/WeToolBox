@@ -29,7 +29,8 @@
     "pages/album/listPhoto/listPhoto",
     "pages/album/createAlbum/createAlbum",
     "pages/post/detailPost/detailPost",
-    "pages/post/publishPost/publishPost"
+    "pages/post/publishPost/publishPost",
+    "pages/album/listAlbum/listAlbum"
   ],
   "window": {
     "backgroundTextStyle": "light",

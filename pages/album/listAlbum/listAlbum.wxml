@@ -1,0 +1,19 @@
+<!--pages/album/listAlbum/listAlbum.wxml-->
+<view class="c-minheight wx-view_TQ4nqD">
+    <view class="_other_text_LxtT2c2">
+        相册
+    </view>
+    <view class="c-minheight wx-view_tdlUCs">
+        <block wx:for="{{albumList}}" wx:for-item="album" wx:for-index="albumIndex" wx:key="album_id">
+            <view class="wx-navigator_n3vQYd" hover-class="navigator-hover">
+                <image class="wx-image_HsAX8s" mode="aspectFit" src="http://imgcdn.guoku.com/images/310/15d1670caa233632626f4e4d5c6c33b2.jpg"
+                    style="background-size: contain; background-position: center center; background-repeat: no-repeat; " />
+                <view class="c-minheight wx-view_ZhdL6d">
+                    <text class="c-block wx-text_cjhm6S">{{album.title}}</text>
+                    <!-- <text class="wx-text_JkhshF2" >独处盒子 体验装</text> -->
+                    <!-- <text class="c-block wx-text_WEMSkk">￥118.00</text> -->
+                </view>
+            </view>
+        </block>
+    </view>
+</view>
