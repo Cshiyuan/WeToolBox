@@ -84,9 +84,9 @@ function deletePhotoPromise(data) {
 
 module.exports = {
 
-    getAlbumPromise: getAlbumPromise,  //创建相册
+    getAlbumPromise: getAlbumPromise,  
     getAlbumListPromise: getAlbumListPromise,  //获得相册列表
     insertAlbumPromise: insertAlbumPromise,    //获得相册
-    insertPhotoPromise: insertPhotoPromise,
+    insertPhotoPromise: insertPhotoPromise,  //创建相册
     deletePhotoPromise: deletePhotoPromise
 }

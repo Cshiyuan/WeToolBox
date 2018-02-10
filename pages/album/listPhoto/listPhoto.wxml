@@ -2,8 +2,7 @@
     <view class="wx-view_IfJZkK">
         <view class="wx-view_u7aIQl">
             <view class="wx-view_3ggkNG">
-                <text class="c-block wx-text_yvWBsn2">ukbhnjllk    osidjfcosidfj osidfj oisjd foisjdf oisjdfo isjdofi sdoifjsodifjsdoif sodifjsoidfj soidfj soidjf
-                    sodij fsodij fsoFrom Shanghai</text>
+                <text class="c-block wx-text_yvWBsn2">{{album.title}}</text>
             </view>
         </view>
     </view>
@@ -48,3 +47,5 @@
         </view>
     </scroll-view>
 </view>
+
+<dialog></dialog>

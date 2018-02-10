@@ -26,9 +26,14 @@ const INSERT_PHOTO_URL = HOST + '/album/insertPhotoToAlbum';  //插入相册
 const DELETE_PHOTO_URL = HOST + '/album/deletePhoto';  //删除特定图片
 
 const INSERT_POST_URL = HOST + '/post/insertPost'; //创建帖子
+const DELETE_POST_URL = HOST + '/post/deletePost';  //删除帖子
 const GET_POSTLIST_URL = HOST + '/post/getPostList';  //拉取帖子的列表
 const INSERT_COMMENT_URL = HOST + '/post/insertComment';  //创建评论
+const DELETE_COMMENT_URL = HOST + '/post/deleteComment'; //删除评论
 const GET_COMMENTLIST_URL = HOST + '/post/getCommentList'; //拉取评论
+
+const STAR_POST_URL = HOST + '/post/starPost';  //点赞帖子
+const UNSTAR_POST_URL = HOST + '/post/unStarPost'; //不点赞帖子
 
 const PICGZ_URL = 'http://wetoolbox-1252042156.picgz.myqcloud.com' //处理图片的URL
 
@@ -64,9 +69,13 @@ module.exports = {
 
     // 帖子相关URL
     INSERT_POST_URL,
+    DELETE_POST_URL,
     GET_POSTLIST_URL,
     INSERT_COMMENT_URL,
     GET_COMMENTLIST_URL,
+    DELETE_COMMENT_URL,
+    STAR_POST_URL,
+    UNSTAR_POST_URL,
 
     PICGZ_URL,
     CosConfig

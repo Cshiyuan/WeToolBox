@@ -1,0 +1,18 @@
+<!--component/dialog/dialog.wxml-->
+<!-- <view class="zan-dialog {{ zanDialog.show ? 'zan-dialog--show' : '' }}"> -->
+<view class="zan-dialog {{ show ? 'zan-dialog--show' : '' }}">
+    <view class="zan-dialog--mask"></view>
+    <view class="zan-dialog--container">
+        <!-- <view wx:if="{{ zanDialog.title }}" class="zan-dialog__header">{{ zanDialog.title }}</view> -->
+        <view class="zan-dialog__header">{{title}}</view>
+        <!-- <view class="zan-dialog__content {{ zanDialog.title ? 'zan-dialog__content--title' : '' }}">{{ zanDialog.content }}</view> -->
+        <input class="zan-dialog__content   weui-input" bindinput="_inputValue" placeholder="{{placeholder}}" style="border:1px solid gray; border-radius:5px"
+        />
+        <view class="zan-dialog__footer {{ zanDialog.buttonsShowVertical ? 'zan-dialog__footer--vertical' : 'zan-dialog__footer--horizon' }}">
+            <!-- <block wx:for="{{ zanDialog.buttons }}" wx:key="{{ item.text }}-{{ item.type }}"> -->
+            <button class="zan-dialog__button zan-btn" data-type="cancel" catchtap="_handleButtonClick" style="color:  gray">取消</button>
+            <button class="zan-dialog__button zan-btn" data-type="commit" catchtap="_handleButtonClick" style="color: #2CA8A8">确认</button>
+            <!-- </block> -->
+        </view>
+    </view>
+</view>

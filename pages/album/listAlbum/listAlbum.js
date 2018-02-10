@@ -1,6 +1,7 @@
 // pages/album/listAlbum/listAlbum.js
-const { getAlbumListPromise } = require('../../../utils/albumRequestPromise');
-
+const { getAlbumListPromise, insertAlbumPromise } = require('../../../utils/albumRequestPromise');
+const { imageView2UrlFormat } = require('../../../utils/cos');
+const { timestampFormat, generateNaviParam } = require('../../../utils/util');
 Page({
 
   /**
@@ -23,6 +24,13 @@ Page({
       getAlbumListPromise({
         activity_id: activity_id
       }).then(result => {
+
+        result.forEach(item => {
+          item.cover = imageView2UrlFormat(item.cover, {
+            width: 400,
+            height: 400
+          });
+        })
         that.setData({
           albumList: result
         });
@@ -34,11 +42,57 @@ Page({
     }
   },
 
+
+
+
+
+  /**
+   * 跳转到相册详情页
+   */
+  naviToPhotoList: function (e) {
+    // let index = e.detail
+    console.log('naviToPhotoList', e);
+    let index = e.currentTarget.dataset.index;
+    if (index !== undefined) {
+
+      let url = '/pages/album/listPhoto/listPhoto';
+      let param = generateNaviParam({
+        album_id: this.data.albumList[index].album_id,
+      });
+
+      wx.navigateTo({
+        url: url + param
+      });
+    }
+  },
+
+  showInputDialog: function (e) {
+    this.inputDialog.show();
+  },
+
+  createAlbum: function (e) {
+    let value = e.detail.value;
+    console.log('createAlbum', value);
+    insertAlbumPromise({
+      object_id: this.data.activity_id,
+      title: value
+    }).then(result => {
+
+      console.log(result)
+    }).catch(err => {
+      
+      console.log(err)
+    })
+
+  },
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
+    //初始化组件
+    this.inputDialog = this.selectComponent("#inputDialog");
+    // this.asynSwitch.setSwitchStatus(this.data.isStopPunch);
   },
 
   /**

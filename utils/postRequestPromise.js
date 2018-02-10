@@ -1,10 +1,34 @@
 const { wxRequestPromise } = require('./util');
 const {
     INSERT_POST_URL,
+    DELETE_POST_URL,
     GET_POSTLIST_URL,
     INSERT_COMMENT_URL,
-    GET_COMMENTLIST_URL
+    GET_COMMENTLIST_URL,
+    DELETE_COMMENT_URL,
+    STAR_POST_URL,
+    UNSTAR_POST_URL,
 } = require('./config');
+
+function starPostPromise(data) {
+    return wxRequestPromise({
+        url: STAR_POST_URL,
+        data: data
+    }).then(response => {
+
+        return response.data;
+    });
+}
+
+function unStarPostPromise(data) {
+    return wxRequestPromise({
+        url: UNSTAR_POST_URL,
+        data: data
+    }).then(response => {
+
+        return response.data;
+    });
+}
 
 
 function insertPostPromise(data) {
@@ -17,6 +41,30 @@ function insertPostPromise(data) {
         return response.data;
     });
 }
+
+function deletePostPromise(data) {
+
+    return wxRequestPromise({
+        url: DELETE_POST_URL,
+        data: data
+    }).then(response => {
+
+        return response.data;
+    });
+}
+
+function deleteCommentPromise(data) {
+
+    return wxRequestPromise({
+        url: DELETE_COMMENT_URL,
+        data: data
+    }).then(response => {
+
+        return response.data;
+    });
+}
+
+
 
 
 function getPostListPromise(data) {
@@ -69,8 +117,13 @@ function getCommentListPromise(data) {
 
 module.exports = {
 
+    deletePostPromise: deletePostPromise,  //删除帖子
     insertPostPromise: insertPostPromise,  //创建帖子
     getPostListPromise: getPostListPromise,    //获得帖子
     insertCommentPromise: insertCommentPromise, //创建评论
-    getCommentListPromise: getCommentListPromise  //获得评论
+    deleteCommentPromise: deleteCommentPromise,  //删除评论
+    getCommentListPromise: getCommentListPromise,  //获得评论
+
+    starPostPromise: starPostPromise,
+    unStarPostPromise: unStarPostPromise
 }

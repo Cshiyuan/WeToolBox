@@ -1,7 +1,4 @@
 {
     "navigationBarTitleText": "活动打卡",
-    "enablePullDownRefresh": true,
-    "usingComponents": {
-        "topTips": "/component/topTips/topTips"
-    }
+    "enablePullDownRefresh": true
 }

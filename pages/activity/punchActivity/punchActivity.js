@@ -2,13 +2,13 @@
 const Promise = require('../../../libs/bluebird');
 const wxTimer = require('../../../utils/wxTimer');
 const bmap = require('../../../libs/bmap-wx');
-const { timestampFormat, generateNaviParam} = require('../../../utils/util');
+const { timestampFormat, generateNaviParam } = require('../../../utils/util');
 const { imageView2UrlFormat } = require('../../../utils/cos')
 const { getActivityPromise, signUpActivityPromise, punchActivityPromise } = require('../../../utils/activityRequestPromise');
 const { countDown, formatTime, getDistance, wxPromisify, formatNumber, showTips } = require('../../../utils/util');
 const { setGlobalPromise, getGlobalPromise } = require('../../../utils/globalPromiseList');
 const getLocationPromise = wxPromisify(wx.getLocation);
-const { getPostListPromise } = require('../../../utils/postRequestPromise');
+const { getPostListPromise, deletePostPromise } = require('../../../utils/postRequestPromise');
 
 Page({
 
@@ -275,6 +275,34 @@ Page({
 
   },
 
+  /**
+   * 点赞帖子
+   */
+  tapStar: function (e) {
+
+    console.log(e);
+    let that = this;
+    let index = e.currentTarget.dataset.postindex;
+    if (index !== undefined) {
+
+      let postList = this.data.postList;
+      postList[index].isStar = !this.data.postList[index].isStar
+      this.setData({
+        postList: postList
+      });
+    }
+
+    // if (this.data.star) {
+    //   this.setData({
+    //     star: false
+    //   });
+    // } else {
+    //   that.setData({
+    //     star: true
+    //   });
+    // }
+
+  },
 
   /**
    * 跳转到设置界面
@@ -292,6 +320,40 @@ Page({
       url: url + param
     });
   },
+
+  longpressPost: function (e) {
+    console.log('longpressPost', e);
+    let index = e.currentTarget.dataset.postindex;
+    if (index !== undefined) {
+      let that = this;
+      wx.showActionSheet({
+        itemList: ['点赞', '删除'],
+        // itemColor: '#2CA8A8', 
+        success: function (res) {
+          console.log(res.tapIndex)
+          if (res.tapIndex === 0) {  //点赞
+
+          }
+          if (res.tapIndex === 1) {  //删除
+            deletePostPromise({
+              post_id: that.data.postList[index].post_id
+            }).then(result => {
+
+              console.log(result);
+            }).catch(err => {
+
+              console.log(err)
+            })
+          }
+        },
+        fail: function (res) {
+          console.log(res.errMsg)
+        }
+      })
+    }
+
+  },
+
 
   /**
    * 跳转到人员界面

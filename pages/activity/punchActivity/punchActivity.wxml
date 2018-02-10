@@ -3,8 +3,8 @@
 <!-- <topTips id="toptips">
 </topTips> -->
 
-<map wx:if="{{position.radius}}" id="map" longitude="{{markers[0].longitude}}" latitude="{{markers[0].latitude}}" scale="17"
-    markers="{{markers}}" circles="{{circles}}" style="width: 100%; height: 300px;" show-location="true"></map>
+<!-- <map wx:if="{{position.radius}}" id="map" longitude="{{markers[0].longitude}}" latitude="{{markers[0].latitude}}" scale="17"
+    markers="{{markers}}" circles="{{circles}}" style="width: 100%; height: 300px;" show-location="true"></map> -->
 
 
 <view class="weui-panel weui-panel_access">
@@ -91,7 +91,7 @@
 
     <block wx:for="{{postList}}" wx:for-item="post" wx:for-index="postIndex" wx:key="post_id">
 
-        <view class="commentlistitem" data-postindex="{{postIndex}}" bindtap="naviToDetailPost">
+        <view class="commentlistitem" navigator-hover data-postindex="{{postIndex}}" bindtap="naviToDetailPost" bindlongpress="longpressPost">
             <view class="likeuser fm2">
                 <image class="useravatar" mode="aspectFill" src="{{post.avatar_url}}" style="background-size: cover; background-position: center center; background-repeat: no-repeat; background-image: url(http://imgcdn.guoku.com/avatar/50/681eb4e30ac36d9481ea421c3fc61c6b.jpg); "
                 />
@@ -104,25 +104,24 @@
                 <view class="weui-flex" style="flex-wrap: wrap; justify-content: flex-start;">
                     <block wx:for="{{post.thumbnailUrls}}" wx:for-item="image" wx:for-index="imageIndex" wx:key="*this">
                         <image catchtap="previewImage" data-postindex="{{postIndex}}" data-imageindex="{{imageIndex}}" src="{{image}}" mode="aspectFill"
-                            style="width:150rpx;height:150rpx;background-color:antiquewhite;margin:4px;" />
+                            style="width:150rpx;height:150rpx;background-color:antiquewhite;margin-right:8px;margin-bottom:8px;"
+                        />
                     </block>
                 </view>
-                <view class="wx-view_adF7Mw" style="padding:0px; margin-top:10px">
+                <view class="wx-view_adF7Mw" style="padding:0px; ">
                     <view class="wx-view_2gazUr" style="padding-left:0px">
-                        <view class="wx-view_DKe6UT" style="-webkit-box-flex:1;-webkit-flex:1;flex:1;flex-grow:1">
-                            <image class="wx-image_6E2A1o" mode="aspectFit" src="http://qty83k.creatby.com/materials/origin/a67f2e79e6ed8ae5bf46237d4f88a4e7_origin.png"
-                                style="background-size: contain; background-position: center center; background-repeat: no-repeat; background-image: url(http://qty83k.creatby.com/materials/origin/a67f2e79e6ed8ae5bf46237d4f88a4e7_origin.png); "
-                            />
-                            <text class="c-block wx-text_id0VJj">235</text>
-                        </view>
-                        <view class="wx-view_DKe6UT" style="-webkit-box-flex:1;-webkit-flex:1;flex:1;flex-grow:1">
+                        <view class="wx-view_DKe6UT" style="flex-grow:1">
                             <image class="wx-image_6E2A1o" mode="aspectFit" src="http://qty83k.creatby.com/materials/origin/0564a45ab780222757935674e13d6919_origin.png"
-                                style="background-size: contain; background-position: center center; background-repeat: no-repeat; background-image: url(http://qty83k.creatby.com/materials/origin/0564a45ab780222757935674e13d6919_origin.png); "
                             />
-                            <text class="c-block wx-text_id0VJj">143</text>
+                            <text class="c-block wx-text_id0VJj">{{post.comment}}</text>
+                        </view>
+                        <view class="wx-view_DKe6UT" style="flex-grow:1">
+                            <view class="heart {{post.isStar ? 'heartAnimation' : ''}}"  data-postindex="{{postIndex}}" catchtap="tapStar"
+                            />
+                            <text class="c-block wx-text_id0VJj">{{post.star}}</text>
                         </view>
                     </view>
-                    <text class="c-block wx-text_9Wn0Di" style="-webkit-box-flex:1;-webkit-flex:1;flex:1;flex-grow:1;text-align:right">{{post.time}}</text>
+                    <text class="c-block wx-text_9Wn0Di" style="flex-grow:1;text-align:right;margin:auto;">{{post.time}}</text>
                 </view>
 
             </view>
