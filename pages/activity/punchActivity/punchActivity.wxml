@@ -3,8 +3,8 @@
 <!-- <topTips id="toptips">
 </topTips> -->
 
-<!-- <map wx:if="{{position.radius}}" id="map" longitude="{{markers[0].longitude}}" latitude="{{markers[0].latitude}}" scale="17"
-    markers="{{markers}}" circles="{{circles}}" style="width: 100%; height: 300px;" show-location="true"></map> -->
+<map wx:if="{{position.radius}}" id="map" longitude="{{markers[0].longitude}}" latitude="{{markers[0].latitude}}" scale="17"
+    markers="{{markers}}" circles="{{circles}}" style="width: 100%; height: 300px;" show-location="true"></map>
 
 
 <view class="weui-panel weui-panel_access">
@@ -91,7 +91,7 @@
 
     <block wx:for="{{postList}}" wx:for-item="post" wx:for-index="postIndex" wx:key="post_id">
 
-        <view class="commentlistitem" navigator-hover data-postindex="{{postIndex}}" bindtap="naviToDetailPost" bindlongpress="longpressPost">
+        <view class="commentlistitem"  data-postindex="{{postIndex}}" bindtap="naviToDetailPost" bindlongpress="longpressPost">
             <view class="likeuser fm2">
                 <image class="useravatar" mode="aspectFill" src="{{post.avatar_url}}" style="background-size: cover; background-position: center center; background-repeat: no-repeat; background-image: url(http://imgcdn.guoku.com/avatar/50/681eb4e30ac36d9481ea421c3fc61c6b.jpg); "
                 />
@@ -116,8 +116,7 @@
                             <text class="c-block wx-text_id0VJj">{{post.comment}}</text>
                         </view>
                         <view class="wx-view_DKe6UT" style="flex-grow:1">
-                            <view class="heart {{post.isStar ? 'heartAnimation' : ''}}"  data-postindex="{{postIndex}}" catchtap="tapStar"
-                            />
+                            <view class="heart {{post.isStar ? 'heartAnimation' : ''}}" data-postindex="{{postIndex}}" catchtap="tapStar" />
                             <text class="c-block wx-text_id0VJj">{{post.star}}</text>
                         </view>
                     </view>

@@ -22,24 +22,24 @@
         </view>
         <view class="wx-view_adF7Mw">
             <view class="wx-view_2gazUr">
-                <view class="wx-view_DKe6UT">
-                    <image class="wx-image_6E2A1o" mode="aspectFit" src="http://qty83k.creatby.com/materials/origin/a67f2e79e6ed8ae5bf46237d4f88a4e7_origin.png"
-                        style="background-size: contain; background-position: center center; background-repeat: no-repeat; background-image: url(http://qty83k.creatby.com/materials/origin/a67f2e79e6ed8ae5bf46237d4f88a4e7_origin.png); "
-                    />
-                    <text class="c-block wx-text_id0VJj">235</text>
-                </view>
-                <view class="wx-view_DKe6UT">
+
+                <view class="wx-view_DKe6UT" style="flex-grow:1">
                     <image class="wx-image_6E2A1o" mode="aspectFit" src="http://qty83k.creatby.com/materials/origin/0564a45ab780222757935674e13d6919_origin.png"
-                        style="background-size: contain; background-position: center center; background-repeat: no-repeat; background-image: url(http://qty83k.creatby.com/materials/origin/0564a45ab780222757935674e13d6919_origin.png); "
                     />
-                    <text class="c-block wx-text_id0VJj">143</text>
+                    <text class="c-block wx-text_id0VJj">{{post.comment}}</text>
+                </view>
+
+                <view class="wx-view_DKe6UT" style="flex-grow:1">
+                    <view class="heart {{post.isStar ? 'heartAnimation' : ''}}" data-postindex="{{postIndex}}" style="width:45px;height:45px;position:static;"
+                        bindtap="tapStar" />
+                    <text class="c-block wx-text_id0VJj">{{post.star}}</text>
                 </view>
             </view>
-            <text class="c-block wx-text_9Wn0Di">1小时前</text>
+            <text class="c-block wx-text_9Wn0Di" style="margin:auto 0;text-align:right">{{post.time}}</text>
         </view>
 
 
-        <view>
+        <view wx:if="{{comments.length > 0}}">
             <view style="border-bottom: 1px solid rgba(34,36,38,.15);border-top:1px solid rgba(34,36,38,.15);padding:5px 10px;font-size:.9em;">Comments</view>
             <block wx:for="{{comments}}" wx:for-item="comment" wx:for-index="commentIndex" wx:key="comment_id">
                 <view class="weui-flex" hover-class="navigator-hover" style="flex-direction:row;" data-index="{{commentIndex}}" bindlongpress="longpressComment">
@@ -66,7 +66,7 @@
 <view style="width:750rpx;bottom:0;position:fixed;z-index:10;box-shadow: 0 1px 3px 0 #D4D4D5, 0 0 0 1px #D4D4D5;background: #FFF;border-radius: .28571429rem;">
     <view class="weui-cell" style="padding:3px 15px;">
         <!-- <view class="weui-cell__hd" style="width: 90rpx;margin-right:10px;padding:15rpx"> -->
-        <view bindtap="tapStar" class="weui-cell__hd heart {{star ? 'heartAnimation' : ''}}" style="margin-left:5px;"></view>
+        <view bindtap="tapStar" class="weui-cell__hd heart {{post.isStar ? 'heartAnimation' : ''}}" style="margin-left:5px;"></view>
         <!-- </view> -->
         <view class="weui-cell__bd " style="margin-left:35px;">
             <input class="weui-input" cursor-spacing="2" confirm-type="发送" bindconfirm="commitComment" placeholder="Comment" />

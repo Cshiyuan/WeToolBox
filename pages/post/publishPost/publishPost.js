@@ -1,7 +1,8 @@
 // pages/post/publishPost/publishPost.js
-const { uploadImages } = require('../../../utils/cos')
+const { uploadImages, imageView2UrlFormat } = require('../../../utils/cos')
 const { insertPostPromise } = require('../../../utils/postRequestPromise');
 const { setGlobalPromise, getGlobalPromise } = require('../../../utils/globalPromiseList');
+// const { imageView2UrlFormat } = require('../../../utils/cos')
 const util = require('../../../utils/util');
 
 Page({
@@ -61,7 +62,7 @@ Page({
   },
 
   deletePhoto: function (e) {
-    
+
     console.log('deletePhoto', e);
     let index = e.currentTarget.dataset.index;
     if (index) {
@@ -115,10 +116,41 @@ Page({
       }).then(result => {
 
 
-        console.log(result)
-        setGlobalPromise({
-          promise: Promise.resolve(result)
-        });
+        console.log(result);
+        let post = result.post;
+        if (post) {
+          post.thumbnailUrls = [];
+          post.originUrls = [];
+          post.images.forEach(item => {
+
+            post.thumbnailUrls.push(imageView2UrlFormat(item, {
+              width: 200,
+              height: 200
+            }));
+            post.originUrls.push(imageView2UrlFormat(item))
+
+          });
+
+          let pageStacks = getCurrentPages();
+          let prePage = pageStacks[pageStacks.length - 2];
+          console.log(prePage);
+
+          let postList = prePage.data.postList;  //拼接到数组的开头
+          postList.unshift(post);
+          prePage.setData({
+            postList: postList
+          })
+          wx.navigateBack({  //返回两次
+            delta: 1
+          });
+        }
+
+        // prePage.setData({
+        //   'activity.type': type
+        // });
+        // setGlobalPromise({
+        //   promise: Promise.resolve(result)
+        // });
         // let url = '/pages/album/listPhoto/listPhoto';
         // let param = util.generateNaviParam({
         //   album_id: result.album.album_id

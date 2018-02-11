@@ -8,7 +8,11 @@ const { getActivityPromise, signUpActivityPromise, punchActivityPromise } = requ
 const { countDown, formatTime, getDistance, wxPromisify, formatNumber, showTips } = require('../../../utils/util');
 const { setGlobalPromise, getGlobalPromise } = require('../../../utils/globalPromiseList');
 const getLocationPromise = wxPromisify(wx.getLocation);
-const { getPostListPromise, deletePostPromise } = require('../../../utils/postRequestPromise');
+const {
+  getPostListPromise,
+  deletePostPromise,
+  starPostPromise,
+  unStarPostPromise } = require('../../../utils/postRequestPromise');
 
 Page({
 
@@ -286,21 +290,27 @@ Page({
     if (index !== undefined) {
 
       let postList = this.data.postList;
-      postList[index].isStar = !this.data.postList[index].isStar
-      this.setData({
-        postList: postList
-      });
-    }
+      let isStar = this.data.postList[index].isStar;
+      let post_id = this.data.postList[index].post_id;
+      let param = {
+        post_id: post_id,
+      }
+      let promise = isStar ? unStarPostPromise(param) : starPostPromise(param);
 
-    // if (this.data.star) {
-    //   this.setData({
-    //     star: false
-    //   });
-    // } else {
-    //   that.setData({
-    //     star: true
-    //   });
-    // }
+      promise.then(result => {
+
+        postList[index].isStar = !isStar
+        postList[index].star = isStar ? postList[index].star - 1 : postList[index].star + 1;
+        that.setData({
+          postList: postList
+        });
+        console.log(result);
+
+      }).catch(error => {
+
+        console.log(error)
+      })
+    }
 
   },
 
@@ -327,14 +337,11 @@ Page({
     if (index !== undefined) {
       let that = this;
       wx.showActionSheet({
-        itemList: ['点赞', '删除'],
-        // itemColor: '#2CA8A8', 
+        itemList: ['删除'],
+        itemColor: '#DC143C',
         success: function (res) {
-          console.log(res.tapIndex)
-          if (res.tapIndex === 0) {  //点赞
 
-          }
-          if (res.tapIndex === 1) {  //删除
+          if (res.tapIndex === 0) {  //删除
             deletePostPromise({
               post_id: that.data.postList[index].post_id
             }).then(result => {

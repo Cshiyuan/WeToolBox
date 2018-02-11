@@ -14,7 +14,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    star: false
+    // star: false
   },
 
   /**
@@ -40,12 +40,11 @@ Page({
     }).then(result => {
 
       console.log(result);
-      result.comments.forEach(item => {
+      result.forEach(item => {
         item.time = timestampFormat(new Date(item.create_time) / 1000)
       })
       that.setData({
-        comments: result.comments,
-        starState: result.starState
+        comments: result,
       });
 
     }).catch(error => {
@@ -57,10 +56,32 @@ Page({
   commitComment: function (e) {
     console.log('commitComment', e);
     let inputValue = e.detail.value;
+    let that = this;
     insertCommentPromise({
       content: inputValue,
       post_id: this.data.post.post_id
     }).then(result => {
+
+      let comment = result.comment;
+      let comments = that.data.comments;
+      comments.unshift(comment);
+      that.setData({
+        comments: comments,
+        'post.comment': that.data.post.comment + 1
+      });
+
+      let pageStacks = getCurrentPages();
+      let prePage = pageStacks[pageStacks.length - 2];
+      // console.log(prePage);
+      let postList = prePage.data.postList;
+      let index = postList.findIndex((value) => {  //寻找到特定的
+        if (value.post_id === that.data.post.post_id)
+          return true;
+      });
+      postList[index].comment = postList[index].comment + 1;
+      prePage.setData({
+        postList: postList
+      });
 
       console.log(result);
     }).catch(err => {
@@ -86,7 +107,25 @@ Page({
               object_id: that.data.post.post_id
             }).then(result => {
 
-              console.log(result);
+              let comments = that.data.comments;
+              comments.splice(index, 1);
+              that.setData({
+                comments: comments,
+                'post.comment': that.data.post.comment - 1
+              });
+
+              let pageStacks = getCurrentPages();
+              let prePage = pageStacks[pageStacks.length - 2];
+              let postList = prePage.data.postList;
+              let index = postList.findIndex((value) => {  //寻找到特定的
+                if (value.post_id === that.data.post.post_id)
+                  return true;
+              });
+              postList[index].comment = postList[index].comment - 1;
+              prePage.setData({
+                postList: postList
+              });
+
             }).catch(err => {
 
               console.log(err)
@@ -105,27 +144,27 @@ Page({
     let that = this;
     // let post_id = this.data.post.post_id;
 
-    if (this.data.star) {
+    if (this.data.post.isStar) {
       this.setData({
-        star: false
+        'post.isStar': false
       });
     } else {
-      // that.setData({
-      //   star: true
-      // });
+      that.setData({
+        'post.isStar': true
+      });
 
-      starPostPromise({
-        post_id: post_id,
-      }).then(result => {
+      // starPostPromise({
+      //   post_id: post_id,
+      // }).then(result => {
 
-        console.log(result);
-        that.setData({
-          star: true
-        });
-      }).catch(error => {
+      //   console.log(result);
+      //   that.setData({
+      //     star: true
+      //   });
+      // }).catch(error => {
 
-        console.log(error)
-      })
+      //   console.log(error)
+      // })
     }
 
   }

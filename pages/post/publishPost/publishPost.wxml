@@ -15,11 +15,11 @@
         </view> -->
 
         <!-- 说明 -->
-        <view class="weui-cells__title">相册说明</view>
+        <view class="weui-cells__title">动态说明</view>
         <view class="weui-cells weui-cells_after-title">
             <view class="weui-cell">
                 <view class="weui-cell__bd">
-                    <textarea class="weui-textarea" placeholder="请输入相册说明" bindinput="inputContent" style="min-height:150rpx; max-height:350rpx"
+                    <textarea class="weui-textarea" placeholder="请输入动态说明" bindinput="inputContent" style="min-height:150rpx; max-height:350rpx"
                         auto-height="true" maxlength="200" />
                     <view class="weui-textarea-counter">{{content.length}}/200</view>
                 </view>
