@@ -69,7 +69,8 @@
         <view bindtap="tapStar" class="weui-cell__hd heart {{post.isStar ? 'heartAnimation' : ''}}" style="margin-left:5px;"></view>
         <!-- </view> -->
         <view class="weui-cell__bd " style="margin-left:35px;">
-            <input class="weui-input" cursor-spacing="2" confirm-type="发送" bindconfirm="commitComment" placeholder="Comment" />
+            <input class="weui-input" value="{{commentValue}}" cursor-spacing="2" confirm-type="send" bindconfirm="commitComment" placeholder="Comment"
+            />
         </view>
     </view>
 </view>

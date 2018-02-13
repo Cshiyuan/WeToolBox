@@ -78,9 +78,10 @@ Page({
       title: value
     }).then(result => {
 
-      console.log(result)
+      let album = result.album;
+      // console.log(result)
     }).catch(err => {
-      
+
       console.log(err)
     })
 

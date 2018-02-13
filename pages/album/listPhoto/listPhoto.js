@@ -36,8 +36,8 @@ Page({
         result.photos.forEach(item => {
           item.originUrl = imageView2UrlFormat(item.url);
           item.thumbnailUrl = imageView2UrlFormat(item.url, {
-            width: 200,
-            height: 200
+            width: 400,
+            height: 400
           });
         })
         that.setData(result);

@@ -15,6 +15,7 @@ Page({
    */
   data: {
     // star: false
+    commentValue: ''
   },
 
   /**
@@ -54,6 +55,7 @@ Page({
   },
 
   commitComment: function (e) {
+
     console.log('commitComment', e);
     let inputValue = e.detail.value;
     let that = this;
@@ -67,7 +69,8 @@ Page({
       comments.unshift(comment);
       that.setData({
         comments: comments,
-        'post.comment': that.data.post.comment + 1
+        'post.comment': that.data.post.comment + 1,
+        commentValue: ''
       });
 
       let pageStacks = getCurrentPages();
@@ -142,30 +145,47 @@ Page({
   tapStar: function (e) {
 
     let that = this;
-    // let post_id = this.data.post.post_id;
 
-    if (this.data.post.isStar) {
-      this.setData({
-        'post.isStar': false
-      });
-    } else {
-      that.setData({
-        'post.isStar': true
-      });
 
-      // starPostPromise({
-      //   post_id: post_id,
-      // }).then(result => {
 
-      //   console.log(result);
-      //   that.setData({
-      //     star: true
-      //   });
-      // }).catch(error => {
-
-      //   console.log(error)
-      // })
+    // let postList = this.data.postList;
+    let post = this.data.post;
+    let isStar = this.data.post.isStar;
+    let post_id = this.data.post.post_id;
+    let param = {
+      post_id: post_id,
     }
+    let promise = isStar ? unStarPostPromise(param) : starPostPromise(param);
+
+    promise.then(result => {
+
+      post.isStar = !isStar
+      post.star = isStar ? post.star - 1 : post.star + 1;
+
+
+      let pageStacks = getCurrentPages();
+      let prePage = pageStacks[pageStacks.length - 2];
+      // console.log(prePage);
+      let postList = prePage.data.postList;
+      let index = postList.findIndex((value) => {  //寻找到特定的
+        if (value.post_id === that.data.post.post_id)
+          return true;
+      });
+      postList[index].star = post.star;  //同步点赞数量和状态
+      postList[index].isStar = post.isStar;
+      that.setData({
+        post: post
+      });
+      prePage.setData({
+        postList: postList
+      });
+
+    }).catch(error => {
+
+      console.log(error)
+    })
+
+
 
   }
 })

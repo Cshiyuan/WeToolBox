@@ -1,7 +1,7 @@
 const { wxRequestPromise } = require('./util');
 const {
     INSERT_ALBUM_URL,
-    GET_ALBUM_URL,
+    GET_ALBUMPHOTOS_URL,
     INSERT_PHOTO_URL,
     DELETE_PHOTO_URL,
     GET_ALBUMLIST_URL
@@ -24,13 +24,13 @@ function insertAlbumPromise(data) {
 
 
 /**
- * @description 获得相册
+ * @description 获得相册里的图片
  * @param {{album_id:String}} data 
  */
 function getAlbumPromise(data) {
 
     return wxRequestPromise({
-        url: GET_ALBUM_URL,
+        url: GET_ALBUMPHOTOS_URL,
         data: data
     }).then(response => {
 
