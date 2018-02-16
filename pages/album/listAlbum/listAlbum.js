@@ -1,7 +1,8 @@
 // pages/album/listAlbum/listAlbum.js
-const { getAlbumListPromise, insertAlbumPromise } = require('../../../utils/albumRequestPromise');
+const { getAlbumListPromise, insertAlbumPromise, deleteAlbumPromise } = require('../../../utils/albumRequestPromise');
 const { imageView2UrlFormat } = require('../../../utils/cos');
 const { timestampFormat, generateNaviParam } = require('../../../utils/util');
+const { setGlobalPromise, getGlobalPromise } = require('../../../utils/globalPromiseList');
 Page({
 
   /**
@@ -42,6 +43,38 @@ Page({
     }
   },
 
+  longpressAlbum: function (e) {
+
+    console.log('longpressAlbum', e);
+    let that = this;
+    let index = e.currentTarget.dataset.index;
+    wx.showActionSheet({
+      itemList: ['删除'],
+      itemColor: '#DC143C',
+      success: function (res) {
+
+        if (res.tapIndex === 0) {  //删除
+          deleteAlbumPromise({
+            album_id: that.data.albumList[index].album_id
+          }).then(result => {
+
+            let albumList = that.data.albumList;
+            albumList.splice(index, 1)
+            that.setData({
+              albumList: albumList
+            })
+          }).catch(err => {
+
+            console.log(err)
+          })
+        }
+      },
+      fail: function (res) {
+        console.log(res.errMsg)
+      }
+    })
+  },
+
 
 
 
@@ -56,12 +89,15 @@ Page({
     if (index !== undefined) {
 
       let url = '/pages/album/listPhoto/listPhoto';
-      let param = generateNaviParam({
-        album_id: this.data.albumList[index].album_id,
-      });
+      setGlobalPromise({
+        promise: Promise.resolve(this.data.albumList[index])
+      })
+      // let param = generateNaviParam({
+      //   album_id: this.data.albumList[index].album_id,
+      // });
 
       wx.navigateTo({
-        url: url + param
+        url: url
       });
     }
   },
@@ -71,7 +107,9 @@ Page({
   },
 
   createAlbum: function (e) {
+
     let value = e.detail.value;
+    let that = this;
     console.log('createAlbum', value);
     insertAlbumPromise({
       object_id: this.data.activity_id,
@@ -79,6 +117,15 @@ Page({
     }).then(result => {
 
       let album = result.album;
+      album.cover = imageView2UrlFormat(album.cover, {
+        width: 400,
+        height: 400
+      });
+      let albumList = that.data.albumList;
+      albumList = albumList.concat(album);
+      that.setData({
+        albumList: albumList
+      })
       // console.log(result)
     }).catch(err => {
 

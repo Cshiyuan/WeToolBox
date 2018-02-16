@@ -347,6 +347,12 @@ Page({
             }).then(result => {
 
               console.log(result);
+              let postList = that.data.postList;
+              postList.splice(index, 1);
+              that.setData({
+                postList: postList
+              })
+
             }).catch(err => {
 
               console.log(err)

@@ -4,7 +4,8 @@ const {
     GET_ALBUMPHOTOS_URL,
     INSERT_PHOTO_URL,
     DELETE_PHOTO_URL,
-    GET_ALBUMLIST_URL
+    GET_ALBUMLIST_URL,
+    DELETE_ALBUM_URL
 } = require('./config');
 
 /**
@@ -15,6 +16,17 @@ function insertAlbumPromise(data) {
 
     return wxRequestPromise({
         url: INSERT_ALBUM_URL,
+        data: data
+    }).then(response => {
+
+        return response.data;
+    });
+}
+
+function deleteAlbumPromise(data) {
+
+    return wxRequestPromise({
+        url: DELETE_ALBUM_URL,
         data: data
     }).then(response => {
 
@@ -85,6 +97,7 @@ function deletePhotoPromise(data) {
 module.exports = {
 
     getAlbumPromise: getAlbumPromise,  
+    deleteAlbumPromise: deleteAlbumPromise,
     getAlbumListPromise: getAlbumListPromise,  //获得相册列表
     insertAlbumPromise: insertAlbumPromise,    //获得相册
     insertPhotoPromise: insertPhotoPromise,  //创建相册

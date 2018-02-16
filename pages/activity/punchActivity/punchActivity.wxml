@@ -91,7 +91,7 @@
 
     <block wx:for="{{postList}}" wx:for-item="post" wx:for-index="postIndex" wx:key="post_id">
 
-        <view class="commentlistitem"  data-postindex="{{postIndex}}" bindtap="naviToDetailPost" bindlongpress="longpressPost">
+        <view class="commentlistitem" data-postindex="{{postIndex}}" bindtap="naviToDetailPost" bindlongpress="longpressPost">
             <view class="likeuser fm2">
                 <image class="useravatar" mode="aspectFill" src="{{post.avatar_url}}" style="background-size: cover; background-position: center center; background-repeat: no-repeat; background-image: url(http://imgcdn.guoku.com/avatar/50/681eb4e30ac36d9481ea421c3fc61c6b.jpg); "
                 />
@@ -131,7 +131,7 @@
 
 
 
-    <button class="wx-button_KajNFH" size="default" type="default" bindtap="naviToPublishPost">
-        写动态
-    </button>
+    <view class="wx-navigator_iOsAsd" hover-class="navigator-hover" bindtap="naviToPublishPost" style="bottom: 30px;right:14px;background-color:#2CA8A8;box-shadow: 2px 3px 10px #555;opacity:0.8;">
+        <image class="wx-image_SfQyMy" mode="aspectFit" src="/images/publish.png" style="margin:13px;" />
+    </view>
 </view>

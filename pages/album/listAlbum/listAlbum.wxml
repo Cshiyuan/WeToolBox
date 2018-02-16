@@ -10,7 +10,7 @@
     </view>
     <view class="c-minheight wx-view_tdlUCs">
         <block wx:for="{{albumList}}" wx:for-item="album" wx:for-index="albumIndex" wx:key="album_id">
-            <view class="wx-navigator_n3vQYd" hover-class="navigator-hover" data-index="{{albumIndex}}" bindtap="naviToPhotoList">
+            <view class="wx-navigator_n3vQYd" hover-class="navigator-hover" data-index="{{albumIndex}}" bindtap="naviToPhotoList" bindlongpress="longpressAlbum">
                 <image class="wx-image_HsAX8s" mode="aspectFit" src="{{album.cover}}" style="background-size: contain; background-position: center center; background-repeat: no-repeat; "
                 />
                 <view class="c-minheight wx-view_ZhdL6d">

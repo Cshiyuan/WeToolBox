@@ -20,6 +20,7 @@ const CHANGE_ACTIVITY_TYPE_URL = HOST + '/activity/changeActivityType';  //改�
 
 
 const INSERT_ALBUM_URL = HOST + '/album/insertAlbum';  //创建相册
+const DELETE_ALBUM_URL = HOST + '/album/deleteAlbum';  //删除相册
 const GET_ALBUMPHOTOS_URL = HOST + '/album/getAlbumPhotos';  //获得相册
 const GET_ALBUMLIST_URL = HOST + '/album/getAlbumList'; //获得相册列表
 const INSERT_PHOTO_URL = HOST + '/album/insertPhotoToAlbum';  //插入相册
@@ -66,6 +67,7 @@ module.exports = {
     INSERT_PHOTO_URL,
     DELETE_PHOTO_URL,
     GET_ALBUMLIST_URL,
+    DELETE_ALBUM_URL,
 
     // 帖子相关URL
     INSERT_POST_URL,

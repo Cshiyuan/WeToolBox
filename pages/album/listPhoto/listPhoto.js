@@ -2,7 +2,7 @@
 const { setGlobalPromise, getGlobalPromise } = require('../../../utils/globalPromiseList');
 const { PICGZ_URL } = require('../../../utils/config');
 const { imageView2UrlFormat } = require('../../../utils/cos')
-const { timestampFormat, generateNaviParam} = require('../../../utils/util');
+const { timestampFormat, generateNaviParam } = require('../../../utils/util');
 const { chooseAndUploadImage } = require('../../../utils/cos')
 const { insertPhotoPromise, deletePhotoPromise, getAlbumPromise } = require('../../../utils/albumRequestPromise')
 // const { getAlbumPromise } = require()
@@ -23,30 +23,35 @@ Page({
   onLoad: function (options) {
 
     let that = this;
-    console.log(options)
-    let album_id = options.album_id;
-    if (album_id) {
+    let promise = getGlobalPromise();
+    promise.then(result => {
+      console.log(result)
+      let album = result;
+      that.setData({
+        album: album
+      });
+      return getAlbumPromise({
 
-      getAlbumPromise({
+        album_id: album.album_id
+      });
 
-        album_id: album_id
-      }).then(result => {
+    }).then(result => {
 
-        console.log(result);
-        result.photos.forEach(item => {
-          item.originUrl = imageView2UrlFormat(item.url);
-          item.thumbnailUrl = imageView2UrlFormat(item.url, {
-            width: 400,
-            height: 400
-          });
-        })
-        that.setData(result);
-      }).catch(error => {
-
-        console.log(error)
+      console.log(result);
+      result.forEach(item => {
+        item.originUrl = imageView2UrlFormat(item.url);
+        item.thumbnailUrl = imageView2UrlFormat(item.url, {
+          width: 400,
+          height: 400
+        });
       })
-    }
+      that.setData({
+        photos: result
+      });
+    }).catch(error => {
 
+      console.log(error)
+    })
   },
 
   uploadImages: function (e) {
@@ -81,6 +86,23 @@ Page({
       })
       that.setData({
         photos: result
+      });
+
+      let pageStacks = getCurrentPages();
+      let prePage = pageStacks[pageStacks.length - 2];
+      let albumList = prePage.data.albumList;
+      let index = albumList.findIndex((value) => {  //寻找到特定的
+        if (value.album_id === that.data.album.album_id)
+          return true;
+      });
+      if (result.length > 0) {
+        albumList[index].cover = imageView2UrlFormat(result[0].url, {
+          width: 400,
+          height: 400
+        })
+      }
+      prePage.setData({
+        albumList: albumList
       });
 
     }).catch(err => {

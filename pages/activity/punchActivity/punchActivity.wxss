@@ -142,7 +142,7 @@
 .wx-navigator_2zAN7l{display: flex; align-items: center; width: 40px; height: 30px; text-align: center; justify-content: center; border-width: 1px; border-style: solid; border-color: rgb(227, 227, 227); border-radius: 2px; position: relative; }
 .wx-image_Sutyvo{width: 18px; height: 14px; }
 .wx-text_BYrm5g{position: absolute; right: -9px; top: -10px; font-size: 10px; width: 18px; height: 18px; line-height: 18px; border-radius: 20px; background-color: rgb(255, 0, 46); color: rgb(255, 255, 255); }
-.wx-navigator_iOsAsd{width: 60px; height: 60px; display: flex; background-color: rgba(242, 242, 242, 0.909804); border-radius: 40px; align-items: center; justify-content: center; position: fixed; bottom: 14px; right: 30px; z-index: 10; }
+.wx-navigator_iOsAsd{width: 50px; height: 50px; display: flex; background-color: rgba(242, 242, 242, 0.909804); border-radius: 40px; align-items: center; justify-content: center; position: fixed; bottom: 14px; right: 30px; z-index: 10; }
 .wx-image_SfQyMy{width: 34px; height: 34px; }
 .wx-scroll-view_PmrL5K{height: 100%; text-align: center; padding-bottom: 5px; padding-top: 150rpx; -webkit-overflow-scrolling : touch;}
 .wx-view_WjSmLp{padding: 18.75rpx 26.25rpx; display: flex; flex-wrap: wrap; justify-content: space-between; }

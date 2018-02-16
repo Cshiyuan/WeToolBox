@@ -65,7 +65,7 @@ Page({
 
     console.log('deletePhoto', e);
     let index = e.currentTarget.dataset.index;
-    if (index) {
+    if (index !== undefined) {
       let images = this.data.images;
       images.splice(index, 1);
       this.setData({
