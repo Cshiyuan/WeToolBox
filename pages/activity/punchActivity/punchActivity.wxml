@@ -72,11 +72,12 @@
         <text class="c-block wx-text_t7lDiK2">❯</text>
     </view>
     <view class="uselinklist">
-        <view class="nav_userlink" hover-class="navigator-hover">
-            <view class="likeuser">
-                <image class="useravatar" mode="aspectFill" src="http://imgcdn.guoku.com/avatar/large/e1786c6ae7425a1dff35caf9612e2130" style="background-size: cover; background-position: center center; background-repeat: no-repeat; background-image: url(http://imgcdn.guoku.com/avatar/large/e1786c6ae7425a1dff35caf9612e2130); "
-                />
-            </view>
+        <view class="nav_userlink weui-flex" hover-class="navigator-hover">
+            <block wx:for="{{albumList}}" wx:for-item="album" wx:for-index="albumIndex" wx:key="album_id">
+                <view class="likeuser " style="margin-right:6px">
+                    <image style="width:100%;height:100%;" mode="aspectFill" src="{{album.cover}}" />
+                </view>
+            </block>
         </view>
     </view>
 </view>
@@ -91,7 +92,7 @@
 
     <block wx:for="{{postList}}" wx:for-item="post" wx:for-index="postIndex" wx:key="post_id">
 
-        <view class="commentlistitem" data-postindex="{{postIndex}}" bindtap="naviToDetailPost" bindlongpress="longpressPost">
+        <view class="commentlistitem fade" data-postindex="{{postIndex}}" bindtap="naviToDetailPost" bindlongpress="longpressPost">
             <view class="likeuser fm2">
                 <image class="useravatar" mode="aspectFill" src="{{post.avatar_url}}" style="background-size: cover; background-position: center center; background-repeat: no-repeat; background-image: url(http://imgcdn.guoku.com/avatar/50/681eb4e30ac36d9481ea421c3fc61c6b.jpg); "
                 />

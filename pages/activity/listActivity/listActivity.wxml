@@ -26,7 +26,7 @@
 
                 </view>
                 <view class="example--meta meta">
-                    <view class="meta-title">{{activity.position.address}}</view>
+                    <view wx:if="{{activity.position.address}}" class="meta-title">{{activity.position.address}}</view>
                     <view class="meta-desc">{{activity.nick_name}}</view>
                 </view>
                 <view class="example--source">

@@ -9,7 +9,7 @@ const { countDown, formatTime, getDistance, wxPromisify, formatNumber, showTips 
 const { setGlobalPromise, getGlobalPromise } = require('../../../utils/globalPromiseList');
 const getLocationPromise = wxPromisify(wx.getLocation);
 const {
-  getPostListPromise,
+  getPostListAlbumListPromise,
   deletePostPromise,
   starPostPromise,
   unStarPostPromise } = require('../../../utils/postRequestPromise');
@@ -187,14 +187,14 @@ Page({
     let length = 10;
     let activity_id = activityId;  //帖子id
     let that = this;
-    getPostListPromise({
+    getPostListAlbumListPromise({
       start: start,
       length: 10,
       activity_id: activity_id
     }).then(result => {
       console.log(result);
 
-      result.forEach(post => {
+      result.postList.forEach(post => {
         post.time = timestampFormat(Date.parse(post.create_time) / 1000)
         post.thumbnailUrls = [];
         post.originUrls = [];
@@ -208,9 +208,16 @@ Page({
 
         })
       });
-      console.log(result)
+      result.albumList.forEach(album => {
+        album.cover = imageView2UrlFormat(album.cover, {
+          width: 200,
+          height: 200
+        });
+      });
+
       that.setData({
-        postList: result
+        postList: result.postList,
+        albumList: result.albumList
       });
 
     }).catch(err => {

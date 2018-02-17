@@ -1,6 +1,7 @@
 // pages/post/publishPost/publishPost.js
 const { uploadImages, imageView2UrlFormat } = require('../../../utils/cos')
 const { insertPostPromise } = require('../../../utils/postRequestPromise');
+const { showFailToast, showLoading } = require('../../../utils/util');
 const { setGlobalPromise, getGlobalPromise } = require('../../../utils/globalPromiseList');
 // const { imageView2UrlFormat } = require('../../../utils/cos')
 const util = require('../../../utils/util');
@@ -92,6 +93,9 @@ Page({
 
     let images = this.data.images;
     let that = this;
+
+    showLoading('');
+
     if (images && images.length) {
       uploadImages({
 
@@ -161,7 +165,6 @@ Page({
         // });
 
       }).catch(err => {
-
         console.log(err)
       })
     }

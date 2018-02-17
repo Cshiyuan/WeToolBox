@@ -32,6 +32,7 @@ const GET_POSTLIST_URL = HOST + '/post/getPostList';  //拉取帖子的列表
 const INSERT_COMMENT_URL = HOST + '/post/insertComment';  //创建评论
 const DELETE_COMMENT_URL = HOST + '/post/deleteComment'; //删除评论
 const GET_COMMENTLIST_URL = HOST + '/post/getCommentList'; //拉取评论
+const GET_POSTLIST_ALBUMLIST_URL = HOST + '/post/getPostListAndAlbumList'; //拉取评论和帖子
 
 const STAR_POST_URL = HOST + '/post/starPost';  //点赞帖子
 const UNSTAR_POST_URL = HOST + '/post/unStarPost'; //不点赞帖子
@@ -78,6 +79,7 @@ module.exports = {
     DELETE_COMMENT_URL,
     STAR_POST_URL,
     UNSTAR_POST_URL,
+    GET_POSTLIST_ALBUMLIST_URL,
 
     PICGZ_URL,
     CosConfig

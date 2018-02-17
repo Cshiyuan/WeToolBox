@@ -8,7 +8,19 @@ const {
     DELETE_COMMENT_URL,
     STAR_POST_URL,
     UNSTAR_POST_URL,
+    GET_POSTLIST_ALBUMLIST_URL
 } = require('./config');
+
+
+function getPostListAlbumListPromise(data) {
+    return wxRequestPromise({
+        url: GET_POSTLIST_ALBUMLIST_URL,
+        data: data
+    }).then(response => {
+
+        return response.data;
+    });
+}
 
 function starPostPromise(data) {
     return wxRequestPromise({
@@ -124,6 +136,7 @@ module.exports = {
     deleteCommentPromise: deleteCommentPromise,  //删除评论
     getCommentListPromise: getCommentListPromise,  //获得评论
 
+    getPostListAlbumListPromise: getPostListAlbumListPromise,
     starPostPromise: starPostPromise,
     unStarPostPromise: unStarPostPromise
 }

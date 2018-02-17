@@ -60,7 +60,7 @@ function wxPromisify(fn) {
 }
 
 function timestampFormat(timestamp) {
-  
+
   function zeroize(num) {
     return (String(num).length == 1 ? '0' : '') + num;
   }
@@ -109,6 +109,15 @@ function wxRequestPromise(object) {
   let dataType = object.dataType || 'json';
   let login = object.login || true;
 
+  var isComplete = false;
+
+  let timer = setTimeout(() => {
+    // if (!isComplete) {
+    showLoading('请求中');
+    // }
+  }, 3000)
+
+
   return new Promise((resolve, reject) => {
     wafer.request({
       login: login,
@@ -119,14 +128,45 @@ function wxRequestPromise(object) {
       dataType: dataType,
       success: function (response) {
 
+        wx.hideLoading();
+        // isComplete = true;
+        clearTimeout(timer);
         resolve(response);
       },
       fail: function (err) {
 
+        wx.hideLoading();
+        // isComplete = true;
+        clearTimeout(timer);
+        showFailToast();
         reject(err);
       }
     });
   });
+}
+
+
+/**
+ * @description 显示Loading
+ * @param {*} object 
+ */
+function showLoading(object) {
+
+  let title;
+  if (typeof (object) == 'string') {
+    title = object
+  }
+  if (object.title !== undefined) {
+    title = object.title;
+  }
+
+  wx.showLoading({
+    title: title,
+  })
+
+  // setTimeout(function () {
+  //   wx.hideLoading()
+  // }, 8000)
 }
 
 /**
@@ -227,6 +267,7 @@ function showTips(title, content) {
 
 module.exports = {
 
+  showLoading: showLoading,
   showSuccessToast: showSuccessToast,
   showFailToast: showFailToast,
   showTips: showTips,

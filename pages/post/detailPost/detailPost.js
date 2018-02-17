@@ -54,6 +54,24 @@ Page({
     });
   },
 
+  /**
+   * 图片预览
+   */
+  previewImage: function (e) {
+
+    console.log('previewImages', e)
+    let imageIndex = e.currentTarget.dataset.imageindex;
+    if (imageIndex !== undefined) {
+
+      let current = this.data.post.originUrls[imageIndex];
+      wx.previewImage({
+        current: current, // 当前显示图片的http链接
+        urls: this.data.post.originUrls // 需要预览的图片http链接列表
+      })
+    }
+
+  },
+
   commitComment: function (e) {
 
     console.log('commitComment', e);

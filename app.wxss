@@ -1,23 +1,26 @@
 /**app.wxss**/
-@import './libs/style/weui.wxss';
 
-page{
+@import './libs/style/weui.wxss';
+page {
     background-color: #F8F8F8;
     font-size: 16px;
-    font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
+    font-family: -apple-system-font, Helvetica Neue, Helvetica, sans-serif;
 }
+
 .page__hd {
     padding: 40px;
 }
+
 .page__bd {
     padding-bottom: 40px;
 }
+
 .page__bd_spacing {
     padding-left: 15px;
     padding-right: 15px;
 }
 
-.page__ft{
+.page__ft {
     padding-bottom: 10px;
     text-align: center;
 }
@@ -33,4 +36,41 @@ page{
     color: #888888;
     text-align: left;
     font-size: 14px;
+}
+
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+    }
+    /*初始状态 透明度为0*/
+    40% {
+        opacity: 0.6;
+    }
+    /*过渡状态 透明度为0*/
+    100% {
+        opacity: 1;
+    }
+    /*结束状态 透明度为1*/
+}
+
+@-webkit-keyframes fade-in {
+    /*针对webkit内核*/
+    0% {
+        opacity: 0;
+    }
+    40% {
+        opacity: 0.6;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.fade {
+    animation: fade-in;
+    /*动画名称*/
+    animation-duration: 0.8s;
+    /*动画持续时间*/
+    -webkit-animation: fade-in 0.8s;
+    /*针对webkit内核*/
 }

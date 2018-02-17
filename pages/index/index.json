@@ -1,5 +1,5 @@
 {
-    "navigationBarTitleText": "微工具盒",
+    "navigationBarTitleText": "活动日记本",
     "usingComponents": {
         "topTips": "/component/topTips/topTips",
         "noticeBar": "/component/noticeBar/noticeBar"
