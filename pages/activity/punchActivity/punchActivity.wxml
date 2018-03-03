@@ -66,7 +66,7 @@
     <button wx:if="{{activity.isPunch}}" class="weui-btn " disabled="true" type="warn" bindtap="punchActivity">已打卡</button>
 </view>
 
-<view class="likelist">
+<view wx:if="{{albumList.length > 0}}" class="likelist">
     <view class="nav_likelistmore" hover-class="navigator-hover" bindtap="naviToAlbumList" style="margin-bottom:0px;">
         <text class="c-block wx-text_t7lDiK">相册</text>
         <text class="c-block wx-text_t7lDiK2">❯</text>
@@ -83,8 +83,8 @@
 
 
 
-<view class="commentlistwrap" style="border-top:1px solid rgb(237, 237, 237);">
-    <view class="wx-view_8NFuqw">
+<view  class="commentlistwrap" style="border-top:1px solid rgb(237, 237, 237);">
+    <view wx:if="{{postList.length > 0}}" class="wx-view_8NFuqw">
         <text class="c-block wx-text_t7lDiK">动态</text>
     </view>
 

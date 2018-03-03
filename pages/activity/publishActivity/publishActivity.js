@@ -1,6 +1,7 @@
 // pages/activity/publishActivity/publishActivity.js
 const util = require('../../../utils/util');
 const { insertActivityPromise } = require('../../../utils/activityRequestPromise');
+const { setGlobalPromise, getGlobalPromise } = require('../../../utils/globalPromiseList');
 
 
 Page({
@@ -25,7 +26,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+
     let myDateString = util.formatTime(new Date());
     let toDay = myDateString.split(' ')[0].replace(new RegExp('/', "gm"), '-');
     let nowTime = myDateString.split(' ')[1].substring(0, 5);
@@ -152,8 +153,13 @@ Page({
 
         let url = '/pages/activity/punchActivity/punchActivity';
         let param = util.generateNaviParam({
-          activity_id: result.activity.activity_id
+          activity_id: result.activity.activity_id,
+          fromCreate: true
         });
+
+        setGlobalPromise({
+          promise: Promise.resolve(result)
+        })
 
         wx.redirectTo({
           url: url + param

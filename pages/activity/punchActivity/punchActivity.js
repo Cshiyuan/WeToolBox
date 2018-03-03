@@ -69,10 +69,91 @@ Page({
 
     console.log(options);
     let that = this;
-    if (options.activity_id) {
-      this.setData(options)
-      this.refreshActivityById(options.activity_id);
-      this.refreshPostList(options.activity_id);
+
+    if (options.fromCreate) {
+      let promise = getGlobalPromise();
+      promise.then(result => {
+
+        console.log(result);
+        if (!result.activity) {
+          wx.redirectTo({
+            url: '/pages/emptyTips/emptyTips'
+          });
+        }
+        let time = result.activity.date + ' ' + result.activity.time + ':00';
+        let position = result.activity.position === '' ? {} : JSON.parse(result.activity.position);
+        console.log(time.replace(/-/g, "/"))
+        let date = new Date(time.replace(/-/g, "/"));
+
+        console.log('start time is ' + date);
+
+        let startTimeStr = formatNumber(date.getFullYear()) + '年' + formatNumber((date.getMonth() + 1)) + '月'
+          + formatNumber(date.getDate()) + '日' + ' ' + formatNumber(date.getHours()) + ':' + formatNumber(date.getMinutes())
+
+        if (position.lat && position.lng) {
+
+          let circle = that.data.circles[0];
+          let marker = that.data.markers[0];
+          circle.latitude = position.lat;
+          circle.longitude = position.lng;
+          circle.radius = position.radius;
+          marker.latitude = position.lat;
+          marker.longitude = position.lng;
+          marker.callout.content = position.address;
+          marker.label.content = '(' + position.lat.toFixed(3) + ',' + position.lng.toFixed(3) + ')';
+          that.setData({
+            circles: [circle],
+            markers: [marker],
+          });
+        }
+
+        that.setData({
+          activity: result.activity,
+          startTimeStr: startTimeStr,
+          position: position,
+          isOwner: result.isOwner,
+        });
+
+
+        let countDown = date.getTime() - Date.now();
+        if (countDown <= 0) {//距离结束时间小于0，说明已经开始，返回空串
+          // that.toptips.showTopTips('活动已经开始了哦。');
+          that.setData({
+            isAlreadyStart: true
+          });
+        } else if (date) {  //开始计时器 
+          // that.toptips.showTopTips('活动还没开始，你不能打卡哦。');
+
+          let timer = new wxTimer({
+            endTime: date,
+            complete: function () {
+              console.log("倒计时结束了");
+
+              that.setData({
+                isAlreadyStart: true
+              });
+            }
+          });
+          that.timer = timer;
+          timer.start(that);
+        }
+        wx.stopPullDownRefresh();
+        return that.judgeMapScale(); //调整地图scale
+
+
+      }).catch(err => {
+        wx.stopPullDownRefresh();
+        console.log('catch err is ' + err);
+      });
+      
+    } else {
+
+      if (options.activity_id) {
+
+        this.setData(options)
+        this.refreshActivityById(options.activity_id);
+        this.refreshPostList(options.activity_id);
+      }
     }
 
     //新建百度地图对象
@@ -429,7 +510,7 @@ Page({
   },
 
   /**
-   * 跳转到帖子发布器
+   * 跳转到帖子详情页
    */
   naviToDetailPost: function (e) {
 
