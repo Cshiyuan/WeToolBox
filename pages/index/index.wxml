@@ -16,12 +16,11 @@
 
 
 <view class="index-bd">
-  <view>
-    <view class="example-menu__item" hover-class="example-hover" data-type="toCreateActivity" bindtap="naviTo">
-      <view class="example-menu__head">
-        <view class="example-menu__title">创建活动</view>
-        <image class="example-menu__image" src="/images/create.png"></image>
-      </view>
+
+  <view class="example-menu__item" hover-class="example-hover" data-type="toCreateActivity" bindtap="naviTo">
+    <view class="example-menu__head">
+      <view class="example-menu__title" style="font-weight:bold;">创建活动</view>
+      <image class="example-menu__image" src="/images/create.png"></image>
     </view>
   </view>
 
@@ -29,7 +28,7 @@
   <view bindtap="lookGroup">
     <view class="example-menu__item" hover-class="example-hover">
       <view class="example-menu__head ">
-        <view class="example-menu__title">获得帮助</view>
+        <view class="example-menu__title" style="font-weight:bold;">获得帮助</view>
         <image class="example-menu__image" src="/images/help.png"></image>
       </view>
     </view>

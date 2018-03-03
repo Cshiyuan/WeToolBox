@@ -18,7 +18,7 @@
         <view class="wx-navigator_iOsAsd" hover-class="navigator-hover" data-type='false' bindtap="changeToDeleteStatus" style="bottom:94px;box-shadow: 2px 3px 10px #555;opacity:0.8;">
             <image class="wx-image_SfQyMy" mode="aspectFit" src="/images/cancel.png" />
         </view>
-        <view class="wx-navigator_iOsAsd" hover-class="navigator-hover" bindtap="commitDelete" style='bottom:80px;box-shadow: 2px 3px 10px #555;opacity:0.8;'>
+        <view class="wx-navigator_iOsAsd" hover-class="navigator-hover" bindtap="commitDelete" style='bottom:30px;box-shadow: 2px 3px 10px #555;opacity:0.8;'>
             <image class="wx-image_SfQyMy" mode="aspectFit" src="/images/commit.png" />
         </view>
     </block>

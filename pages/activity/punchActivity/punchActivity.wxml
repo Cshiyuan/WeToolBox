@@ -11,7 +11,7 @@
     <view class="weui-panel__bd">
         <view class="weui-media-box weui-media-box_text">
             <view class="weui-media-box__title weui-media-box__title_in-text">
-                <text selectable>
+                <text selectable style="font-weight:bold;">
                     {{activity.title}}
                 </text>
             </view>
@@ -21,8 +21,8 @@
                 </text>
             </view>
             <view class="weui-media-box__info">
-                <view class="weui-media-box__info__meta">开始时间：{{startTimeStr}}</view>
-                <view wx:if="{{position.radius}}" class="weui-media-box__info__meta">活动打卡范围：{{position.radius}} 米</view>
+                <view class="weui-media-box__info__meta" style="font-weight:bold;">开始时间：{{startTimeStr}}</view>
+                <view wx:if="{{position.radius}}" class="weui-media-box__info__meta" style="font-weight:bold;">活动打卡范围：{{position.radius}} 米</view>
             </view>
         </view>
     </view>
@@ -67,18 +67,16 @@
 </view>
 
 <view class="likelist">
-    <view class="nav_likelistmore" hover-class="navigator-hover" bindtap="naviToAlbumList">
+    <view class="nav_likelistmore" hover-class="navigator-hover" bindtap="naviToAlbumList" style="margin-bottom:0px;">
         <text class="c-block wx-text_t7lDiK">相册</text>
         <text class="c-block wx-text_t7lDiK2">❯</text>
     </view>
-    <view class="uselinklist">
-        <view class="nav_userlink weui-flex" hover-class="navigator-hover">
-            <block wx:for="{{albumList}}" wx:for-item="album" wx:for-index="albumIndex" wx:key="album_id">
-                <view class="likeuser " style="margin-right:6px">
-                    <image style="width:100%;height:100%;" mode="aspectFill" src="{{album.cover}}" />
-                </view>
-            </block>
-        </view>
+    <view class="uselinklist nav_userlink weui-flex" style="flex-wrap: wrap;flex-direction: row;justify-content: flex-start;">
+        <block wx:for="{{albumList}}" wx:for-item="album" wx:for-index="albumIndex" wx:key="album_id">
+            <view class="likeuser " style="margin-right:10px;margin-top:10px" hover-class="navigator-hover">
+                <image style="width:100%;height:100%;" mode="aspectFill" src="{{album.cover}}" />
+            </view>
+        </block>
     </view>
 </view>
 
@@ -91,7 +89,6 @@
     </view>
 
     <block wx:for="{{postList}}" wx:for-item="post" wx:for-index="postIndex" wx:key="post_id">
-
         <view class="commentlistitem fade" data-postindex="{{postIndex}}" bindtap="naviToDetailPost" bindlongpress="longpressPost">
             <view class="likeuser fm2">
                 <image class="useravatar" mode="aspectFill" src="{{post.avatar_url}}" style="background-size: cover; background-position: center center; background-repeat: no-repeat; background-image: url(http://imgcdn.guoku.com/avatar/50/681eb4e30ac36d9481ea421c3fc61c6b.jpg); "
@@ -123,15 +120,26 @@
                     </view>
                     <text class="c-block wx-text_9Wn0Di" style="flex-grow:1;text-align:right;margin:auto;">{{post.time}}</text>
                 </view>
-
             </view>
         </view>
-
     </block>
 
+    <!-- 加载的底部条 -->
+    <view wx:if="{{loading}}" class="weui-loadmore">
+        <view class="weui-loading"></view>
+        <view class="weui-loadmore__tips" style="background-color:transparent">正在加载</view>
+    </view>
+
+    <view wx:if="{{!loading && postList.length === 0}}" class="weui-loadmore weui-loadmore_line">
+        <view class="weui-loadmore__tips weui-loadmore__tips_in-line" style="background-color:transparent">暂无数据</view>
+    </view>
+
+    <view wx:if="{{!loading && postList.length !== 0}}" class="weui-loadmore weui-loadmore_line weui-loadmore_dot">
+        <view class="weui-loadmore__tips weui-loadmore__tips_in-line weui-loadmore__tips_in-dot" style="background-color:transparent"></view>
+    </view>
 
 
-
+    <!-- 发布按钮 -->
     <view class="wx-navigator_iOsAsd" hover-class="navigator-hover" bindtap="naviToPublishPost" style="bottom: 30px;right:14px;background-color:#2CA8A8;box-shadow: 2px 3px 10px #555;opacity:0.8;">
         <image class="wx-image_SfQyMy" mode="aspectFit" src="/images/publish.png" style="margin:13px;" />
     </view>

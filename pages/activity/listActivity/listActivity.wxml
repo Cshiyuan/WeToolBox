@@ -16,17 +16,14 @@
                                 </view>
                             </view>
                         </view>
-
                         <view class="weui-media-box weui-media-box_text">
-                            <view class="weui-media-box__title weui-media-box__title_in-text">{{activity.title}}</view>
+                            <view class="weui-media-box__title weui-media-box__title_in-text" style="font-weight:bold;">{{activity.title}}</view>
                             <view class="weui-media-box__desc">{{activity.description}}</view>
                         </view>
-
                     </view>
-
                 </view>
                 <view class="example--meta meta">
-                    <view wx:if="{{activity.position.address}}" class="meta-title">{{activity.position.address}}</view>
+                    <view wx:if="{{activity.position.address}}" class="meta-title" style="font-weight:bold;">{{activity.position.address}}</view>
                     <view class="meta-desc">{{activity.nick_name}}</view>
                 </view>
                 <view class="example--source">
@@ -41,13 +38,13 @@
 
 <view wx:if="{{loading}}" class="weui-loadmore">
     <view class="weui-loading"></view>
-    <view class="weui-loadmore__tips">正在加载</view>
+    <view class="weui-loadmore__tips" style="background-color:transparent">正在加载</view>
 </view>
 
 <view wx:if="{{!loading && activityList.length === 0}}" class="weui-loadmore weui-loadmore_line">
-    <view class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无数据</view>
+    <view class="weui-loadmore__tips weui-loadmore__tips_in-line" style="background-color:transparent">暂无数据</view>
 </view>
 
 <view wx:if="{{!loading && activityList.length !== 0}}" class="weui-loadmore weui-loadmore_line weui-loadmore_dot">
-    <view class="weui-loadmore__tips weui-loadmore__tips_in-line weui-loadmore__tips_in-dot"></view>
+    <view class="weui-loadmore__tips weui-loadmore__tips_in-line weui-loadmore__tips_in-dot"  style="background-color:transparent"></view>
 </view>

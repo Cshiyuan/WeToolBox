@@ -125,7 +125,23 @@ Page({
       albumList = albumList.concat(album);
       that.setData({
         albumList: albumList
-      })
+      });
+
+      let pageStacks = getCurrentPages();
+      let prePage = pageStacks[pageStacks.length - 2];
+      // console.log(prePage);
+      // let albumList = prePage.data.albumList;
+      // let index = albumList.findIndex((value) => {  //寻找到特定的
+      //   if (value.post_id === that.data.post.post_id)
+      //     return true;
+      // });
+      // postList[index].comment = albumList[index].comment + 1;
+      prePage.setData({
+        albumList: albumList
+      });
+
+
+
       // console.log(result)
     }).catch(err => {
 

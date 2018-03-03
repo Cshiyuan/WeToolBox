@@ -75,22 +75,7 @@
 .wx-view_KedDbI{padding: 37.5rpx; padding-top: 37.5rpx; }
 .wx-text_6zTs4l{font-size: 14px; color: rgb(110, 110, 110); text-align: justify; line-height: 1.7em; }
 
-@keyframes fade-in {  
-  0% {opacity: 0;}/*初始状态 透明度为0*/  
-  40% {opacity: 0.6;}/*过渡状态 透明度为0*/  
-  100% {opacity: 1;}/*结束状态 透明度为1*/  
-}  
-@-webkit-keyframes fade-in {/*针对webkit内核*/  
-  0% {opacity: 0;}  
-  40% {opacity: 0.6;}  
-  100% {opacity: 1;}  
-}  
 
-.fade {    
-  animation: fade-in;/*动画名称*/  
-  animation-duration: 0.8s;/*动画持续时间*/  
-  -webkit-animation:fade-in 0.8s;/*针对webkit内核*/  
-}  
 
 
 .heart {

@@ -55,7 +55,11 @@ Page({
     isOwner: false,
     commitLoading: false,
     myLocation: {},
-    postList: []
+
+    postList: [],
+    loading: false,
+    end: 0,   //请求参数
+    length: 5
   },
 
   /**
@@ -66,6 +70,7 @@ Page({
     console.log(options);
     let that = this;
     if (options.activity_id) {
+      this.setData(options)
       this.refreshActivityById(options.activity_id);
       this.refreshPostList(options.activity_id);
     }
@@ -183,13 +188,14 @@ Page({
    */
   refreshPostList: function (activityId) {
 
-    let start = 0;
-    let length = 10;
     let activity_id = activityId;  //帖子id
     let that = this;
+    this.setData({
+      loading: true
+    });
     getPostListAlbumListPromise({
-      start: start,
-      length: 10,
+      start: this.data.end,  //分页查询
+      length: this.data.length,
       activity_id: activity_id
     }).then(result => {
       console.log(result);
@@ -210,14 +216,17 @@ Page({
       });
       result.albumList.forEach(album => {
         album.cover = imageView2UrlFormat(album.cover, {
-          width: 200,
-          height: 200
+          width: 100,
+          height: 100
         });
       });
-
+      // result.albumList = result.albumList.concat(result.albumList);  注释掉测试代码
+      // that.data.activityList.concat(array),
       that.setData({
-        postList: result.postList,
-        albumList: result.albumList
+        postList: that.data.postList.concat(result.postList),
+        albumList: result.albumList,
+        end: that.data.end + that.data.length,
+        loading: false
       });
 
     }).catch(err => {
@@ -338,6 +347,9 @@ Page({
     });
   },
 
+  /**
+   * 长按帖子事件响应
+   */
   longpressPost: function (e) {
     console.log('longpressPost', e);
     let index = e.currentTarget.dataset.postindex;
@@ -449,7 +461,6 @@ Page({
     });
   },
 
-
   /**
    * 报名活动
    */
@@ -528,6 +539,26 @@ Page({
    */
   onPullDownRefresh: function () {
     this.refreshActivityById(this.data.activity.activity_id);
+  },
+
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+
+    console.log('onReachBottom!');
+    if (this.data.activity_id) {
+      this.refreshPostList(this.data.activity_id);
+    }
+
+    // if (this.data.title === '我创建的活动') {
+    //   this.refreshListForMyActivity();
+    // }
+    // if (this.data.title === '我参与的活动') {
+    //   this.refreshListForMySignUpActivity();
+    // }
+
   },
 
   /**

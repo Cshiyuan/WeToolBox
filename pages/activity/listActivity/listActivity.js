@@ -11,7 +11,7 @@ Page({
     activityList: [],
     loading: false,
     end: 0,   //请求参数
-    length: 10,
+    length: 5,
     isCreateList: false
   },
 
@@ -208,13 +208,13 @@ Page({
 
       refreshPromise = getUserActivityListPromise({
         start: 0,  //分页查询
-        length: 10
+        length: 5
       });
     } else {
 
       refreshPromise = getUserSignUpActivityListPromise({
         start: 0,  //分页查询
-        length: 10
+        length: 5
       });
     }
 
