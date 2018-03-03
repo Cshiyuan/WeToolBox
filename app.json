@@ -30,7 +30,8 @@
     "pages/album/createAlbum/createAlbum",
     "pages/post/detailPost/detailPost",
     "pages/post/publishPost/publishPost",
-    "pages/album/listAlbum/listAlbum"
+    "pages/album/listAlbum/listAlbum",
+    "pages/group/indexGroup/indexGroup"
   ],
   "window": {
     "backgroundTextStyle": "light",
