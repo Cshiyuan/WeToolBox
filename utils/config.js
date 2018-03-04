@@ -37,6 +37,9 @@ const GET_POSTLIST_ALBUMLIST_URL = HOST + '/post/getPostListAndAlbumList'; //拉
 const STAR_POST_URL = HOST + '/post/starPost';  //点赞帖子
 const UNSTAR_POST_URL = HOST + '/post/unStarPost'; //不点赞帖子
 
+
+const DECRYDATA_URL = HOST + '/group/decryptData';  //解密shareticket
+
 const PICGZ_URL = 'http://wetoolbox-1252042156.picgz.myqcloud.com' //处理图片的URL
 
 const CosConfig = {
@@ -80,6 +83,8 @@ module.exports = {
     STAR_POST_URL,
     UNSTAR_POST_URL,
     GET_POSTLIST_ALBUMLIST_URL,
+
+    DECRYDATA_URL,
 
     PICGZ_URL,
     CosConfig

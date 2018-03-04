@@ -71,13 +71,30 @@ Page({
     });
   },
 
+
+  openGroup: function () {
+
+    wx.navigateTo({
+      url: '/pages/group/indexGroup/indexGroup'
+    });
+  },
+
+  openSetting: function (e) {
+
+    wx.openSetting({
+      success: (res) => {
+        console.log(res);
+        /*
+         * res.authSetting = {
+         *   "scope.userInfo": true,
+         *   "scope.userLocation": true
+         * }
+         */
+      }
+    })
+  },
+
   naviTo: function (e) {
-
-    // chooseAndUploadImage().then(results => {
-
-    //   console.log(results);
-    // });
-    // return
 
     console.log(e);
     let type = e.currentTarget.dataset.type;

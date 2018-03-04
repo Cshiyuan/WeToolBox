@@ -2,6 +2,7 @@
 const bmap = require('../../../libs/bmap-wx');
 const { wxPromisify, showTips } = require('../../../utils/util');
 const getLocationPromise = wxPromisify(wx.getLocation);
+const { setGlobalPromise, getGlobalPromise } = require('../../../utils/globalPromiseList');
 
 
 Page({

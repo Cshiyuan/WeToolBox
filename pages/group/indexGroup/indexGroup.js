@@ -1,66 +1,302 @@
 // pages/group/indexGroup.js
+const { wxPromisify } = require('../../../utils/util');
+const { decryptDataPromise } = require('../../../utils/groupRequestPromise');
+const {
+  getPostListAlbumListPromise,
+  deletePostPromise,
+  starPostPromise,
+  unStarPostPromise } = require('../../../utils/postRequestPromise');
+const { imageView2UrlFormat } = require('../../../utils/cos')
+const { timestampFormat, generateNaviParam } = require('../../../utils/util');
+const { setGlobalPromise, getGlobalPromise } = require('../../../utils/globalPromiseList');
+const getShareInfoPromise = wxPromisify(wx.getShareInfo);
+
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-  
+    openGId: '',
+    postList: [],
+    loading: false,
+    end: 0,   //请求参数
+    length: 5
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-  
+
+    console.log('indexGroup onLoad', options)
+    let context = getApp().globalData.context;
+    let that = this;
+    console.log('context is ', context);
+    if (context && context.scene === 1044) {
+      //符合条件的
+      // console.log('context is ', context);
+      let shareTicket = context.shareTicket;
+      getShareInfoPromise({
+
+        shareTicket: shareTicket
+      }).then(result => {
+
+        console.log('getShareInfoPromise result is ', result);
+        return decryptDataPromise({
+          encryptedData: result.encryptedData,
+          iv: result.iv
+        })
+
+      }).then(result => {
+
+        console.log('decryptDataPromise result is ', result);
+        if (result.openGId) {
+          that.setData({
+            openGId: result.openGId
+          });
+          that.refreshPostList(result.openGId);
+        }
+      });
+
+
+    } else {
+
+    }
+
+    wx.updateShareMenu({
+      withShareTicket: true
+    });
+    console.log(options);
+
   },
 
+
   /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-  
+ * 刷新动态列表
+ */
+  refreshPostList: function (openGId) {
+
+    // let openGId = openGId;  //帖子id
+    let that = this;
+    this.setData({
+      loading: true
+    });
+    getPostListAlbumListPromise({
+      start: this.data.end,  //分页查询
+      length: this.data.length,
+      object_id: openGId
+    }).then(result => {
+      console.log(result);
+
+      result.postList.forEach(post => {
+        post.time = timestampFormat(Date.parse(post.create_time) / 1000)
+        post.thumbnailUrls = [];
+        post.originUrls = [];
+        post.images.forEach(item => {
+
+          post.thumbnailUrls.push(imageView2UrlFormat(item, {
+            width: 200,
+            height: 200
+          }));
+          post.originUrls.push(imageView2UrlFormat(item))
+
+        })
+      });
+      result.albumList.forEach(album => {
+        album.cover = imageView2UrlFormat(album.cover, {
+          width: 100,
+          height: 100
+        });
+      });
+      // result.albumList = result.albumList.concat(result.albumList);  注释掉测试代码
+      // that.data.activityList.concat(array),
+      that.setData({
+        postList: that.data.postList.concat(result.postList),
+        albumList: result.albumList,
+        end: that.data.end + that.data.length,
+        loading: false
+      });
+
+    }).catch(err => {
+      console.log(err);
+    });
+
   },
+
+
+  /**
+ * 跳转到帖子发布器
+ */
+  naviToPublishPost: function (e) {
+
+    let url = '/pages/post/publishPost/publishPost';
+    let param = generateNaviParam({
+      object_id: this.data.openGId,
+    });
+
+    wx.navigateTo({
+      url: url + param
+    });
+  },
+
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
-  
+  onShow: function (options) {
+    console.log('indexGroup onShow', options);
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-  
-  },
 
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-  
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-  
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-  
-  },
 
   /**
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-  
-  }
+
+  },
+
+
+  /**
+   * 图片预览
+   */
+  previewImage: function (e) {
+
+    console.log('previewImages', e)
+    let postIndex = e.currentTarget.dataset.postindex;
+    let imageIndex = e.currentTarget.dataset.imageindex;
+    if (postIndex !== undefined && imageIndex !== undefined) {
+      let post = this.data.postList[postIndex];
+      // let image = this.data.images[index];
+      let current = post.originUrls[imageIndex];
+      wx.previewImage({
+        current: current, // 当前显示图片的http链接
+        urls: post.originUrls // 需要预览的图片http链接列表
+      })
+    }
+  },
+
+
+  /**
+   * 点赞帖子
+   */
+  tapStar: function (e) {
+
+    console.log(e);
+    let that = this;
+    let index = e.currentTarget.dataset.postindex;
+    if (index !== undefined) {
+
+      let postList = this.data.postList;
+      let isStar = this.data.postList[index].isStar;
+      let post_id = this.data.postList[index].post_id;
+      let param = {
+        post_id: post_id,
+      }
+      let promise = isStar ? unStarPostPromise(param) : starPostPromise(param);
+
+      promise.then(result => {
+
+        postList[index].isStar = !isStar
+        postList[index].star = isStar ? postList[index].star - 1 : postList[index].star + 1;
+        that.setData({
+          postList: postList
+        });
+        console.log(result);
+
+      }).catch(error => {
+
+        console.log(error)
+      })
+    }
+
+  },
+
+
+  /**
+   * 长按帖子事件响应
+   */
+  longpressPost: function (e) {
+    console.log('longpressPost', e);
+    let index = e.currentTarget.dataset.postindex;
+    if (index !== undefined) {
+      let that = this;
+      wx.showActionSheet({
+        itemList: ['删除'],
+        itemColor: '#DC143C',
+        success: function (res) {
+
+          if (res.tapIndex === 0) {  //删除
+            deletePostPromise({
+              post_id: that.data.postList[index].post_id
+            }).then(result => {
+
+              console.log(result);
+              let postList = that.data.postList;
+              postList.splice(index, 1);
+              that.setData({
+                postList: postList
+              })
+
+            }).catch(err => {
+
+              console.log(err)
+            })
+          }
+        },
+        fail: function (res) {
+          console.log(res.errMsg)
+        }
+      })
+    }
+
+  },
+
+
+  /**
+ * 页面上拉触底事件的处理函数
+ */
+  onReachBottom: function () {
+
+    console.log('onReachBottom!');
+    if (this.data.openGId) {
+      this.refreshPostList(this.data.openGId);
+    }
+  },
+
+  /**
+   * 跳转到帖子详情页
+   */
+  naviToDetailPost: function (e) {
+
+    console.log('naviToDetailPost ', e);
+    let postIndex = e.currentTarget.dataset.postindex;
+    let post = this.data.postList[postIndex];
+    console.log(post)
+    setGlobalPromise({
+      promise: Promise.resolve(post)
+    })
+
+    wx.navigateTo({
+      url: '/pages/post/detailPost/detailPost'
+    });
+  },
+
+
+  /**
+   * 跳转到相册界面 
+   */
+  naviToAlbumList: function (e) {
+
+    let url = '/pages/album/listAlbum/listAlbum';
+    let param = generateNaviParam({
+      activity_id: this.data.openGId,
+    });
+
+    wx.navigateTo({
+      url: url + param
+    });
+  },
 })

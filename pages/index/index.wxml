@@ -25,6 +25,25 @@
   </view>
 
 
+  <view bindtap="openGroup">
+    <view class="example-menu__item" hover-class="example-hover">
+      <view class="example-menu__head ">
+        <view class="example-menu__title" style="font-weight:bold;">打开群空间</view>
+        <image class="example-menu__image" src="/images/group.png"></image>
+      </view>
+    </view>
+  </view>
+
+  <view bindtap="openSetting">
+    <view class="example-menu__item" hover-class="example-hover">
+      <view class="example-menu__head ">
+        <view class="example-menu__title" style="font-weight:bold;">权限设置</view>
+        <image class="example-menu__image" src="/images/setting.png"></image>
+      </view>
+    </view>
+  </view>
+
+
   <view bindtap="lookGroup">
     <view class="example-menu__item" hover-class="example-hover">
       <view class="example-menu__head ">

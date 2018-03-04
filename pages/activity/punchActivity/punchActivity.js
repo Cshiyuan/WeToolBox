@@ -277,7 +277,7 @@ Page({
     getPostListAlbumListPromise({
       start: this.data.end,  //分页查询
       length: this.data.length,
-      activity_id: activity_id
+      object_id: activity_id
     }).then(result => {
       console.log(result);
 
@@ -501,7 +501,7 @@ Page({
 
     let url = '/pages/post/publishPost/publishPost';
     let param = generateNaviParam({
-      activity_id: this.data.activity.activity_id,
+      object_id: this.data.activity.activity_id,
     });
 
     wx.navigateTo({

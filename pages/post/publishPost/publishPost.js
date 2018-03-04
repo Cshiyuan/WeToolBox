@@ -22,10 +22,10 @@ Page({
    */
   onLoad: function (options) {
 
-    let activity_id = options.activity_id;
-    if (activity_id) {
+    let object_id = options.object_id;
+    if (object_id) {
       this.setData({
-        activity_id: activity_id,
+        object_id: object_id,
       });
     }
 
@@ -112,7 +112,7 @@ Page({
           });
         })
         return insertPostPromise({   //提交服务器
-          activity_id: that.data.activity_id,
+          object_id: that.data.object_id,
           content: that.data.content,
           photos: photos
         })

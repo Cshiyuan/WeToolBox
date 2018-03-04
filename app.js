@@ -1,6 +1,10 @@
 //app.js
 App({
-  onLaunch: function () {
+
+  onLaunch: function (options) {
+
+
+    console.log('app onlaunch', options);
     // 展示本地存储能力
     // var logs = wx.getStorageSync('logs') || []
     // logs.unshift(Date.now())
@@ -33,8 +37,21 @@ App({
       }
     });
 
-    
+
   },
+
+
+  onShow: function (options) {
+    this.globalData.context = options;
+    console.log('app onshow', options);
+  },
+
+
+  onHide: function (options) {
+    console.log('app onHide', options);
+    delete this.globalData.context  //删除属性
+  },
+
   globalData: {
     userInfo: null
   }

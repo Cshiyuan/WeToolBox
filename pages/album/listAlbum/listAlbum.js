@@ -23,7 +23,7 @@ Page({
       });
       let that = this;
       getAlbumListPromise({
-        activity_id: activity_id
+        object_id: activity_id
       }).then(result => {
 
         result.forEach(item => {
@@ -43,6 +43,9 @@ Page({
     }
   },
 
+  /**
+   * 相册长按删除
+   */
   longpressAlbum: function (e) {
 
     console.log('longpressAlbum', e);
@@ -75,10 +78,6 @@ Page({
     })
   },
 
-
-
-
-
   /**
    * 跳转到相册详情页
    */
@@ -102,10 +101,16 @@ Page({
     }
   },
 
+  /**
+   * 显示输入窗口
+   */
   showInputDialog: function (e) {
     this.inputDialog.show();
   },
 
+  /**
+   * 创建相册
+   */
   createAlbum: function (e) {
 
     let value = e.detail.value;
@@ -140,9 +145,6 @@ Page({
         albumList: albumList
       });
 
-
-
-      // console.log(result)
     }).catch(err => {
 
       console.log(err)
@@ -159,45 +161,4 @@ Page({
     // this.asynSwitch.setSwitchStatus(this.data.isStopPunch);
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })
