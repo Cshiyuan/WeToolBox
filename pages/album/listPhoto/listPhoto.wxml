@@ -15,35 +15,44 @@
         </view>
     </block>
     <block wx:if="{{deleteStatus}}">
-        <view class="wx-navigator_iOsAsd" hover-class="navigator-hover" data-type='false' bindtap="changeToDeleteStatus" style="bottom:94px;box-shadow: 2px 3px 10px #555;opacity:0.8;">
+        <view style="display:flex;background-color:white;position:fixed;width:750rpx;height:40px;z-index:20;bottom:0;border-top:1px solid rgb(237, 237, 237);justify-content:space-between;opacity:0.95;align-items:center;">
+            <view data-type='false' catchtap="changeToDeleteStatus" style="padding:5px;color:rgb(37,198,252);font-size: 14px;font-weight:bolder">
+                取消
+            </view>
+            <view style="padding:5px;color:gray;font-size: 14px;font-weight:bolder">
+                已选中{{deletePhotoIds.length}}项
+            </view>
+            <view catchtap="commitDelete" style="padding:5px;color:rgb(244,54,54);font-size: 14px;font-weight:bolder">
+                删除
+            </view>
+        </view>
+        <!-- <view class="wx-navigator_iOsAsd" hover-class="navigator-hover" data-type='false' bindtap="changeToDeleteStatus" style="bottom:94px;box-shadow: 2px 3px 10px #555;opacity:0.8;">
             <image class="wx-image_SfQyMy" mode="aspectFit" src="/images/cancel.png" />
         </view>
         <view class="wx-navigator_iOsAsd" hover-class="navigator-hover" bindtap="commitDelete" style='bottom:30px;box-shadow: 2px 3px 10px #555;opacity:0.8;'>
             <image class="wx-image_SfQyMy" mode="aspectFit" src="/images/commit.png" />
-        </view>
+        </view> -->
     </block>
 
-    <scroll-view class="wx-scroll-view_PmrL5K" lower-threshold="50" scroll-y="True" style="overflow-x: hidden; overflow-y: auto;"
+    <scroll-view class="wx-scroll-view_PmrL5K wx-view_WjSmLp" lower-threshold="50" scroll-y="True" style="overflow-x: hidden; overflow-y: auto;padding-top:105rpx;"
         upper-threshold="50">
-        <view class="wx-view_WjSmLp">
+        <!-- <view class="wx-view_WjSmLp"> -->
+        <checkbox-group bindchange="deleteCheckBoxChange">
             <block wx:for="{{photos}}" wx:for-item="photo" wx:for-index="photoIndex" wx:key="photo_id">
-                <view class="wx-navigator_csHYE8">
-                    <image class="wx-image_jfWp5t" lazy-load mode="aspectFill" data-index="{{photoIndex}}" bindtap="previewImages" src="{{photo.thumbnailUrl}}"
-                    />
-                    <!-- <view class="wx-view_9TxaXG">
-                        <view class="wx-view_vnhcDJ">
-                            <image class="wx-image_RO5xv0" mode="aspectFit" src="{{photo.avatar_url}}" style="border-radius:50%;" />
-                            <text class="c-block wx-text_6X8CEW">{{photo.nick_name}}</text>
-                        </view>
-                        <text class="c-block wx-text_VIqUJH">2016.11</text>
-                    </view> -->
+
+                <image class="wx-navigator_csHYE8" lazy-load mode="aspectFill" data-index="{{photoIndex}}" catchtap="previewImages" src="{{photo.thumbnailUrl}}">
                     <block wx:if="{{deleteStatus}}">
-                        <view hover-class="navigator-hover" data-index="{{photoIndex}}" bindtap="deletePhoto" style="position: absolute;top: -15px;right: -15px;width:30px;height:30px;border-radius:50%;">
-                            <image mode="aspectFill" src="/images/delete.png" style="width:30px;height:30px" />
-                        </view>
+                        <!-- <view data-index="{{photoIndex}}" catchtap="deletePhoto" style="position: relative;top:-218rpx;left:5rpx;display:inline-block"> -->
+                        <!-- <image mode="aspectFill" src="/images/delete.png" style="width:25px;height:25px" /> -->
+                        <checkbox value="{{photo.photo_id}}" catchtap="deletePhoto" checked="{{item.checked}}" style="position: relative;top:-222rpx;left:5rpx;display:inline-block;opacity:0.8;"
+                        />
+                        <!-- </view> -->
                     </block>
-                </view>
+                </image>
+
             </block>
-        </view>
+        </checkbox-group>
+        <!-- </radio-group> -->
+        <!-- </view> -->
     </scroll-view>
 </view>

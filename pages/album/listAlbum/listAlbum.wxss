@@ -18,10 +18,10 @@
 }
 
 .wx-navigator_n3vQYd {
-    width: 300rpx;
+    /* width: 300rpx; */
     min-height: 375rpx;
     text-align: center;
-    padding: 10px 37.5rpx 5px;
+    padding: 10px 37rpx 5px;
     color: rgb(33, 33, 33);
     text-decoration: none;
     border-bottom-color: rgb(237, 237, 237);

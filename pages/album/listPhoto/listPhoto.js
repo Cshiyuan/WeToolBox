@@ -30,6 +30,9 @@ Page({
       that.setData({
         album: album
       });
+      wx.setNavigationBarTitle({
+        title: album.title
+      });
       return getAlbumPromise({
 
         album_id: album.album_id
@@ -41,8 +44,8 @@ Page({
       result.forEach(item => {
         item.originUrl = imageView2UrlFormat(item.url);
         item.thumbnailUrl = imageView2UrlFormat(item.url, {
-          width: 400,
-          height: 400
+          width: 300,
+          height: 300
         });
       })
       that.setData({
@@ -160,9 +163,21 @@ Page({
     });
   },
 
+  deleteCheckBoxChange: function (e) {
+    console.log('deleteCheckBoxChange', e);
+    let deleteIdsArray = e.detail.value;
+    console.log('deleteIdsArray', deleteIdsArray);
+    this.setData({
+      deletePhotoIds: deleteIdsArray
+    })
+
+  },
+
+
   deletePhoto: function (e) {
 
     console.log(e)
+    return;
     let index = e.currentTarget.dataset.index;
 
     if (index !== undefined) {

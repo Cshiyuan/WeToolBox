@@ -273,7 +273,7 @@ checkbox-group, radio-group {
 
 .wx-view_IfJZkK {
     display: flex;
-    padding:10rpx 37.5rpx;
+    padding: 10rpx 37.5rpx;
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid rgb(209, 209, 209);
@@ -282,8 +282,7 @@ checkbox-group, radio-group {
     top: 0px;
     background-color: rgba(255, 255, 255, 0.95);
     width: 100%;
-    height:100rpx;
-
+    height: 100rpx;
 }
 
 .wx-view_u7aIQl {
@@ -364,30 +363,26 @@ checkbox-group, radio-group {
 }
 
 .wx-scroll-view_PmrL5K {
-    text-align: center;
+    /* text-align: center; */
     padding-bottom: 5px;
     padding-top: 150rpx;
     -webkit-overflow-scrolling: touch;
 }
 
 .wx-view_WjSmLp {
-    padding: 18.75rpx 26.25rpx;
+    /* padding: 18.75rpx 26.25rpx; */
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
 }
 
 .wx-navigator_csHYE8 {
-    width: 333.75rpx;
-    height: 333.75rpx;
+    width: 223rpx;
+    height: 223rpx;
     background-color: rgb(237, 237, 237);
-    margin-bottom: 26.25rpx;
-    position: relative;
-}
-
-.wx-image_jfWp5t {
-    width: 100%;
-    height: 100%;
+    margin-left: 20rpx;
+    margin-top: 20rpx;
+    /* position: relative; */
 }
 
 .wx-view_9TxaXG {

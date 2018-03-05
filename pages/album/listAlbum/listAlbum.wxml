@@ -13,10 +13,8 @@
             <view class="wx-navigator_n3vQYd" hover-class="navigator-hover" data-index="{{albumIndex}}" bindtap="naviToPhotoList" bindlongpress="longpressAlbum">
                 <image class="wx-image_HsAX8s" mode="aspectFit" src="{{album.cover}}" style="background-size: contain; background-position: center center; background-repeat: no-repeat; "
                 />
-                <view class="c-minheight wx-view_ZhdL6d">
+                <view class="c-minheight wx-view_ZhdL6d" style="max-width:300rpx;">
                     <text class="c-block wx-text_cjhm6S" style="font-weight:bold;">{{album.title}}</text>
-                    <!-- <text class="wx-text_JkhshF2" >独处盒子 体验装</text> -->
-                    <!-- <text class="c-block wx-text_WEMSkk">￥118.00</text> -->
                 </view>
             </view>
         </block>
