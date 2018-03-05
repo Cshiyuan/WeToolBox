@@ -1,88 +1,93 @@
 <!--pages/group/indexGroup.wxml-->
-<view class="page__hd" style="background-image:url(http://wetoolbox-1252042156.picgz.myqcloud.com/20180304/65d8b454-7a33-44ec-ae07-f8e315c7c7b0.jpg);">
-    <open-data class="page__title" type="groupName" open-gid="{{openGId}}" style="color:white"></open-data>
-    <!-- <view>Loadmore</view> -->
-    <!-- <view class="page__desc">加载更多</view> -->
-</view>
-
-<!-- <text>pages/group/indexGroup.wxml</text> -->
 
 
-<view wx:if="{{albumList.length > 0}}" class="likelist">
-    <view class="nav_likelistmore" hover-class="navigator-hover" bindtap="naviToAlbumList" style="margin-bottom:0px;">
-        <text class="c-block wx-text_t7lDiK">相册</text>
-        <text class="c-block wx-text_t7lDiK2">❯</text>
+<block wx:if="{{showShareLink}}">
+    <view style="background-image:url(http://wetoolbox-1252042156.picgz.myqcloud.com/20180305/e7d0cce2-fb4a-4fbb-8c73-cf5b41386e20.jpg);height:100%;width:100%;background-repeat:no-repeat; background-size:100% 100%;display: flex;justify-content: center;align-items: center;">
+        <button open-type="share" style="color:white;background-color:#2CA8A8;width:463.5rpx;box-shadow: 2px 3px 10px #999;opacity:0.95;">转发并打开群空间</button>
     </view>
-    <view class="uselinklist nav_userlink weui-flex" style="flex-wrap: wrap;flex-direction: row;justify-content: flex-start;">
-        <block wx:for="{{albumList}}" wx:for-item="album" wx:for-index="albumIndex" wx:key="album_id">
-            <view class="likeuser " style="margin-right:10px;margin-top:10px" hover-class="navigator-hover">
-                <image style="width:100%;height:100%;" mode="aspectFill" src="{{album.cover}}" />
+</block>
+<block wx:else>
+    <view class="page__hd" style="background-image:url(http://wetoolbox-1252042156.picgz.myqcloud.com/20180305/a97adf2f-f7d1-48a6-a86d-a409abdf4757.jpg);">
+        <open-data class="page__title" type="groupName" open-gid="{{openGId}}" style="color:white"></open-data>
+        <!-- <view>Loadmore</view> -->
+        <!-- <view class="page__desc">加载更多</view> -->
+    </view>
+
+    <!-- <text>pages/group/indexGroup.wxml</text> -->
+    <view wx:if="{{albumList.length > 0}}" class="likelist">
+        <view class="nav_likelistmore" hover-class="navigator-hover" bindtap="naviToAlbumList" style="margin-bottom:0px;">
+            <text class="c-block wx-text_t7lDiK">相册</text>
+            <text class="c-block wx-text_t7lDiK2">❯</text>
+        </view>
+        <view class="uselinklist nav_userlink weui-flex" style="flex-wrap: wrap;flex-direction: row;justify-content: flex-start;">
+            <block wx:for="{{albumList}}" wx:for-item="album" wx:for-index="albumIndex" wx:key="album_id">
+                <view class="likeuser " style="margin-right:10px;margin-top:10px" hover-class="navigator-hover">
+                    <image style="width:100%;height:100%;" mode="aspectFill" src="{{album.cover}}" />
+                </view>
+            </block>
+        </view>
+    </view>
+
+
+    <view class="commentlistwrap" style="border-top:1px solid rgb(237, 237, 237);">
+        <view wx:if="{{postList.length > 0}}" class="wx-view_8NFuqw">
+            <text class="c-block wx-text_t7lDiK">动态</text>
+        </view>
+
+        <block wx:for="{{postList}}" wx:for-item="post" wx:for-index="postIndex" wx:key="post_id">
+            <view class="commentlistitem fade" data-postindex="{{postIndex}}" bindtap="naviToDetailPost" bindlongpress="longpressPost">
+                <view class="likeuser fm2">
+                    <image class="useravatar" mode="aspectFill" src="{{post.avatar_url}}" style="background-size: cover; background-position: center center; background-repeat: no-repeat; background-image: url(http://imgcdn.guoku.com/avatar/50/681eb4e30ac36d9481ea421c3fc61c6b.jpg); "
+                    />
+                </view>
+                <view class="c-minheight wx-view_WnUrtw">
+                    <view class="wx-view_F9ISUC">
+                        <text class="wx-text_71u3gA">{{post.nick_name}}</text>
+                    </view>
+                    <text class="c-block wx-text_kGXxsa">{{post.content}}</text>
+                    <view class="weui-flex" style="flex-wrap: wrap; justify-content: flex-start;">
+                        <block wx:for="{{post.thumbnailUrls}}" wx:for-item="image" wx:for-index="imageIndex" wx:key="*this">
+                            <image catchtap="previewImage" data-postindex="{{postIndex}}" data-imageindex="{{imageIndex}}" src="{{image}}" mode="aspectFill"
+                                style="width:150rpx;height:150rpx;background-color:antiquewhite;margin-right:8px;margin-bottom:8px;"
+                            />
+                        </block>
+                    </view>
+                    <view class="wx-view_adF7Mw" style="padding:0px; ">
+                        <view class="wx-view_2gazUr" style="padding-left:0px">
+                            <view class="wx-view_DKe6UT" style="flex-grow:1">
+                                <image class="wx-image_6E2A1o" mode="aspectFit" src="http://qty83k.creatby.com/materials/origin/0564a45ab780222757935674e13d6919_origin.png"
+                                />
+                                <text class="c-block wx-text_id0VJj">{{post.comment}}</text>
+                            </view>
+                            <view class="wx-view_DKe6UT" style="flex-grow:1">
+                                <view class="heart {{post.isStar ? 'heartAnimation' : ''}}" data-postindex="{{postIndex}}" catchtap="tapStar" />
+                                <text class="c-block wx-text_id0VJj">{{post.star}}</text>
+                            </view>
+                        </view>
+                        <text class="c-block wx-text_9Wn0Di" style="flex-grow:1;text-align:right;margin:auto;">{{post.time}}</text>
+                    </view>
+                </view>
             </view>
         </block>
-    </view>
-</view>
 
-
-
-
-<view class="commentlistwrap" style="border-top:1px solid rgb(237, 237, 237);">
-    <view wx:if="{{postList.length > 0}}" class="wx-view_8NFuqw">
-        <text class="c-block wx-text_t7lDiK">动态</text>
-    </view>
-
-    <block wx:for="{{postList}}" wx:for-item="post" wx:for-index="postIndex" wx:key="post_id">
-        <view class="commentlistitem fade" data-postindex="{{postIndex}}" bindtap="naviToDetailPost" bindlongpress="longpressPost">
-            <view class="likeuser fm2">
-                <image class="useravatar" mode="aspectFill" src="{{post.avatar_url}}" style="background-size: cover; background-position: center center; background-repeat: no-repeat; background-image: url(http://imgcdn.guoku.com/avatar/50/681eb4e30ac36d9481ea421c3fc61c6b.jpg); "
-                />
-            </view>
-            <view class="c-minheight wx-view_WnUrtw">
-                <view class="wx-view_F9ISUC">
-                    <text class="wx-text_71u3gA">{{post.nick_name}}</text>
-                </view>
-                <text class="c-block wx-text_kGXxsa">{{post.content}}</text>
-                <view class="weui-flex" style="flex-wrap: wrap; justify-content: flex-start;">
-                    <block wx:for="{{post.thumbnailUrls}}" wx:for-item="image" wx:for-index="imageIndex" wx:key="*this">
-                        <image catchtap="previewImage" data-postindex="{{postIndex}}" data-imageindex="{{imageIndex}}" src="{{image}}" mode="aspectFill"
-                            style="width:150rpx;height:150rpx;background-color:antiquewhite;margin-right:8px;margin-bottom:8px;"
-                        />
-                    </block>
-                </view>
-                <view class="wx-view_adF7Mw" style="padding:0px; ">
-                    <view class="wx-view_2gazUr" style="padding-left:0px">
-                        <view class="wx-view_DKe6UT" style="flex-grow:1">
-                            <image class="wx-image_6E2A1o" mode="aspectFit" src="http://qty83k.creatby.com/materials/origin/0564a45ab780222757935674e13d6919_origin.png"
-                            />
-                            <text class="c-block wx-text_id0VJj">{{post.comment}}</text>
-                        </view>
-                        <view class="wx-view_DKe6UT" style="flex-grow:1">
-                            <view class="heart {{post.isStar ? 'heartAnimation' : ''}}" data-postindex="{{postIndex}}" catchtap="tapStar" />
-                            <text class="c-block wx-text_id0VJj">{{post.star}}</text>
-                        </view>
-                    </view>
-                    <text class="c-block wx-text_9Wn0Di" style="flex-grow:1;text-align:right;margin:auto;">{{post.time}}</text>
-                </view>
-            </view>
+        <!-- 加载的底部条 -->
+        <view wx:if="{{loading}}" class="weui-loadmore">
+            <view class="weui-loading"></view>
+            <view class="weui-loadmore__tips" style="background-color:transparent">正在加载</view>
         </view>
-    </block>
 
-    <!-- 加载的底部条 -->
-    <view wx:if="{{loading}}" class="weui-loadmore">
-        <view class="weui-loading"></view>
-        <view class="weui-loadmore__tips" style="background-color:transparent">正在加载</view>
+        <view wx:if="{{!loading && postList.length === 0}}" class="weui-loadmore weui-loadmore_line">
+            <view class="weui-loadmore__tips weui-loadmore__tips_in-line" style="background-color:transparent">暂无数据</view>
+        </view>
+
+        <view wx:if="{{!loading && postList.length !== 0}}" class="weui-loadmore weui-loadmore_line weui-loadmore_dot">
+            <view class="weui-loadmore__tips weui-loadmore__tips_in-line weui-loadmore__tips_in-dot" style="background-color:transparent"></view>
+        </view>
+
+
+        <!-- 发布按钮 -->
+        <view class="wx-navigator_iOsAsd" hover-class="navigator-hover" bindtap="naviToPublishPost" style="bottom: 30px;right:14px;background-color:#2CA8A8;box-shadow: 2px 3px 10px #555;opacity:0.8;">
+            <image class="wx-image_SfQyMy" mode="aspectFit" src="/images/publish.png" style="margin:13px;" />
+        </view>
     </view>
-
-    <view wx:if="{{!loading && postList.length === 0}}" class="weui-loadmore weui-loadmore_line">
-        <view class="weui-loadmore__tips weui-loadmore__tips_in-line" style="background-color:transparent">暂无数据</view>
-    </view>
-
-    <view wx:if="{{!loading && postList.length !== 0}}" class="weui-loadmore weui-loadmore_line weui-loadmore_dot">
-        <view class="weui-loadmore__tips weui-loadmore__tips_in-line weui-loadmore__tips_in-dot" style="background-color:transparent"></view>
-    </view>
-
-
-    <!-- 发布按钮 -->
-    <view class="wx-navigator_iOsAsd" hover-class="navigator-hover" bindtap="naviToPublishPost" style="bottom: 30px;right:14px;background-color:#2CA8A8;box-shadow: 2px 3px 10px #555;opacity:0.8;">
-        <image class="wx-image_SfQyMy" mode="aspectFit" src="/images/publish.png" style="margin:13px;" />
-    </view>
-</view>
+</block>

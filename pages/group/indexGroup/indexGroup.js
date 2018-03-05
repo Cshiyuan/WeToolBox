@@ -22,7 +22,8 @@ Page({
     postList: [],
     loading: false,
     end: 0,   //请求参数
-    length: 5
+    length: 5,
+    showShareLink: false
   },
 
   /**
@@ -62,7 +63,9 @@ Page({
 
 
     } else {
-
+      this.setData({
+        showShareLink: true
+      })
     }
 
     wx.updateShareMenu({
@@ -154,8 +157,46 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  onShareAppMessage: function (e) {
 
+    let that = this;
+    return {
+      title: '快来进入专属群日记吧',
+      path: '/pages/group/indexGroup/indexGroup',
+      imageUrl: 'http://wetoolbox-1252042156.picgz.myqcloud.com/20180305/e7d0cce2-fb4a-4fbb-8c73-cf5b41386e20.jpg',
+      success: function (res) {
+        console.log('onShareAppMessage success', res);
+
+        let shareTicket = res.shareTickets[0]
+        getShareInfoPromise({
+
+          shareTicket: shareTicket
+        }).then(result => {
+  
+          console.log('getShareInfoPromise result is ', result);
+          return decryptDataPromise({
+            encryptedData: result.encryptedData,
+            iv: result.iv
+          })
+  
+        }).then(result => {
+  
+          console.log('decryptDataPromise result is ', result);
+          if (result.openGId) {
+            that.setData({
+              openGId: result.openGId,
+              showShareLink: false
+            });
+            that.refreshPostList(result.openGId);
+          }
+        });
+        // 转发成功
+      },
+      fail: function (res) {
+        // 转发失败
+        console.log('onShareAppMessage fail', res);
+      }
+    }
   },
 
 

@@ -46,13 +46,10 @@
                         <!-- <image mode="aspectFill" src="/images/delete.png" style="width:25px;height:25px" /> -->
                         <checkbox value="{{photo.photo_id}}" catchtap="deletePhoto" checked="{{item.checked}}" style="position: relative;top:-222rpx;left:5rpx;display:inline-block;opacity:0.8;"
                         />
-                        <!-- </view> -->
                     </block>
                 </image>
 
             </block>
         </checkbox-group>
-        <!-- </radio-group> -->
-        <!-- </view> -->
     </scroll-view>
 </view>
