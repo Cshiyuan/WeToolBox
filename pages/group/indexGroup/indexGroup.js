@@ -39,18 +39,7 @@ Page({
       //符合条件的
       // console.log('context is ', context);
       let shareTicket = context.shareTicket;
-      getShareInfoPromise({
-
-        shareTicket: shareTicket
-      }).then(result => {
-
-        console.log('getShareInfoPromise result is ', result);
-        return decryptDataPromise({
-          encryptedData: result.encryptedData,
-          iv: result.iv
-        })
-
-      }).then(result => {
+      that.getOpenGIdByShareTicket(shareTicket).then(result => {
 
         console.log('decryptDataPromise result is ', result);
         if (result.openGId) {
@@ -60,7 +49,6 @@ Page({
           that.refreshPostList(result.openGId);
         }
       });
-
 
     } else {
       this.setData({
@@ -75,10 +63,29 @@ Page({
 
   },
 
+  /**
+   * 刷新动态列表
+   */
+  getOpenGIdByShareTicket: function (shareTicket) {
+
+    // let openGId = openGId;  //帖子id
+    return getShareInfoPromise({
+
+      shareTicket: shareTicket
+    }).then(result => {
+
+      console.log('getShareInfoPromise result is ', result);
+      return decryptDataPromise({
+        encryptedData: result.encryptedData,
+        iv: result.iv
+      })
+    })
+
+  },
 
   /**
- * 刷新动态列表
- */
+   * 刷新动态列表
+   */
   refreshPostList: function (openGId) {
 
     // let openGId = openGId;  //帖子id
@@ -142,61 +149,6 @@ Page({
     wx.navigateTo({
       url: url + param
     });
-  },
-
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function (options) {
-    console.log('indexGroup onShow', options);
-  },
-
-
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function (e) {
-
-    let that = this;
-    return {
-      title: '快来进入专属群日记吧',
-      path: '/pages/group/indexGroup/indexGroup',
-      imageUrl: 'http://wetoolbox-1252042156.picgz.myqcloud.com/20180305/e7d0cce2-fb4a-4fbb-8c73-cf5b41386e20.jpg',
-      success: function (res) {
-        console.log('onShareAppMessage success', res);
-
-        let shareTicket = res.shareTickets[0]
-        getShareInfoPromise({
-
-          shareTicket: shareTicket
-        }).then(result => {
-  
-          console.log('getShareInfoPromise result is ', result);
-          return decryptDataPromise({
-            encryptedData: result.encryptedData,
-            iv: result.iv
-          })
-  
-        }).then(result => {
-  
-          console.log('decryptDataPromise result is ', result);
-          if (result.openGId) {
-            that.setData({
-              openGId: result.openGId,
-              showShareLink: false
-            });
-            that.refreshPostList(result.openGId);
-          }
-        });
-        // 转发成功
-      },
-      fail: function (res) {
-        // 转发失败
-        console.log('onShareAppMessage fail', res);
-      }
-    }
   },
 
 
@@ -339,5 +291,40 @@ Page({
     wx.navigateTo({
       url: url + param
     });
+  },
+
+
+  /**
+ * 用户点击右上角分享
+ */
+  onShareAppMessage: function (e) {
+
+    let that = this;
+    return {
+      title: '快来进入专属群日记吧',
+      path: '/pages/group/indexGroup/indexGroup',
+      imageUrl: 'http://wetoolbox-1252042156.picgz.myqcloud.com/20180305/e7d0cce2-fb4a-4fbb-8c73-cf5b41386e20.jpg',
+      success: function (res) {
+
+        console.log('onShareAppMessage success', res);
+        let shareTicket = res.shareTickets[0]
+        that.getOpenGIdByShareTicket(shareTicket).then(result => {
+
+          console.log('decryptDataPromise result is ', result);
+          if (result.openGId) {
+            that.setData({
+              openGId: result.openGId,
+              showShareLink: false
+            });
+            that.refreshPostList(result.openGId);
+          }
+        });
+        // 转发成功
+      },
+      fail: function (res) {
+        // 转发失败
+        console.log('onShareAppMessage fail', res);
+      }
+    }
   },
 })

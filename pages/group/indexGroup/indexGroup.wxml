@@ -3,7 +3,7 @@
 
 <block wx:if="{{showShareLink}}">
     <view style="background-image:url(http://wetoolbox-1252042156.picgz.myqcloud.com/20180305/e7d0cce2-fb4a-4fbb-8c73-cf5b41386e20.jpg);height:100%;width:100%;background-repeat:no-repeat; background-size:100% 100%;display: flex;justify-content: center;align-items: center;">
-        <button open-type="share" style="color:white;background-color:#2CA8A8;width:463.5rpx;box-shadow: 2px 3px 10px #999;opacity:0.95;">转发并打开群空间</button>
+        <button open-type="share" style="color:white;background-color:#2CA8A8;width:463.5rpx;box-shadow: 2px 3px 10px #999;opacity:0.95;">转发并打开群日记</button>
     </view>
 </block>
 <block wx:else>

@@ -28,7 +28,7 @@
   <view bindtap="openGroup">
     <view class="example-menu__item" hover-class="example-hover">
       <view class="example-menu__head ">
-        <view class="example-menu__title" style="font-weight:bold;">打开群空间</view>
+        <view class="example-menu__title" style="font-weight:bold;">打开群日记</view>
         <image class="example-menu__image" src="/images/group.png"></image>
       </view>
     </view>
