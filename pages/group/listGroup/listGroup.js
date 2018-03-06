@@ -2,6 +2,7 @@
 const {
   getGroupListPromise
 } = require('../../../utils/groupRequestPromise');
+const { timestampFormat, generateNaviParam } = require('../../../utils/util');
 Page({
 
   /**
@@ -16,9 +17,34 @@ Page({
    */
   onLoad: function (options) {
 
+    let that = this;
     getGroupListPromise().then(result => {
       console.log(result);
+      that.setData({
+        groupList: result
+      })
+
     })
+  },
+
+  jumpToIndexGroup:function(e) {
+    
+    console.log(e);
+    let index = e.currentTarget.dataset.index;
+    if(index !== undefined) {
+      let group = this.data.groupList[index];
+      let openGId = group.openg_id || '';
+
+      let url = '/pages/group/indexGroup/indexGroup';
+      let param = generateNaviParam({
+        openGId: group.openg_id
+      });
+  
+      wx.navigateTo({
+        url: url + param
+      });
+    }
+
   },
 
   /**
