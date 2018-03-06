@@ -14,6 +14,12 @@
         "text": "活动列表",
         "iconPath": "images/list.png",
         "selectedIconPath": "images/list_selected.png"
+      },
+      {
+        "pagePath": "pages/group/listGroup/listGroup",
+        "text": "群日记列表",
+        "iconPath": "images/list.png",
+        "selectedIconPath": "images/list_selected.png"
       }
     ]
   },
@@ -31,7 +37,8 @@
     "pages/post/detailPost/detailPost",
     "pages/post/publishPost/publishPost",
     "pages/album/listAlbum/listAlbum",
-    "pages/group/indexGroup/indexGroup"
+    "pages/group/indexGroup/indexGroup",
+    "pages/group/listGroup/listGroup"
   ],
   "window": {
     "backgroundTextStyle": "light",
