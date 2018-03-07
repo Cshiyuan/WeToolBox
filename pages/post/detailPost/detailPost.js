@@ -72,6 +72,9 @@ Page({
 
   },
 
+  /**
+   * 提交评论
+   */
   commitComment: function (e) {
 
     console.log('commitComment', e);
@@ -112,6 +115,9 @@ Page({
 
   },
 
+  /**
+   * 长按删除评论
+   */
   longpressComment: function (e) {
     console.log(e);
     let index = e.currentTarget.dataset.index;
@@ -160,6 +166,9 @@ Page({
     }
   },
 
+  /**
+   * 点赞
+   */
   tapStar: function (e) {
 
     let that = this;

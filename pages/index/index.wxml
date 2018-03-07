@@ -17,12 +17,12 @@
 
 <view class="index-bd">
 
-  <view class="example-menu__item" hover-class="example-hover" data-type="toCreateActivity" bindtap="naviTo">
+  <!-- <view class="example-menu__item" hover-class="example-hover" data-type="toCreateActivity" bindtap="naviTo">
     <view class="example-menu__head">
       <view class="example-menu__title" style="font-weight:bold;">创建活动</view>
       <image class="example-menu__image" src="/images/create.png"></image>
     </view>
-  </view>
+  </view> -->
 
 
   <view bindtap="openGroup">

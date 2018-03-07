@@ -306,9 +306,6 @@ Page({
       this.setData({
         commitLoading: true
       })
-      that.setData({
-        comments: result,
-      });
       return punchActivityPromise({
 
         activity_id: activityId
@@ -328,8 +325,6 @@ Page({
             commitLoading: false
           });
         }
-      }).catch(error => {
-
       }).catch(error => {
         that.setData({
           commitLoading: false
