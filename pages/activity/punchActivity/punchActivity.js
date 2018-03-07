@@ -338,6 +338,39 @@ Page({
 
   },
 
+  /**
+   * 根据定位和
+   */
+  judgeMapScale: function () {
+
+    let that = this;
+    let position = this.data.position;
+
+    if (position.lat && position.lng) {
+
+      return getLocationPromise({
+        type: 'gcj02'
+      }).then(res => {
+
+        that.map.includePoints({
+          padding: [40, 40, 40, 40],
+          points: [{
+            latitude: res.latitude,
+            longitude: res.longitude,
+          }, {
+            latitude: that.data.position.lat,
+            longitude: that.data.position.lng,
+          }]
+        })
+
+      }).catch(err => {
+        console.log(err);
+        showTips('提示', '请确认一下网络和定位服务是否开启了哦。')
+      });
+    }
+
+  },
+
 
 
   /**
