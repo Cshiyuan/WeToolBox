@@ -10,28 +10,39 @@
             markers="{{markers}}" circles="{{circles}}" style="width: 100%; height: 300px;" show-location="true"></map>
 
 
-        <view class="weui-panel weui-panel_access">
+        <view class="weui-panel weui-panel_access" style="margin-top:0;">
             <view class="weui-panel__bd">
-                <view class="weui-media-box weui-media-box_text">
-                    <view class="weui-media-box__title weui-media-box__title_in-text">
+                <view class="weui-media-box weui-media-box_text" style="padding:0;">
+                    <!-- <view class="weui-media-box__title weui-media-box__title_in-text">
                         <text selectable style="font-weight:bold;">
                             {{activity.title}}
                         </text>
+                    </view> -->
+                    <view style="padding:10px;border-bottom:1px solid #e9e9e9">
+                        <view class="weui-media-box__desc" style="display:inline;">
+                            <text selectable>
+                                {{activity.description}}
+                            </text>
+                        </view>
                     </view>
-                    <view class="weui-media-box__desc" style="display:inline;">
-                        <text selectable>
-                            {{activity.description}}
-                        </text>
-                    </view>
-                    <view class="weui-media-box__info">
-                        <view class="weui-media-box__info__meta" style="font-weight:bold;">开始时间：{{startTimeStr}}</view>
-                        <view wx:if="{{position.radius}}" class="weui-media-box__info__meta" style="font-weight:bold;">活动打卡范围：{{position.radius}} 米</view>
+                    <view class="weui-media-box__info weui-flex" style="flex-direction:column;">
+
+                        <view class="weui-flex" style="font-weight:bold;margin:10px;">
+                            <view style="flex-grow:1">开始时间：</view>
+                            <view style="flex-grow:1">{{startTimeStr}}</view>
+                        </view>
+                        <view wx:if="{{position.radius}}" class="weui-flex" style="font-weight:bold;margin:10px;">
+                            <view style="flex-grow:1">打卡范围：</view>
+                            <view style="flex-grow:1">{{position.radius}} 米</view>
+                        </view>
+
+                        <!-- <view style="font-weight:bold;">活动打卡范围：{{position.radius}} 米</view> -->
                     </view>
                 </view>
             </view>
         </view>
 
-        <view class="weui-cells">
+        <view class="weui-cells" style="margin-top:2px;">
             <!-- 报名列表 -->
             <view class="weui-cell weui-cell_access" hover-class="weui-cell_active" data-type="signUpList" bindtap="naviToMemberList">
                 <view class="weui-cell__bd">活动报名列表</view>

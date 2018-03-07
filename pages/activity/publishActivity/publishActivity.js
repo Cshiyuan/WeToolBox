@@ -11,7 +11,7 @@ Page({
    */
   data: {
 
-    title: '',
+    title: '无主题',
     description: '',
     date: "2016-09-01",
     time: "12:01",
