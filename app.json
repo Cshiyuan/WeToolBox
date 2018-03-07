@@ -10,12 +10,6 @@
         "selectedIconPath": "images/person_selected.png"
       },
       {
-        "pagePath": "pages/activity/listActivity/listActivity",
-        "text": "活动列表",
-        "iconPath": "images/list.png",
-        "selectedIconPath": "images/list_selected.png"
-      },
-      {
         "pagePath": "pages/group/listGroup/listGroup",
         "text": "群日记列表",
         "iconPath": "images/list.png",

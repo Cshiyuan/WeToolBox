@@ -107,6 +107,14 @@ Page({
       console.log(result);
 
       result.postList.forEach(post => {
+
+        if (post.type === 1) {
+          post.activity = JSON.parse(post.extra);
+          if (post.activity.position) {
+            post.activity.position = JSON.parse(post.activity.position);
+          }
+        }
+
         post.time = timestampFormat(Date.parse(post.create_time) / 1000)
         post.thumbnailUrls = [];
         post.originUrls = [];
@@ -143,8 +151,8 @@ Page({
 
 
   /**
- * 跳转到帖子发布器
- */
+   * 跳转到帖子发布器
+   */
   naviToPublishPost: function (e) {
 
     let url = '/pages/post/publishPost/publishPost';
@@ -154,6 +162,20 @@ Page({
 
     wx.navigateTo({
       url: url + param
+    });
+  },
+
+
+  /**
+   * 跳转到活动发布器
+   */
+  naviToPublishActivity: function (e) {
+
+    let param = generateNaviParam({
+      object_id: this.data.openGId,
+    });
+    wx.navigateTo({
+      url: '/pages/activity/publishActivity/publishActivity' + param
     });
   },
 
@@ -301,8 +323,8 @@ Page({
 
 
   /**
- * 用户点击右上角分享
- */
+   * 用户点击右上角分享
+   */
   onShareAppMessage: function (e) {
 
     let that = this;

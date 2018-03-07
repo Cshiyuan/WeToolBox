@@ -27,6 +27,12 @@ Page({
    */
   onLoad: function (options) {
 
+    if (options.object_id) {
+      this.setData({
+        object_id: options.object_id
+      })
+    }
+
     let myDateString = util.formatTime(new Date());
     let toDay = myDateString.split(' ')[0].replace(new RegExp('/', "gm"), '-');
     let nowTime = myDateString.split(' ')[1].substring(0, 5);
@@ -141,13 +147,20 @@ Page({
 
     let that = this;
 
-    insertActivityPromise({
+    let opts = {
       title: title,
       description: description,
       position: position,
       time: time,
       date: date
-    }).then(result => {
+    }
+
+    if (this.data.object_id) {
+      opts['object_id'] = this.data.object_id;
+      opts['type'] = 1;
+    }
+
+    insertActivityPromise(opts).then(result => {
 
       if (result.activity.activity_id) {
 

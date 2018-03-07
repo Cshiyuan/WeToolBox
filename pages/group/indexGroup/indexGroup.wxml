@@ -35,7 +35,7 @@
         </view>
 
         <block wx:for="{{postList}}" wx:for-item="post" wx:for-index="postIndex" wx:key="post_id">
-            <view class="commentlistitem fade" data-postindex="{{postIndex}}" bindtap="naviToDetailPost" bindlongpress="longpressPost">
+            <view class="commentlistitem fade" wx:if="{{post.type === 0}}" data-postindex="{{postIndex}}" bindtap="naviToDetailPost" bindlongpress="longpressPost">
                 <view class="likeuser fm2">
                     <image class="useravatar" mode="aspectFill" src="{{post.avatar_url}}" style="background-size: cover; background-position: center center; background-repeat: no-repeat; background-image: url(http://imgcdn.guoku.com/avatar/50/681eb4e30ac36d9481ea421c3fc61c6b.jpg); "
                     />
@@ -52,6 +52,48 @@
                             />
                         </block>
                     </view>
+                    <view class="wx-view_adF7Mw" style="padding:0px; ">
+                        <view class="wx-view_2gazUr" style="padding-left:0px">
+                            <view class="wx-view_DKe6UT" style="flex-grow:1">
+                                <image class="wx-image_6E2A1o" mode="aspectFit" src="http://qty83k.creatby.com/materials/origin/0564a45ab780222757935674e13d6919_origin.png"
+                                />
+                                <text class="c-block wx-text_id0VJj">{{post.comment}}</text>
+                            </view>
+                            <view class="wx-view_DKe6UT" style="flex-grow:1">
+                                <view class="heart {{post.isStar ? 'heartAnimation' : ''}}" data-postindex="{{postIndex}}" catchtap="tapStar" />
+                                <text class="c-block wx-text_id0VJj">{{post.star}}</text>
+                            </view>
+                        </view>
+                        <text class="c-block wx-text_9Wn0Di" style="flex-grow:1;text-align:right;margin:auto;">{{post.time}}</text>
+                    </view>
+                </view>
+            </view>
+
+            <view class="commentlistitem fade" wx:if="{{post.type === 1}}" data-postindex="{{postIndex}}" bindtap="naviToDetailPost"
+                bindlongpress="longpressPost">
+                <view class="likeuser fm2">
+                    <image class="useravatar" mode="aspectFill" src="{{post.avatar_url}}" style="background-size: cover; background-position: center center; background-repeat: no-repeat; background-image: url(http://imgcdn.guoku.com/avatar/50/681eb4e30ac36d9481ea421c3fc61c6b.jpg); "
+                    />
+                </view>
+                <view class="c-minheight wx-view_WnUrtw">
+                    <view class="wx-view_F9ISUC">
+                        <text class="wx-text_71u3gA">{{post.nick_name}}</text>
+                    </view>
+
+                    <view class="example--box" hover-class="navigator-hover" data-index="{{activityIndex}}" bindtap="naviToActivity">
+                        <view class="example--demo demo">
+                            <view class="demo-inner">
+                                <view class="weui-media-box weui-media-box_text">
+                                    <view class="weui-media-box__title weui-media-box__title_in-text" style="font-weight:bold;">{{activity.title}}</view>
+                                    <view class="weui-media-box__desc">{{post.content}}</view>
+                                </view>
+                            </view>
+                        </view>
+                        <view class="example--meta meta">
+                            <view wx:if="{{post.activity.position.address}}" class="meta-title" style="font-weight:bold;">{{post.activity.position.address}}</view>
+                        </view>
+                    </view>
+
                     <view class="wx-view_adF7Mw" style="padding:0px; ">
                         <view class="wx-view_2gazUr" style="padding-left:0px">
                             <view class="wx-view_DKe6UT" style="flex-grow:1">
@@ -91,3 +133,12 @@
         </view>
     </view>
 </block>
+
+
+<!-- 发布按钮 -->
+<view class="wx-navigator_iOsAsd" hover-class="navigator-hover" bindtap="naviToPublishPost" style="bottom: 30px;right:14px;background-color:#2CA8A8;box-shadow: 2px 3px 10px #555;opacity:0.8;">
+    <image class="wx-image_SfQyMy" mode="aspectFit" src="/images/publish.png" style="margin:13px;" />
+</view>
+<view class="wx-navigator_iOsAsd" hover-class="navigator-hover" data-type='true' bindtap="naviToPublishActivity" style='bottom:94px;right:14px;background-color:#2CA8A8;box-shadow: 2px 3px 10px #555;opacity:0.8;'>
+    <image class="wx-image_SfQyMy" mode="aspectFit" src="/images/flag.png" style="margin:13px;" />
+</view>

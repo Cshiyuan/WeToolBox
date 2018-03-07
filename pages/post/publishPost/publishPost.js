@@ -96,14 +96,17 @@ Page({
 
     showLoading('');
 
-    if (images && images.length) {
-      uploadImages({
+    let promise;
 
+    //存在图片
+    if (images && images.length) {
+
+      promise = uploadImages({
         images: images
       }).then(results => {
 
         console.log(results)
-        let photos = []
+
         results.forEach(item => {
           photos.push({
             url: item,
@@ -111,62 +114,75 @@ Page({
             extra: ''
           });
         })
-        return insertPostPromise({   //提交服务器
-          object_id: that.data.object_id,
-          content: that.data.content,
-          photos: photos
-        })
+        return photos;
 
-      }).then(result => {
+      });
 
+      //不存在图片，直接发布
+    } else if (this.data.content.length > 0) {
 
-        console.log(result);
-        let post = result.post;
-        if (post) {
-          post.thumbnailUrls = [];
-          post.originUrls = [];
-          post.images.forEach(item => {
-
-            post.thumbnailUrls.push(imageView2UrlFormat(item, {
-              width: 200,
-              height: 200
-            }));
-            post.originUrls.push(imageView2UrlFormat(item))
-
-          });
-
-          let pageStacks = getCurrentPages();
-          let prePage = pageStacks[pageStacks.length - 2];
-          console.log(prePage);
-
-          let postList = prePage.data.postList;  //拼接到数组的开头
-          postList.unshift(post);
-          prePage.setData({
-            postList: postList
-          })
-          wx.navigateBack({  //返回两次
-            delta: 1
-          });
-        }
-
-        // prePage.setData({
-        //   'activity.type': type
-        // });
-        // setGlobalPromise({
-        //   promise: Promise.resolve(result)
-        // });
-        // let url = '/pages/album/listPhoto/listPhoto';
-        // let param = util.generateNaviParam({
-        //   album_id: result.album.album_id
-        // });
-
-        // wx.redirectTo({
-        //   url: url + param
-        // });
-
-      }).catch(err => {
-        console.log(err)
-      })
+      promise = Promise.resolve([]);
     }
+
+    promise.then(photos => {
+
+      return insertPostPromise({   //提交服务器
+        object_id: that.data.object_id,
+        content: that.data.content,
+        photos: photos
+      })
+
+    }).then(result => {
+
+
+      console.log(result);
+      let post = result.post;
+      if (post) {
+        post.thumbnailUrls = [];
+        post.originUrls = [];
+        post.images.forEach(item => {
+
+          post.thumbnailUrls.push(imageView2UrlFormat(item, {
+            width: 200,
+            height: 200
+          }));
+          post.originUrls.push(imageView2UrlFormat(item))
+
+        });
+
+        let pageStacks = getCurrentPages();
+        let prePage = pageStacks[pageStacks.length - 2];
+        console.log(prePage);
+
+        let postList = prePage.data.postList;  //拼接到数组的开头
+        postList.unshift(post);
+        prePage.setData({
+          postList: postList
+        })
+        wx.navigateBack({  //返回两次
+          delta: 1
+        });
+      }
+
+      // prePage.setData({
+      //   'activity.type': type
+      // });
+      // setGlobalPromise({
+      //   promise: Promise.resolve(result)
+      // });
+      // let url = '/pages/album/listPhoto/listPhoto';
+      // let param = util.generateNaviParam({
+      //   album_id: result.album.album_id
+      // });
+
+      // wx.redirectTo({
+      //   url: url + param
+      // });
+
+    }).catch(err => {
+      console.log(err)
+    })
   }
+
+
 })
