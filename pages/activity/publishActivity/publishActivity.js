@@ -162,40 +162,50 @@ Page({
 
     insertActivityPromise(opts).then(result => {
 
-      if (result.activity.activity_id) {
 
-        let url = '/pages/activity/punchActivity/punchActivity';
-        let param = util.generateNaviParam({
-          activity_id: result.activity.activity_id,
-          fromCreate: true
-        });
+      console.log(result);
+      let post = result.post;
+      if (post) {
 
-        setGlobalPromise({
-          promise: Promise.resolve(result)
+        if (post.type === 1) {
+          post.activity = JSON.parse(post.extra);
+          if (post.activity.position) {
+            post.activity.position = JSON.parse(post.activity.position);
+          }
+        }
+
+        let pageStacks = getCurrentPages();
+        let prePage = pageStacks[pageStacks.length - 2];
+        console.log(prePage);
+
+        let postList = prePage.data.postList;  //拼接到数组的开头
+        postList.unshift(post);
+        prePage.setData({
+          postList: postList
         })
-
-        wx.redirectTo({
-          url: url + param
-        });
-
-      } else {
-
-        util.showFailToast();
-        that.setData({
-          isCanPublish: true,
-          loading: false
+        wx.navigateBack({  //返回两次
+          delta: 1
         });
       }
 
-    }).catch(err => {
+      // prePage.setData({
+      //   'activity.type': type
+      // });
+      // setGlobalPromise({
+      //   promise: Promise.resolve(result)
+      // });
+      // let url = '/pages/album/listPhoto/listPhoto';
+      // let param = util.generateNaviParam({
+      //   album_id: result.album.album_id
+      // });
 
-      console.log('catch err ' + err);
-      util.showFailToast();
-      that.setData({
-        isCanPublish: true,
-        loading: false
-      });
-    });
+      // wx.redirectTo({
+      //   url: url + param
+      // });
+
+    }).catch(err => {
+      console.log(err)
+    })
   }
 
 })

@@ -71,7 +71,6 @@ Page({
     });
   },
 
-
   openGroup: function () {
 
     wx.navigateTo({
