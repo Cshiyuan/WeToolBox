@@ -9,10 +9,12 @@ const { countDown, formatTime, getDistance, wxPromisify, formatNumber, showTips 
 const { setGlobalPromise, getGlobalPromise } = require('../../../utils/globalPromiseList');
 const getLocationPromise = wxPromisify(wx.getLocation);
 const {
-  getPostListAlbumListPromise,
-  deletePostPromise,
+  insertCommentPromise,
+  getCommentListPromise,
+  deleteCommentPromise,
   starPostPromise,
-  unStarPostPromise } = require('../../../utils/postRequestPromise');
+  unStarPostPromise
+} = require('../../../utils/postRequestPromise');
 
 Page({
 
@@ -145,16 +147,26 @@ Page({
         wx.stopPullDownRefresh();
         console.log('catch err is ' + err);
       });
-      
+
     } else {
 
-      if (options.activity_id) {
+      let promise = getGlobalPromise();
+      promise.then(result => {
+
+
+        that.setData({
+          post: result
+        });
+      });
+
+      if (options.activity_id && options.post_id) {
 
         this.setData(options)
         this.refreshActivityById(options.activity_id);
-        this.refreshPostList(options.activity_id);
+        this.refreshCommentListPromise(options.post_id);
       }
     }
+
 
     //新建百度地图对象
     let BMap = new bmap.BMapWX({
@@ -163,12 +175,6 @@ Page({
     this.BMap = BMap;
     this.map = wx.createMapContext('map');
   },
-
-  onReady: function () {
-    // this.refreshPostList();
-    // this.toptips = this.selectComponent("#toptips");
-  },
-
 
   /**
    * 生命周期函数--监听页面显示
@@ -265,78 +271,33 @@ Page({
   },
 
   /**
-   * 刷新动态列表
+   * 根据post_id刷新评论
    */
-  refreshPostList: function (activityId) {
+  refreshCommentListPromise: function (post_id) {
 
-    let activity_id = activityId;  //帖子id
     let that = this;
-    this.setData({
-      loading: true
-    });
-    getPostListAlbumListPromise({
-      start: this.data.end,  //分页查询
-      length: this.data.length,
-      object_id: activity_id
+    getCommentListPromise({
+      post_id: post_id
     }).then(result => {
+
       console.log(result);
-
-      result.postList.forEach(post => {
-        post.time = timestampFormat(Date.parse(post.create_time) / 1000)
-        post.thumbnailUrls = [];
-        post.originUrls = [];
-        post.images.forEach(item => {
-
-          post.thumbnailUrls.push(imageView2UrlFormat(item, {
-            width: 200,
-            height: 200
-          }));
-          post.originUrls.push(imageView2UrlFormat(item))
-
-        })
-      });
-      result.albumList.forEach(album => {
-        album.cover = imageView2UrlFormat(album.cover, {
-          width: 100,
-          height: 100
-        });
-      });
-      // result.albumList = result.albumList.concat(result.albumList);  注释掉测试代码
-      // that.data.activityList.concat(array),
+      result.forEach(item => {
+        item.time = timestampFormat(new Date(item.create_time) / 1000)
+      })
       that.setData({
-        postList: that.data.postList.concat(result.postList),
-        albumList: result.albumList,
-        end: that.data.end + that.data.length,
-        loading: false
+        comments: result,
       });
 
-    }).catch(err => {
-      console.log(err);
+    }).catch(error => {
+
+      console.log(error);
     });
 
   },
 
-  /**
-   * 图片预览
-   */
-  previewImage: function (e) {
-
-    console.log('previewImages', e)
-    let postIndex = e.currentTarget.dataset.postindex;
-    let imageIndex = e.currentTarget.dataset.imageindex;
-    if (postIndex !== undefined && imageIndex !== undefined) {
-      let post = this.data.postList[postIndex];
-      // let image = this.data.images[index];
-      let current = post.originUrls[imageIndex];
-      wx.previewImage({
-        current: current, // 当前显示图片的http链接
-        urls: post.originUrls // 需要预览的图片http链接列表
-      })
-    }
-  },
 
   /**
-   * 打卡Activity
+   * 根据activity_id打卡Activity
    */
   punchActivityById: function (activityId) {
 
@@ -344,6 +305,9 @@ Page({
     if (!this.data.commitLoading) {
       this.setData({
         commitLoading: true
+      })
+      that.setData({
+        comments: result,
       });
       return punchActivityPromise({
 
@@ -364,6 +328,7 @@ Page({
             commitLoading: false
           });
         }
+      }).catch(error => {
 
       }).catch(error => {
         that.setData({
@@ -373,43 +338,12 @@ Page({
         console.log('catch err is ' + err);
       });
     }
+    console.log(error);
+
 
   },
 
-  /**
-   * 点赞帖子
-   */
-  tapStar: function (e) {
 
-    console.log(e);
-    let that = this;
-    let index = e.currentTarget.dataset.postindex;
-    if (index !== undefined) {
-
-      let postList = this.data.postList;
-      let isStar = this.data.postList[index].isStar;
-      let post_id = this.data.postList[index].post_id;
-      let param = {
-        post_id: post_id,
-      }
-      let promise = isStar ? unStarPostPromise(param) : starPostPromise(param);
-
-      promise.then(result => {
-
-        postList[index].isStar = !isStar
-        postList[index].star = isStar ? postList[index].star - 1 : postList[index].star + 1;
-        that.setData({
-          postList: postList
-        });
-        console.log(result);
-
-      }).catch(error => {
-
-        console.log(error)
-      })
-    }
-
-  },
 
   /**
    * 跳转到设置界面
@@ -426,45 +360,6 @@ Page({
     wx.navigateTo({
       url: url + param
     });
-  },
-
-  /**
-   * 长按帖子事件响应
-   */
-  longpressPost: function (e) {
-    console.log('longpressPost', e);
-    let index = e.currentTarget.dataset.postindex;
-    if (index !== undefined) {
-      let that = this;
-      wx.showActionSheet({
-        itemList: ['删除'],
-        itemColor: '#DC143C',
-        success: function (res) {
-
-          if (res.tapIndex === 0) {  //删除
-            deletePostPromise({
-              post_id: that.data.postList[index].post_id
-            }).then(result => {
-
-              console.log(result);
-              let postList = that.data.postList;
-              postList.splice(index, 1);
-              that.setData({
-                postList: postList
-              })
-
-            }).catch(err => {
-
-              console.log(err)
-            })
-          }
-        },
-        fail: function (res) {
-          console.log(res.errMsg)
-        }
-      })
-    }
-
   },
 
 
@@ -494,53 +389,6 @@ Page({
     });
   },
 
-  /**
-   * 跳转到帖子发布器
-   */
-  naviToPublishPost: function (e) {
-
-    let url = '/pages/post/publishPost/publishPost';
-    let param = generateNaviParam({
-      object_id: this.data.activity.activity_id,
-    });
-
-    wx.navigateTo({
-      url: url + param
-    });
-  },
-
-  /**
-   * 跳转到帖子详情页
-   */
-  naviToDetailPost: function (e) {
-
-    console.log('naviToDetailPost ', e);
-    let postIndex = e.currentTarget.dataset.postindex;
-    let post = this.data.postList[postIndex];
-    console.log(post)
-    setGlobalPromise({
-      promise: Promise.resolve(post)
-    })
-
-    wx.navigateTo({
-      url: '/pages/post/detailPost/detailPost'
-    });
-  },
-
-  /**
-   * 跳转到相册界面 
-   */
-  naviToAlbumList: function (e) {
-
-    let url = '/pages/album/listAlbum/listAlbum';
-    let param = generateNaviParam({
-      activity_id: this.data.activity.activity_id,
-    });
-
-    wx.navigateTo({
-      url: url + param
-    });
-  },
 
   /**
    * 报名活动
@@ -615,64 +463,151 @@ Page({
 
   },
 
+
+  /**
+  * 发表评论事件响应
+  */
+  commitComment: function (e) {
+
+    console.log('commitComment', e);
+    let inputValue = e.detail.value;
+    let that = this;
+    insertCommentPromise({
+      content: inputValue,
+      post_id: this.data.post_id
+    }).then(result => {
+
+      let comment = result.comment;
+      let comments = that.data.comments;
+      comments.unshift(comment);
+      that.setData({
+        comments: comments,
+        // 'post.comment': that.data.post.comment + 1,
+        commentValue: ''
+      });
+
+      let pageStacks = getCurrentPages();
+      let prePage = pageStacks[pageStacks.length - 2];
+      // console.log(prePage);
+      let postList = prePage.data.postList;
+      let index = postList.findIndex((value) => {  //寻找到特定的
+        if (value.post_id === that.data.post_id)
+          return true;
+      });
+      postList[index].comment = postList[index].comment + 1;
+      prePage.setData({
+        postList: postList
+      });
+
+      console.log(result);
+    }).catch(err => {
+      console.log(err)
+    })
+
+
+  },
+
+  /**
+   * 长按评论事件响应
+   */
+  longpressComment: function (e) {
+    console.log(e);
+    let index = e.currentTarget.dataset.index;
+    if (index !== undefined) {
+      let that = this;
+      wx.showActionSheet({
+        itemList: ['删除'],
+        itemColor: '#DC143C',
+        success: function (res) {
+          console.log(res.tapIndex)
+          if (res.tapIndex === 0) {  //删除
+            deleteCommentPromise({
+              comment_id: that.data.comments[index].comment_id,
+              object_id: that.data.post.post_id
+            }).then(result => {
+
+              let comments = that.data.comments;
+              comments.splice(index, 1);
+              that.setData({
+                comments: comments,
+                'post.comment': that.data.post.comment - 1
+              });
+
+              let pageStacks = getCurrentPages();
+              let prePage = pageStacks[pageStacks.length - 2];
+              let postList = prePage.data.postList;
+              let index = postList.findIndex((value) => {  //寻找到特定的
+                if (value.post_id === that.data.post.post_id)
+                  return true;
+              });
+              postList[index].comment = postList[index].comment - 1;
+              prePage.setData({
+                postList: postList
+              });
+
+            }).catch(err => {
+
+              console.log(err)
+            })
+          }
+        },
+        fail: function (res) {
+          console.log(res.errMsg)
+        }
+      })
+    }
+  },
+
+  /**
+  * 点赞
+  */
+  tapStar: function (e) {
+
+    let that = this;
+
+    // let postList = this.data.postList;
+    let post = this.data.post;
+    let isStar = this.data.post.isStar;
+    let post_id = this.data.post.post_id;
+    let param = {
+      post_id: post_id,
+    }
+    let promise = isStar ? unStarPostPromise(param) : starPostPromise(param);
+
+    promise.then(result => {
+
+      post.isStar = !isStar
+      post.star = isStar ? post.star - 1 : post.star + 1;
+
+      let pageStacks = getCurrentPages();
+      let prePage = pageStacks[pageStacks.length - 2];
+      // console.log(prePage);
+      let postList = prePage.data.postList;
+      let index = postList.findIndex((value) => {  //寻找到特定的
+        if (value.post_id === that.data.post.post_id)
+          return true;
+      });
+      postList[index].star = post.star;  //同步点赞数量和状态
+      postList[index].isStar = post.isStar;
+      that.setData({
+        post: post
+      });
+      prePage.setData({
+        postList: postList
+      });
+
+    }).catch(error => {
+
+      console.log(error)
+    })
+
+  },
+
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
     this.refreshActivityById(this.data.activity.activity_id);
-  },
-
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-    console.log('onReachBottom!');
-    if (this.data.activity_id) {
-      this.refreshPostList(this.data.activity_id);
-    }
-
-    // if (this.data.title === '我创建的活动') {
-    //   this.refreshListForMyActivity();
-    // }
-    // if (this.data.title === '我参与的活动') {
-    //   this.refreshListForMySignUpActivity();
-    // }
-
-  },
-
-  /**
-   * 根据定位和
-   */
-  judgeMapScale: function () {
-
-    let that = this;
-    let position = this.data.position;
-
-    if (position.lat && position.lng) {
-
-      return getLocationPromise({
-        type: 'gcj02'
-      }).then(res => {
-
-        that.map.includePoints({
-          padding: [40, 40, 40, 40],
-          points: [{
-            latitude: res.latitude,
-            longitude: res.longitude,
-          }, {
-            latitude: that.data.position.lat,
-            longitude: that.data.position.lng,
-          }]
-        })
-
-      }).catch(err => {
-        console.log(err);
-        showTips('提示', '请确认一下网络和定位服务是否开启了哦。')
-      });
-    }
-
   },
 
   /**
@@ -695,6 +630,5 @@ Page({
       }
     }
   }
-
 
 })

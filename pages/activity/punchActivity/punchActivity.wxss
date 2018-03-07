@@ -39,9 +39,9 @@
 
 
 
-.c-minheight {
+/* .c-minheight {
     min-height: 80px;
-}
+} */
 .c-full {
     width: 100%;
     height: 100%;
@@ -148,8 +148,8 @@
 .wx-text_6X8CEW{font-size: 12px; color: #ffffff; }
 .wx-text_VIqUJH{font-size: 12px; color: #dedede; }
 .wx-text_rDzX07{font-size: 12px; color: #bfbfbf; }
-.wx-view_JbWxfk{padding-left: 37.5rpx; padding-right: 37.5rpx; }
-.carditem01{border-radius: 6px; background-color: rgb(255, 255, 255); box-shadow: rgba(0, 0, 0, 0.239216) 0px 2px 5px 0px; margin-bottom: 37.5rpx; }
+.wx-view_JbWxfk{padding-left: 8px; padding-right: 8px; padding-top:10px;padding-bottom: 10px;}
+.carditem01{border-radius: 6px; background-color: rgb(255, 255, 255); box-shadow: rgba(0, 0, 0, 0.239216) 0px 2px 5px 0px; margin-bottom: 1px; }
 .wx-view_QvvUkU{justify-content: flex-start; align-items: center; padding: 18.75rpx; border-bottom-color: rgb(237, 237, 237);}
 .wx-navigator_rv4BGW{display: flex; align-items: center; flex-direction: row; justify-content: flex-start; }
 .wx-image_tBcdCT{width: 50px; height: 50px; border-radius: 50px; border-bottom-right-radius: 50px; border-bottom-left-radius: 50px; border-top-right-radius: 50px; border-top-left-radius: 50px; }
@@ -170,15 +170,14 @@
 
 
 
-
 .heart {
     background: url(http://demo.htmleaf.com/1511/201511131551/images/web_heart_animation.png);
     background-position: left;
     background-repeat: no-repeat;
-    height: 45px;
-    width: 45px;
+    height: 70px;
+    width: 70px;
     cursor: pointer;
-    /* position: absolute; */
+    position: absolute;
     left:-14px;
     background-size:2900%
   }

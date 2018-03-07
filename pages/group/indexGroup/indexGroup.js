@@ -295,14 +295,39 @@ Page({
     console.log('naviToDetailPost ', e);
     let postIndex = e.currentTarget.dataset.postindex;
     let post = this.data.postList[postIndex];
-    console.log(post)
-    setGlobalPromise({
-      promise: Promise.resolve(post)
-    })
+    if (post.type === 0) {
 
-    wx.navigateTo({
-      url: '/pages/post/detailPost/detailPost'
-    });
+      console.log(post)
+      setGlobalPromise({
+        promise: Promise.resolve(post)
+      })
+
+      wx.navigateTo({
+        url: '/pages/post/detailPost/detailPost'
+      });
+    }
+    if (post.type === 1) {
+
+      console.log(post)
+      // console.log(post)
+      setGlobalPromise({
+        promise: Promise.resolve(post)
+      })
+      // setGlobalPromise({
+      //   promise: Promise.resolve(post)
+      // })
+
+      let url = '/pages/activity/punchActivity/punchActivity';
+      let param = generateNaviParam({
+        activity_id: post.activity.activity_id,
+        post_id: post.post_id
+      });
+
+      wx.navigateTo({
+        url: url + param
+      });
+    }
+
   },
 
 

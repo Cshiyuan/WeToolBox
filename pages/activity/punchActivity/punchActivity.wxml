@@ -3,144 +3,105 @@
 <!-- <topTips id="toptips">
 </topTips> -->
 
-<map wx:if="{{position.radius}}" id="map" longitude="{{markers[0].longitude}}" latitude="{{markers[0].latitude}}" scale="17"
-    markers="{{markers}}" circles="{{circles}}" style="width: 100%; height: 300px;" show-location="true"></map>
+<view class="c-minheight wx-view_JbWxfk" style="padding-bottom:50px">
+    <view class="c-minheight carditem01">
+
+        <map wx:if="{{position.radius}}" id="map" longitude="{{markers[0].longitude}}" latitude="{{markers[0].latitude}}" scale="17"
+            markers="{{markers}}" circles="{{circles}}" style="width: 100%; height: 300px;" show-location="true"></map>
 
 
-<view class="weui-panel weui-panel_access">
-    <view class="weui-panel__bd">
-        <view class="weui-media-box weui-media-box_text">
-            <view class="weui-media-box__title weui-media-box__title_in-text">
-                <text selectable style="font-weight:bold;">
-                    {{activity.title}}
-                </text>
-            </view>
-            <view class="weui-media-box__desc" style="display:inline;">
-                <text selectable>
-                    {{activity.description}}
-                </text>
-            </view>
-            <view class="weui-media-box__info">
-                <view class="weui-media-box__info__meta" style="font-weight:bold;">开始时间：{{startTimeStr}}</view>
-                <view wx:if="{{position.radius}}" class="weui-media-box__info__meta" style="font-weight:bold;">活动打卡范围：{{position.radius}} 米</view>
+        <view class="weui-panel weui-panel_access">
+            <view class="weui-panel__bd">
+                <view class="weui-media-box weui-media-box_text">
+                    <view class="weui-media-box__title weui-media-box__title_in-text">
+                        <text selectable style="font-weight:bold;">
+                            {{activity.title}}
+                        </text>
+                    </view>
+                    <view class="weui-media-box__desc" style="display:inline;">
+                        <text selectable>
+                            {{activity.description}}
+                        </text>
+                    </view>
+                    <view class="weui-media-box__info">
+                        <view class="weui-media-box__info__meta" style="font-weight:bold;">开始时间：{{startTimeStr}}</view>
+                        <view wx:if="{{position.radius}}" class="weui-media-box__info__meta" style="font-weight:bold;">活动打卡范围：{{position.radius}} 米</view>
+                    </view>
+                </view>
             </view>
         </view>
-    </view>
-</view>
 
-<view class="weui-cells">
-    <!-- 报名列表 -->
-    <view class="weui-cell weui-cell_access" hover-class="weui-cell_active" data-type="signUpList" bindtap="naviToMemberList">
-        <view class="weui-cell__bd">活动报名列表</view>
-        <view class="weui-cell__ft weui-cell__ft_in-access" style="padding-right:50rpx;">
-            <block wx:for="{{activity.signUpList}}" wx:for-item="item" wx:for-index="itemIndex" wx:key="itemIndex">
-                <view class="weui-grid" style="padding:0;border:0; width:22px;">
-                    <image class="weui-grid__icon" style="border:3px solid white;border-radius:28px;" src="{{item.avatar_url}}" />
-                </view>
-            </block>
-        </view>
-    </view>
-    <!-- 打卡列表 -->
-    <view class="weui-cell weui-cell_access" hover-class="weui-cell_active" data-type="punchList" bindtap="naviToMemberList">
-        <view class="weui-cell__bd">活动已打卡列表</view>
-        <view class="weui-cell__ft weui-cell__ft_in-access" style="padding-right:50rpx;">
-            <block wx:for="{{activity.punchList}}" wx:for-item="item" wx:for-index="itemIndex" wx:key="itemIndex">
-                <view class="weui-grid" style="padding:0;border:0; width:22px;">
-                    <image class="weui-grid__icon" style="border:3px solid white;border-radius:28px;" src="{{item.avatar_url}}" />
-                </view>
-            </block>
-        </view>
-    </view>
-    <!-- 设置入口 -->
-    <view wx:if="{{isOwner}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active" bindtap="naviToSetting">
-        <view class="weui-cell__bd">设置</view>
-        <view class="weui-cell__ft weui-cell__ft_in-access"></view>
-    </view>
-</view>
-
-<view class="page__bd_spacing" style="margin-top: 50rpx;margin-bottom:50rpx;padding-bottom:50rpx;">
-    <button wx:if="{{!activity.isSignUp}}" class="weui-btn {{commitLoading ? 'zan-btn--loading' : ''}}" disabled="{{commitLoading}}"
-        type="warn" bindtap="signUpActivity">报名 {{wxTimer}}</button>
-    <button wx:if="{{activity.isSignUp && !activity.isPunch}}" class="weui-btn {{commitLoading ? 'zan-btn--loading' : ''}}" disabled="{{!isAlreadyStart || commitLoading}}"
-        type="warn" bindtap="punchActivity">打卡 {{wxTimer}}</button>
-    <button wx:if="{{activity.isPunch}}" class="weui-btn " disabled="true" type="warn" bindtap="punchActivity">已打卡</button>
-</view>
-
-<view wx:if="{{albumList.length > 0}}" class="likelist">
-    <view class="nav_likelistmore" hover-class="navigator-hover" bindtap="naviToAlbumList" style="margin-bottom:0px;">
-        <text class="c-block wx-text_t7lDiK">相册</text>
-        <text class="c-block wx-text_t7lDiK2">❯</text>
-    </view>
-    <view class="uselinklist nav_userlink weui-flex" style="flex-wrap: wrap;flex-direction: row;justify-content: flex-start;">
-        <block wx:for="{{albumList}}" wx:for-item="album" wx:for-index="albumIndex" wx:key="album_id">
-            <view class="likeuser " style="margin-right:10px;margin-top:10px" hover-class="navigator-hover">
-                <image style="width:100%;height:100%;" mode="aspectFill" src="{{album.cover}}" />
-            </view>
-        </block>
-    </view>
-</view>
-
-
-
-
-<view  class="commentlistwrap" style="border-top:1px solid rgb(237, 237, 237);">
-    <view wx:if="{{postList.length > 0}}" class="wx-view_8NFuqw">
-        <text class="c-block wx-text_t7lDiK">动态</text>
-    </view>
-
-    <block wx:for="{{postList}}" wx:for-item="post" wx:for-index="postIndex" wx:key="post_id">
-        <view class="commentlistitem fade" data-postindex="{{postIndex}}" bindtap="naviToDetailPost" bindlongpress="longpressPost">
-            <view class="likeuser fm2">
-                <image class="useravatar" mode="aspectFill" src="{{post.avatar_url}}" style="background-size: cover; background-position: center center; background-repeat: no-repeat; background-image: url(http://imgcdn.guoku.com/avatar/50/681eb4e30ac36d9481ea421c3fc61c6b.jpg); "
-                />
-            </view>
-            <view class="c-minheight wx-view_WnUrtw">
-                <view class="wx-view_F9ISUC">
-                    <text class="wx-text_71u3gA">{{post.nick_name}}</text>
-                </view>
-                <text class="c-block wx-text_kGXxsa">{{post.content}}</text>
-                <view class="weui-flex" style="flex-wrap: wrap; justify-content: flex-start;">
-                    <block wx:for="{{post.thumbnailUrls}}" wx:for-item="image" wx:for-index="imageIndex" wx:key="*this">
-                        <image catchtap="previewImage" data-postindex="{{postIndex}}" data-imageindex="{{imageIndex}}" src="{{image}}" mode="aspectFill"
-                            style="width:150rpx;height:150rpx;background-color:antiquewhite;margin-right:8px;margin-bottom:8px;"
-                        />
+        <view class="weui-cells">
+            <!-- 报名列表 -->
+            <view class="weui-cell weui-cell_access" hover-class="weui-cell_active" data-type="signUpList" bindtap="naviToMemberList">
+                <view class="weui-cell__bd">活动报名列表</view>
+                <view class="weui-cell__ft weui-cell__ft_in-access" style="padding-right:50rpx;">
+                    <block wx:for="{{activity.signUpList}}" wx:for-item="item" wx:for-index="itemIndex" wx:key="itemIndex">
+                        <view class="weui-grid" style="padding:0;border:0; width:22px;">
+                            <image class="weui-grid__icon" style="border:3px solid white;border-radius:28px;" src="{{item.avatar_url}}" />
+                        </view>
                     </block>
                 </view>
-                <view class="wx-view_adF7Mw" style="padding:0px; ">
-                    <view class="wx-view_2gazUr" style="padding-left:0px">
-                        <view class="wx-view_DKe6UT" style="flex-grow:1">
-                            <image class="wx-image_6E2A1o" mode="aspectFit" src="http://qty83k.creatby.com/materials/origin/0564a45ab780222757935674e13d6919_origin.png"
-                            />
-                            <text class="c-block wx-text_id0VJj">{{post.comment}}</text>
+            </view>
+            <!-- 打卡列表 -->
+            <view class="weui-cell weui-cell_access" hover-class="weui-cell_active" data-type="punchList" bindtap="naviToMemberList">
+                <view class="weui-cell__bd">活动已打卡列表</view>
+                <view class="weui-cell__ft weui-cell__ft_in-access" style="padding-right:50rpx;">
+                    <block wx:for="{{activity.punchList}}" wx:for-item="item" wx:for-index="itemIndex" wx:key="itemIndex">
+                        <view class="weui-grid" style="padding:0;border:0; width:22px;">
+                            <image class="weui-grid__icon" style="border:3px solid white;border-radius:28px;" src="{{item.avatar_url}}" />
                         </view>
-                        <view class="wx-view_DKe6UT" style="flex-grow:1">
-                            <view class="heart {{post.isStar ? 'heartAnimation' : ''}}" data-postindex="{{postIndex}}" catchtap="tapStar" />
-                            <text class="c-block wx-text_id0VJj">{{post.star}}</text>
-                        </view>
-                    </view>
-                    <text class="c-block wx-text_9Wn0Di" style="flex-grow:1;text-align:right;margin:auto;">{{post.time}}</text>
+                    </block>
                 </view>
             </view>
+            <!-- 设置入口 -->
+            <view wx:if="{{isOwner}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active" bindtap="naviToSetting">
+                <view class="weui-cell__bd">设置</view>
+                <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+            </view>
         </view>
-    </block>
 
-    <!-- 加载的底部条 -->
-    <view wx:if="{{loading}}" class="weui-loadmore">
-        <view class="weui-loading"></view>
-        <view class="weui-loadmore__tips" style="background-color:transparent">正在加载</view>
+        <view class="page__bd_spacing" style="margin-top: 50rpx;margin-bottom:50rpx;padding-bottom:50rpx;">
+            <button wx:if="{{!activity.isSignUp}}" class="weui-btn {{commitLoading ? 'zan-btn--loading' : ''}}" disabled="{{commitLoading}}"
+                type="warn" bindtap="signUpActivity">报名 {{wxTimer}}</button>
+            <button wx:if="{{activity.isSignUp && !activity.isPunch}}" class="weui-btn {{commitLoading ? 'zan-btn--loading' : ''}}" disabled="{{!isAlreadyStart || commitLoading}}"
+                type="warn" bindtap="punchActivity">打卡 {{wxTimer}}</button>
+            <button wx:if="{{activity.isPunch}}" class="weui-btn " disabled="true" type="warn" bindtap="punchActivity">已打卡</button>
+        </view>
+
+
+        <view wx:if="{{comments.length > 0}}">
+            <view style="border-bottom: 1px solid rgba(34,36,38,.15);border-top:1px solid rgba(34,36,38,.15);padding:5px 10px;font-size:.9em;">Comments</view>
+            <block wx:for="{{comments}}" wx:for-item="comment" wx:for-index="commentIndex" wx:key="comment_id">
+                <view class="weui-flex fade" hover-class="navigator-hover" style="flex-direction:row;" data-index="{{commentIndex}}" bindlongpress="longpressComment">
+                    <view style="margin-top:10px;">
+                        <image src="{{comment.avatar_url}}" style="height:80rpx; width:80rpx;margin:10px;border-radius:5px;" />
+                    </view>
+                    <view style="margin:10px 10px 10px 5px;flex-grow:1">
+                        <view class="weui-flex">
+                            <view style="padding-right:10px;font-size: 1em;color: rgba(0,0,0,.87);font-weight: 700;text-align:center;">{{comment.nick_name}}</view>
+                            <view style="color: rgba(0,0,0,.4);font-size: .75em;text-align:center;margin:auto 0;">{{comment.time}}</view>
+                        </view>
+                        <text style="margin: .25em 0 .5em;font-size: .85em;word-wrap: break-word;color: rgba(0,0,0,.87);line-height: 1.3;">{{comment.content}}</text>
+                    </view>
+                </view>
+            </block>
+        </view>
+
     </view>
 
-    <view wx:if="{{!loading && postList.length === 0}}" class="weui-loadmore weui-loadmore_line">
-        <view class="weui-loadmore__tips weui-loadmore__tips_in-line" style="background-color:transparent">暂无数据</view>
-    </view>
 
-    <view wx:if="{{!loading && postList.length !== 0}}" class="weui-loadmore weui-loadmore_line weui-loadmore_dot">
-        <view class="weui-loadmore__tips weui-loadmore__tips_in-line weui-loadmore__tips_in-dot" style="background-color:transparent"></view>
-    </view>
+</view>
 
 
-    <!-- 发布按钮 -->
-    <view class="wx-navigator_iOsAsd" hover-class="navigator-hover" bindtap="naviToPublishPost" style="bottom: 30px;right:14px;background-color:#2CA8A8;box-shadow: 2px 3px 10px #555;opacity:0.8;">
-        <image class="wx-image_SfQyMy" mode="aspectFit" src="/images/publish.png" style="margin:13px;" />
+<view style="width:750rpx;bottom:0;position:fixed;z-index:10;box-shadow: 0 1px 3px 0 #D4D4D5, 0 0 0 1px #D4D4D5;background: #FFF;border-radius: .28571429rem;">
+    <view class="weui-cell" style="padding:3px 15px;">
+        <!-- <view class="weui-cell__hd" style="width: 90rpx;margin-right:10px;padding:15rpx"> -->
+        <view bindtap="tapStar" class="weui-cell__hd heart {{post.isStar ? 'heartAnimation' : ''}}" style="margin-left:5px;"></view>
+        <!-- </view> -->
+        <view class="weui-cell__bd " style="margin-left:35px;">
+            <input class="weui-input" value="{{commentValue}}" cursor-spacing="2" confirm-type="send" bindconfirm="commitComment" placeholder="Comment"
+            />
+        </view>
     </view>
 </view>
