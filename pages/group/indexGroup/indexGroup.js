@@ -343,7 +343,7 @@ Page({
 
         console.log('onShareAppMessage success', res);
         let shareTicket = res.shareTickets[0]
-        that.getOpenGIdByShareTicket(shareTicket).then(result => {
+        getOpenGIdByShareTicket(shareTicket).then(result => {
 
           console.log('decryptDataPromise result is ', result);
           if (result.openGId) {
