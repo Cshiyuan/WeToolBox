@@ -477,7 +477,7 @@ Page({
     console.log('commitComment', e);
     let inputValue = e.detail.value;
     let that = this;
-    if (inputValue.trim().length > 0) {
+    if (inputValue.trim().length === 0) {
       return;
     }
     insertCommentPromise({
