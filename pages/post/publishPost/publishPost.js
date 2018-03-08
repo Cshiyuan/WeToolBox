@@ -107,6 +107,7 @@ Page({
 
         console.log(results)
 
+        let photos = [];
         results.forEach(item => {
           photos.push({
             url: item,
