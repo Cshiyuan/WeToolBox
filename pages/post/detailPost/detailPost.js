@@ -23,21 +23,37 @@ Page({
    */
   onLoad: function (options) {
 
+    wx.updateShareMenu({
+      withShareTicket: true
+    });
     let that = this;
     let promise = getGlobalPromise();
     promise.then(result => {
-
-      // console.log(result);
 
       that.setData({
         post: result
       });
 
-      return getCommentListPromise({
-        post_id: result.post_id
-      });
+      that.refreshCommentList(result.post_id)
+
+    }).catch(error => {
+
+      console.log(error);
+    });
+
+    
+  },
 
 
+  /**
+   * 刷新评论
+   */
+  refreshCommentList: function (post_id) {
+
+    let that = this;
+    getCommentListPromise({
+
+      post_id: post_id
     }).then(result => {
 
       console.log(result);
@@ -52,7 +68,10 @@ Page({
 
       console.log(error);
     });
+
   },
+
+
 
   /**
    * 图片预览
@@ -214,5 +233,48 @@ Page({
 
 
 
-  }
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function (e) {
+
+
+    let that = this;
+    let param = util.generateNaviParam({  //生成转发参数
+      openg_id: this.data.post.object_id,
+      post_id: this.data.post.post_id
+    });
+
+    return {
+      // title: '快来进入专属群日记吧',
+      path: '/pages/post/detailPost/detailPost' + param,
+      // imageUrl: 'http://wetoolbox-1252042156.picgz.myqcloud.com/20180306/9ad9cf92-9eb8-4ad8-a20f-bc3b9a07a895.JPG',
+      success: function (res) {
+
+        console.log('onShareAppMessage success', res);
+        let shareTicket = res.shareTickets[0]
+        // that.getOpenGIdByShareTicket(shareTicket).then(result => {
+
+        //   console.log('decryptDataPromise result is ', result);
+        //   if (result.openGId) {
+        //     that.setData({
+        //       openGId: result.openGId,
+        //       showShareLink: false
+        //     });
+        //     that.refreshPostList(result.openGId);
+        //   }
+        // });
+        // 转发成功
+      },
+      fail: function (res) {
+        // 转发失败
+        console.log('onShareAppMessage fail', res);
+      }
+    }
+  },
+
+
+
 })

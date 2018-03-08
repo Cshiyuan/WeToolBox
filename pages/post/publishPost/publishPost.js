@@ -31,7 +31,6 @@ Page({
 
   },
 
-
   //输入标题
   inputTitle: function (e) {
     this.setData({
@@ -87,7 +86,6 @@ Page({
     })
 
   },
-
 
   publishPost: function (e) {
 

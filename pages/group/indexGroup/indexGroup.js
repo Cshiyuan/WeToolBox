@@ -31,6 +31,10 @@ Page({
    */
   onLoad: function (options) {
 
+    wx.updateShareMenu({
+      withShareTicket: true
+    });
+
     console.log('indexGroup onLoad', options)
     let context = getApp().globalData.context;
     let that = this;
@@ -62,9 +66,6 @@ Page({
       })
     }
 
-    wx.updateShareMenu({
-      withShareTicket: true
-    });
     // console.log(options);
 
   },

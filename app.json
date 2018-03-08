@@ -1,4 +1,5 @@
 {
+
   "tabBar": {
     "color": "#5F5F5F",
     "selectedColor": "#2CA8A8",
@@ -36,8 +37,10 @@
   ],
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#fff",
+    "navigationBarBackgroundColor": "#2CA8A8",
     "navigationBarTitleText": "WeChat",
-    "navigationBarTextStyle": "black"
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#2CA8A8"
+
   }
 }
