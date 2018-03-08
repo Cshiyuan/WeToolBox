@@ -1,6 +1,6 @@
 // pages/group/indexGroup.js
 const { wxPromisify } = require('../../../utils/util');
-const { decryptDataPromise } = require('../../../utils/groupRequestPromise');
+
 const {
   getPostListAlbumListPromise,
   deletePostPromise,
@@ -9,6 +9,7 @@ const {
 const { imageView2UrlFormat } = require('../../../utils/cos')
 const { timestampFormat, generateNaviParam } = require('../../../utils/util');
 const { setGlobalPromise, getGlobalPromise } = require('../../../utils/globalPromiseList');
+const { getOpenGIdByShareTicket } = require('../../../utils/groupRequestPromise');
 const getShareInfoPromise = wxPromisify(wx.getShareInfo);
 
 
@@ -43,7 +44,7 @@ Page({
       //符合条件的
       // console.log('context is ', context);
       let shareTicket = context.shareTicket;
-      that.getOpenGIdByShareTicket(shareTicket).then(result => {
+      getOpenGIdByShareTicket(shareTicket).then(result => {
 
         console.log('decryptDataPromise result is ', result);
         if (result.openGId) {
@@ -70,25 +71,6 @@ Page({
 
   },
 
-  /**
-   * 刷新动态列表
-   */
-  getOpenGIdByShareTicket: function (shareTicket) {
-
-    // let openGId = openGId;  //帖子id
-    return getShareInfoPromise({
-
-      shareTicket: shareTicket
-    }).then(result => {
-
-      console.log('getShareInfoPromise result is ', result);
-      return decryptDataPromise({
-        encryptedData: result.encryptedData,
-        iv: result.iv
-      })
-    })
-
-  },
 
   /**
    * 刷新动态列表

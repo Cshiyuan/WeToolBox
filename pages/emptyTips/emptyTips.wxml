@@ -6,7 +6,7 @@
     <image mode="aspectFill" style="display:block; margin:auto; padding-top:350rpx;width:250rpx;height:250rpx;" src="/images/empty.png"
       background-size="cover"></image>
     <view>
-      <text style="display:block; margin:auto;text-align:center;color: #dbdbdb;">没有找到相关活动哦。</text>
+      <text style="display:block; margin:auto;text-align:center;color: #dbdbdb;">无权限查看或已被删除</text>
     </view>
   </view>
 </view>

@@ -28,6 +28,7 @@ const DELETE_PHOTO_URL = HOST + '/album/deletePhoto';  //删除特定图片
 
 const INSERT_POST_URL = HOST + '/post/insertPost'; //创建帖子
 const DELETE_POST_URL = HOST + '/post/deletePost';  //删除帖子
+const GET_POST_URL = HOST + '/post/getPost'; //获得帖子
 const GET_POSTLIST_URL = HOST + '/post/getPostList';  //拉取帖子的列表
 const INSERT_COMMENT_URL = HOST + '/post/insertComment';  //创建评论
 const DELETE_COMMENT_URL = HOST + '/post/deleteComment'; //删除评论
@@ -79,6 +80,7 @@ module.exports = {
     // 帖子相关URL
     INSERT_POST_URL,
     DELETE_POST_URL,
+    GET_POST_URL,
     GET_POSTLIST_URL,
     INSERT_COMMENT_URL,
     GET_COMMENTLIST_URL,

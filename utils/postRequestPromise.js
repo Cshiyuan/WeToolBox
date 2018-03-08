@@ -8,7 +8,8 @@ const {
     DELETE_COMMENT_URL,
     STAR_POST_URL,
     UNSTAR_POST_URL,
-    GET_POSTLIST_ALBUMLIST_URL
+    GET_POSTLIST_ALBUMLIST_URL,
+    GET_POST_URL
 } = require('./config');
 
 
@@ -21,6 +22,17 @@ function getPostListAlbumListPromise(data) {
         return response.data;
     });
 }
+
+function getPostPromise(data) {
+    return wxRequestPromise({
+        url: GET_POST_URL,
+        data: data
+    }).then(response => {
+
+        return response.data;
+    });
+}
+
 
 function starPostPromise(data) {
     return wxRequestPromise({
@@ -131,7 +143,8 @@ module.exports = {
 
     deletePostPromise: deletePostPromise,  //删除帖子
     insertPostPromise: insertPostPromise,  //创建帖子
-    getPostListPromise: getPostListPromise,    //获得帖子
+    getPostPromise: getPostPromise,
+    getPostListPromise: getPostListPromise,    //获得帖子列表
     insertCommentPromise: insertCommentPromise, //创建评论
     deleteCommentPromise: deleteCommentPromise,  //删除评论
     getCommentListPromise: getCommentListPromise,  //获得评论

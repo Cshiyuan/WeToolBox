@@ -5,8 +5,11 @@ const {
   getCommentListPromise,
   deleteCommentPromise,
   starPostPromise,
-  unStarPostPromise
+  unStarPostPromise,
+  getPostPromise
 } = require('../../../utils/postRequestPromise');
+const { getOpenGIdByShareTicket } = require('../../../utils/groupRequestPromise');
+const { imageView2UrlFormat } = require('../../../utils/cos')
 const { timestampFormat, generateNaviParam } = require('../../../utils/util');
 Page({
 
@@ -26,22 +29,76 @@ Page({
     wx.updateShareMenu({
       withShareTicket: true
     });
+
+    let promise;
+    if (options.isShare) {
+      let context = getApp().globalData.context;
+      if (context && context.scene === 1044 && context.shareTicket) {
+        console.log('success to share to group');
+        promise = getOpenGIdByShareTicket(context.shareTicket).then(result => {
+
+          console.log('decryptDataPromise result is ', result);
+          if (result.openGId) {
+            //判断是否是同一个群
+            if (options.openg_id === result.openGId) {
+
+              return getPostPromise({ post_id: options.post_id }).then(post => {
+                if (post.type === 1) {
+                  post.activity = JSON.parse(post.extra);
+                  if (post.activity.position) {
+                    post.activity.position = JSON.parse(post.activity.position);
+                  }
+                }
+                post.time = timestampFormat(Date.parse(post.create_time) / 1000)
+                post.thumbnailUrls = [];
+                post.originUrls = [];
+                post.images.forEach(item => {
+
+                  post.thumbnailUrls.push(imageView2UrlFormat(item, {
+                    width: 200,
+                    height: 200
+                  }));
+                  post.originUrls.push(imageView2UrlFormat(item))
+
+                })
+                return post
+
+              });
+            } else {
+
+              return Promise.reject('different group!')
+            }
+          } else {
+            return Promise.reject('decryptDataPromise error!')
+          }
+        });
+
+      } else {
+        promise = Promise.reject('scene is error !')
+      }
+    } else {  //非分享情况
+      promise = getGlobalPromise();
+    }
+
+
     let that = this;
-    let promise = getGlobalPromise();
     promise.then(result => {
 
       that.setData({
         post: result
       });
 
-      that.refreshCommentList(result.post_id)
+      return that.refreshCommentList(result.post_id)
 
     }).catch(error => {
 
       console.log(error);
+      wx.redirectTo({
+        url: '/pages/emptyTips/emptyTips'
+      });
     });
 
-    
+
   },
 
 
@@ -51,7 +108,7 @@ Page({
   refreshCommentList: function (post_id) {
 
     let that = this;
-    getCommentListPromise({
+    return getCommentListPromise({
 
       post_id: post_id
     }).then(result => {
@@ -114,6 +171,9 @@ Page({
       });
 
       let pageStacks = getCurrentPages();
+      if(pageStacks.length === 1) {
+        return;
+      }
       let prePage = pageStacks[pageStacks.length - 2];
       // console.log(prePage);
       let postList = prePage.data.postList;
@@ -161,6 +221,9 @@ Page({
               });
 
               let pageStacks = getCurrentPages();
+              if(pageStacks.length === 1) {
+                return;
+              }
               let prePage = pageStacks[pageStacks.length - 2];
               let postList = prePage.data.postList;
               let index = postList.findIndex((value) => {  //寻找到特定的
@@ -207,9 +270,14 @@ Page({
 
       post.isStar = !isStar
       post.star = isStar ? post.star - 1 : post.star + 1;
-
+      that.setData({
+        post: post
+      });
 
       let pageStacks = getCurrentPages();
+      if(pageStacks.length === 1) {
+        return;
+      }
       let prePage = pageStacks[pageStacks.length - 2];
       // console.log(prePage);
       let postList = prePage.data.postList;
@@ -219,9 +287,7 @@ Page({
       });
       postList[index].star = post.star;  //同步点赞数量和状态
       postList[index].isStar = post.isStar;
-      that.setData({
-        post: post
-      });
+      
       prePage.setData({
         postList: postList
       });
@@ -242,10 +308,13 @@ Page({
 
 
     let that = this;
-    let param = util.generateNaviParam({  //生成转发参数
+    let param = generateNaviParam({  //生成转发参数
       openg_id: this.data.post.object_id,
-      post_id: this.data.post.post_id
+      post_id: this.data.post.post_id,
+      isShare: true
     });
+
+    console.log('share Path is ', '/pages/post/detailPost/detailPost' + param);
 
     return {
       // title: '快来进入专属群日记吧',

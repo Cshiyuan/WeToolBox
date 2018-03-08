@@ -5,16 +5,19 @@ const bmap = require('../../../libs/bmap-wx');
 const { timestampFormat, generateNaviParam } = require('../../../utils/util');
 const { imageView2UrlFormat } = require('../../../utils/cos')
 const { getActivityPromise, signUpActivityPromise, punchActivityPromise } = require('../../../utils/activityRequestPromise');
-const { countDown, formatTime, getDistance, wxPromisify, formatNumber, showTips } = require('../../../utils/util');
+const { countDown, formatTime, getDistance, wxPromisify, formatNumber, showTips, } = require('../../../utils/util');
 const { setGlobalPromise, getGlobalPromise } = require('../../../utils/globalPromiseList');
 const getLocationPromise = wxPromisify(wx.getLocation);
+// const { imageView2UrlFormat } = require('../../../utils/cos')
 const {
   insertCommentPromise,
   getCommentListPromise,
   deleteCommentPromise,
   starPostPromise,
-  unStarPostPromise
+  unStarPostPromise,
+  getPostPromise
 } = require('../../../utils/postRequestPromise');
+const { getOpenGIdByShareTicket } = require('../../../utils/groupRequestPromise');
 
 Page({
 
@@ -69,31 +72,86 @@ Page({
    */
   onLoad: function (options) {
 
-
     wx.updateShareMenu({
       withShareTicket: true
     });
 
+    let promise;
+    if (options.isShare) {
+      let context = getApp().globalData.context;
+      if (context && context.scene === 1044 && context.shareTicket) {
+        console.log('success to share to group');
+        promise = getOpenGIdByShareTicket(context.shareTicket).then(result => {
+
+          console.log('decryptDataPromise result is ', result);
+          if (result.openGId) {
+            //判断是否是同一个群
+            if (options.openg_id === result.openGId) {
+
+              return getPostPromise({ post_id: options.post_id }).then(post => {
+
+                if (post.type === 1) {
+                  post.activity = JSON.parse(post.extra);
+                  if (post.activity.position) {
+                    post.activity.position = JSON.parse(post.activity.position);
+                  }
+                }
+                post.time = timestampFormat(Date.parse(post.create_time) / 1000)
+                post.thumbnailUrls = [];
+                post.originUrls = [];
+                post.images.forEach(item => {
+
+                  post.thumbnailUrls.push(imageView2UrlFormat(item, {
+                    width: 200,
+                    height: 200
+                  }));
+                  post.originUrls.push(imageView2UrlFormat(item))
+
+                })
+                return post
+              });
+            } else {
+
+              return Promise.reject('different group!')
+            }
+          } else {
+            return Promise.reject('decryptDataPromise error!')
+          }
+        });
+
+      } else {
+        promise = Promise.reject('scene is error !')
+      }
+    } else {  //非分享情况
+      promise = getGlobalPromise();
+    }
+
     let that = this;
-    let promise = getGlobalPromise();
     promise.then(result => {
       that.setData({
         post: result
       });
-    });
 
-    if (options.activity_id && options.post_id) {
-      this.setData(options)
-      this.refreshActivityById(options.activity_id);
-      this.refreshCommentListPromise(options.post_id);
-    }
+      if (options.activity_id && options.post_id) {
+        that.setData(options)
+        that.refreshActivityById(options.activity_id);
+        that.refreshCommentListPromise(options.post_id);
 
-    //新建百度地图对象
-    let BMap = new bmap.BMapWX({
-      ak: 'hOfa0G8FQM2LgYxmqSVsu7rUyeS043Np'
-    });
-    this.BMap = BMap;
-    this.map = wx.createMapContext('map');
+        //新建百度地图对象
+        let BMap = new bmap.BMapWX({
+          ak: 'hOfa0G8FQM2LgYxmqSVsu7rUyeS043Np'
+        });
+        that.BMap = BMap;
+        that.map = wx.createMapContext('map');
+      }
+    }).catch(error => {
+      console.log(error);
+      wx.redirectTo({
+        url: '/pages/emptyTips/emptyTips'
+      });
+    })
+
+
   },
 
   /**
@@ -434,6 +492,9 @@ Page({
       });
 
       let pageStacks = getCurrentPages();
+      if(pageStacks.length === 1) {
+        return;
+      }
       let prePage = pageStacks[pageStacks.length - 2];
       // console.log(prePage);
       let postList = prePage.data.postList;
@@ -480,6 +541,9 @@ Page({
               });
 
               let pageStacks = getCurrentPages();
+              if(pageStacks.length === 1) {
+                return;
+              }
               let prePage = pageStacks[pageStacks.length - 2];
               let postList = prePage.data.postList;
               let index = postList.findIndex((value) => {  //寻找到特定的
@@ -524,8 +588,13 @@ Page({
 
       post.isStar = !isStar
       post.star = isStar ? post.star - 1 : post.star + 1;
-
+      that.setData({
+        post: post
+      });
       let pageStacks = getCurrentPages();
+      if(pageStacks.length === 1) {
+        return;
+      }
       let prePage = pageStacks[pageStacks.length - 2];
       // console.log(prePage);
       let postList = prePage.data.postList;
@@ -535,9 +604,7 @@ Page({
       });
       postList[index].star = post.star;  //同步点赞数量和状态
       postList[index].isStar = post.isStar;
-      that.setData({
-        post: post
-      });
+
       prePage.setData({
         postList: postList
       });
@@ -562,15 +629,26 @@ Page({
    */
   onShareAppMessage: function (res) {
 
-    let nickName = getApp().globalData.userInfo.nickName;
-    let title = this.data.activity.title;
-    let activity_id = this.data.activity.activity_id;
+    // let nickName = getApp().globalData.userInfo.nickName;
+    // let title = this.data.activity.title;
+    // let activity_id = this.data.activity.activity_id;
+
+    let param = generateNaviParam({  //生成转发参数
+      openg_id: this.data.post.object_id,
+      post_id: this.data.post.post_id,
+      activity_id: this.data.activity_id,
+      isShare: true
+    });
+
+    console.log('share Path is ', '/pages/activity/punchActivity/punchActivity' + param);
 
     return {
-      title: nickName + '发来了一个活动 ' + title,
-      path: '/pages/activity/punchActivity/punchActivity?activity_id=' + activity_id,
+      // title: nickName + '发来了一个活动 ' + title,
+      path: '/pages/activity/punchActivity/punchActivity' + param,
       success: function (res) {
         // 转发成功
+        console.log('onShareAppMessage success', res);
+        let shareTicket = res.shareTickets[0]
       },
       fail: function (res) {
         // 转发失败

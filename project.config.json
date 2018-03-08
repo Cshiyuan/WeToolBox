@@ -25,7 +25,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": -1,
+			"current": 11,
 			"list": [
 				{
 					"id": 0,
@@ -97,6 +97,18 @@
 						"groupName": "测试模拟群0",
 						"shareName": "8Bqu3afhSO3idFC6JoRe6qzxUC_R1J_ZJe1BwNXgim0@cr4dev",
 						"shareKey": "ycbd0mB8t54NnP35mnYVfjTjwMK9l2f-rGQyk3kTylhlC-oPImTRUBabm0p69Rz85aMbtHqMQtLDT9693H8J8A~~"
+					}
+				},
+				{
+					"id": 11,
+					"name": "shareForDetailPost",
+					"pathName": "pages/post/detailPost/detailPost",
+					"query": "openg_id=tGFFv90Jif5stKSGjlqSI7tzEcHXI&post_id=PTca70815b-ea8b-469d-8049-e3fb54cf6d8a&isShare=true&",
+					"scene": "1044",
+					"shareInfo": {
+						"groupName": "测试模拟群0",
+						"shareName": "8Bqu3afhSO3idFC6JoRe6qzxUC_R1J_ZJe1BwNXgim0@cr4dev",
+						"shareKey": "kQGzHiD17U3EXwp9qKSwrKQHjS4YvlKri8fR-O0VuNaeZPQbzSMYUJ8t7TJIcM7o1BVVWGJ9S5Si3QhC3Bbwow~~"
 					}
 				}
 			]

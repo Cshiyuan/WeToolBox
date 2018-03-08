@@ -1,4 +1,4 @@
-const { wxRequestPromise } = require('./util');
+const { wxRequestPromise, wxPromisify } = require('./util');
 const {
     DECRYDATA_URL,
     GET_USERLIST_BY_GROUP,
@@ -67,6 +67,26 @@ function deleteUserGroupRelationPromise(data) {
     });
 }
 
+/**
+ * 根据shareticket获得openGid
+ */
+const getShareInfoPromise = wxPromisify(wx.getShareInfo);
+function getOpenGIdByShareTicket(shareTicket) {
+
+  // let openGId = openGId;  //帖子id
+  return getShareInfoPromise({
+
+    shareTicket: shareTicket
+  }).then(result => {
+
+    console.log('getShareInfoPromise result is ', result);
+    return decryptDataPromise({
+      encryptedData: result.encryptedData,
+      iv: result.iv
+    })
+  })
+
+}
 
 
 module.exports = {
@@ -74,6 +94,8 @@ module.exports = {
     decryptDataPromise: decryptDataPromise,  
     deleteUserGroupRelationPromise:deleteUserGroupRelationPromise,
     getGroupListPromise: getGroupListPromise,
-    getUserListPromise: getUserListPromise
+    getUserListPromise: getUserListPromise,
+
+    getOpenGIdByShareTicket: getOpenGIdByShareTicket,
 
 }

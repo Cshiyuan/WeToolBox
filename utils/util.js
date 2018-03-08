@@ -1,8 +1,10 @@
 
 const Promise = require('../libs/bluebird');
 const wafer = require('../libs/wafer-client-sdk/index');
+// const { decryptDataPromise } = require('../utils/groupRequestPromise');
 const { LOGIN_URL } = require('./config');
 wafer.setLoginUrl(LOGIN_URL);
+
 
 
 const formatTime = date => {
@@ -91,8 +93,6 @@ function timestampFormat(timestamp) {
     }
   }
 }
-
-
 
 
 
@@ -283,6 +283,6 @@ module.exports = {
 
   wxPromisify: wxPromisify,  //将原有的小程序接口替换成
   Promise: Promise,    //以bluebird引入的Promise实现
-  wxRequestPromise: wxRequestPromise  //一个简单的打包wxRquset
+  wxRequestPromise: wxRequestPromise,  //一个简单的打包wxRquset
 
 }
