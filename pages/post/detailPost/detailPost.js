@@ -156,6 +156,9 @@ Page({
     console.log('commitComment', e);
     let inputValue = e.detail.value;
     let that = this;
+    if (inputValue.trim().length > 0) {
+      return;
+    }
     insertCommentPromise({
       content: inputValue,
       post_id: this.data.post.post_id
@@ -171,7 +174,7 @@ Page({
       });
 
       let pageStacks = getCurrentPages();
-      if(pageStacks.length === 1) {
+      if (pageStacks.length === 1) {
         return;
       }
       let prePage = pageStacks[pageStacks.length - 2];
@@ -221,7 +224,7 @@ Page({
               });
 
               let pageStacks = getCurrentPages();
-              if(pageStacks.length === 1) {
+              if (pageStacks.length === 1) {
                 return;
               }
               let prePage = pageStacks[pageStacks.length - 2];
@@ -275,7 +278,7 @@ Page({
       });
 
       let pageStacks = getCurrentPages();
-      if(pageStacks.length === 1) {
+      if (pageStacks.length === 1) {
         return;
       }
       let prePage = pageStacks[pageStacks.length - 2];
@@ -287,7 +290,7 @@ Page({
       });
       postList[index].star = post.star;  //同步点赞数量和状态
       postList[index].isStar = post.isStar;
-      
+
       prePage.setData({
         postList: postList
       });
@@ -318,6 +321,7 @@ Page({
 
     return {
       // title: '快来进入专属群日记吧',
+      title: ' ',
       path: '/pages/post/detailPost/detailPost' + param,
       // imageUrl: 'http://wetoolbox-1252042156.picgz.myqcloud.com/20180306/9ad9cf92-9eb8-4ad8-a20f-bc3b9a07a895.JPG',
       success: function (res) {

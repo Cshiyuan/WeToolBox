@@ -477,6 +477,9 @@ Page({
     console.log('commitComment', e);
     let inputValue = e.detail.value;
     let that = this;
+    if (inputValue.trim().length > 0) {
+      return;
+    }
     insertCommentPromise({
       content: inputValue,
       post_id: this.data.post_id
@@ -492,7 +495,7 @@ Page({
       });
 
       let pageStacks = getCurrentPages();
-      if(pageStacks.length === 1) {
+      if (pageStacks.length === 1) {
         return;
       }
       let prePage = pageStacks[pageStacks.length - 2];
@@ -541,7 +544,7 @@ Page({
               });
 
               let pageStacks = getCurrentPages();
-              if(pageStacks.length === 1) {
+              if (pageStacks.length === 1) {
                 return;
               }
               let prePage = pageStacks[pageStacks.length - 2];
@@ -592,7 +595,7 @@ Page({
         post: post
       });
       let pageStacks = getCurrentPages();
-      if(pageStacks.length === 1) {
+      if (pageStacks.length === 1) {
         return;
       }
       let prePage = pageStacks[pageStacks.length - 2];
@@ -644,6 +647,7 @@ Page({
 
     return {
       // title: nickName + '发来了一个活动 ' + title,
+      title: ' ',
       path: '/pages/activity/punchActivity/punchActivity' + param,
       success: function (res) {
         // 转发成功
