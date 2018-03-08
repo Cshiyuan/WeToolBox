@@ -321,7 +321,7 @@ Page({
 
     return {
       // title: '快来进入专属群日记吧',
-      title: ' ',
+      title: '群日记动态',
       path: '/pages/post/detailPost/detailPost' + param,
       // imageUrl: 'http://wetoolbox-1252042156.picgz.myqcloud.com/20180306/9ad9cf92-9eb8-4ad8-a20f-bc3b9a07a895.JPG',
       success: function (res) {

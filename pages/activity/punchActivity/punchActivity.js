@@ -647,7 +647,7 @@ Page({
 
     return {
       // title: nickName + '发来了一个活动 ' + title,
-      title: ' ',
+      title: '群日记的活动',
       path: '/pages/activity/punchActivity/punchActivity' + param,
       success: function (res) {
         // 转发成功
