@@ -227,33 +227,37 @@ Page({
     let index = e.currentTarget.dataset.postindex;
     if (index !== undefined) {
       let that = this;
-      wx.showActionSheet({
-        itemList: ['删除'],
-        itemColor: '#DC143C',
-        success: function (res) {
+      let isOwner = that.data.postList[index].isOwner;
+      if (isOwner) {
+        wx.showActionSheet({
+          itemList: ['删除'],
+          itemColor: '#DC143C',
+          success: function (res) {
 
-          if (res.tapIndex === 0) {  //删除
-            deletePostPromise({
-              post_id: that.data.postList[index].post_id
-            }).then(result => {
+            if (res.tapIndex === 0) {  //删除
+              deletePostPromise({
+                post_id: that.data.postList[index].post_id
+              }).then(result => {
 
-              console.log(result);
-              let postList = that.data.postList;
-              postList.splice(index, 1);
-              that.setData({
-                postList: postList
+                console.log(result);
+                let postList = that.data.postList;
+                postList.splice(index, 1);
+                that.setData({
+                  postList: postList
+                })
+
+              }).catch(err => {
+
+                console.log(err)
               })
-
-            }).catch(err => {
-
-              console.log(err)
-            })
+            }
+          },
+          fail: function (res) {
+            console.log(res.errMsg)
           }
-        },
-        fail: function (res) {
-          console.log(res.errMsg)
-        }
-      })
+        })
+      }
+
     }
 
   },

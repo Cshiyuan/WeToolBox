@@ -40,9 +40,9 @@ const UNSTAR_POST_URL = HOST + '/post/unStarPost'; //不点赞帖子
 
 
 const DECRYDATA_URL = HOST + '/group/decryptData';  //解密shareticket
-const GET_USERLIST_BY_GROUP = HOST + '/group/getUserListByGroup';  
-const GET_GROUPLIST_BY_USER = HOST + '/group/getGroupListByUser'; 
-const DELETE_USERGROUP_RELATION = HOST + '/group/deleteUserGroupRelation';
+const GET_USERLIST_BY_GROUP = HOST + '/group/getUserListByGroup';  //获得用户的群列表
+const GET_GROUPLIST_BY_USER = HOST + '/group/getGroupListByUser';   //获得群里的用户列表
+const DELETE_USERGROUP_RELATION = HOST + '/group/deleteUserGroupRelation';  //删除用户和群直接的关系
 
 const PICGZ_URL = 'http://wetoolbox-1252042156.picgz.myqcloud.com' //处理图片的URL
 

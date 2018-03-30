@@ -42,7 +42,7 @@
         <view wx:if="{{comments.length > 0}}">
             <view style="border-bottom: 1px solid rgba(34,36,38,.15);border-top:1px solid rgba(34,36,38,.15);padding:5px 10px;font-size:.9em;">Comments</view>
             <block wx:for="{{comments}}" wx:for-item="comment" wx:for-index="commentIndex" wx:key="comment_id">
-                <view class="weui-flex fade" hover-class="navigator-hover" style="flex-direction:row;" data-index="{{commentIndex}}" bindlongpress="longpressComment">
+                <view class="weui-flex fade"  style="flex-direction:row;" data-index="{{commentIndex}}" bindlongpress="longpressComment">
                     <view style="margin-top:10px;">
                         <image src="{{comment.avatar_url}}" style="height:80rpx; width:80rpx;margin:10px;border-radius:5px;" />
                     </view>

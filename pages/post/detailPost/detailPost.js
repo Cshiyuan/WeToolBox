@@ -205,49 +205,52 @@ Page({
     let index = e.currentTarget.dataset.index;
     if (index !== undefined) {
       let that = this;
-      wx.showActionSheet({
-        itemList: ['删除'],
-        itemColor: '#DC143C',
-        success: function (res) {
-          console.log(res.tapIndex)
-          if (res.tapIndex === 0) {  //删除
-            deleteCommentPromise({
-              comment_id: that.data.comments[index].comment_id,
-              object_id: that.data.post.post_id
-            }).then(result => {
+      let isOwner = that.data.comments[index].isOwner;
+      if (isOwner) {
+        wx.showActionSheet({
+          itemList: ['删除'],
+          itemColor: '#DC143C',
+          success: function (res) {
+            console.log(res.tapIndex)
+            if (res.tapIndex === 0) {  //删除
+              deleteCommentPromise({
+                comment_id: that.data.comments[index].comment_id,
+                object_id: that.data.post.post_id
+              }).then(result => {
 
-              let comments = that.data.comments;
-              comments.splice(index, 1);
-              that.setData({
-                comments: comments,
-                'post.comment': that.data.post.comment - 1
-              });
+                let comments = that.data.comments;
+                comments.splice(index, 1);
+                that.setData({
+                  comments: comments,
+                  'post.comment': that.data.post.comment - 1
+                });
 
-              let pageStacks = getCurrentPages();
-              if (pageStacks.length === 1) {
-                return;
-              }
-              let prePage = pageStacks[pageStacks.length - 2];
-              let postList = prePage.data.postList;
-              let index = postList.findIndex((value) => {  //寻找到特定的
-                if (value.post_id === that.data.post.post_id)
-                  return true;
-              });
-              postList[index].comment = postList[index].comment - 1;
-              prePage.setData({
-                postList: postList
-              });
+                let pageStacks = getCurrentPages();
+                if (pageStacks.length === 1) {
+                  return;
+                }
+                let prePage = pageStacks[pageStacks.length - 2];
+                let postList = prePage.data.postList;
+                let index = postList.findIndex((value) => {  //寻找到特定的
+                  if (value.post_id === that.data.post.post_id)
+                    return true;
+                });
+                postList[index].comment = postList[index].comment - 1;
+                prePage.setData({
+                  postList: postList
+                });
 
-            }).catch(err => {
+              }).catch(err => {
 
-              console.log(err)
-            })
+                console.log(err)
+              })
+            }
+          },
+          fail: function (res) {
+            console.log(res.errMsg)
           }
-        },
-        fail: function (res) {
-          console.log(res.errMsg)
-        }
-      })
+        })
+      }
     }
   },
 
