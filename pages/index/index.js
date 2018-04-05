@@ -62,6 +62,14 @@ Page({
     this.noticeBar.setContent('只是单纯凭借兴趣制作的工具，任何问题可以加交流群反馈。点下面的连接就有群二维码啦。');
   },
 
+  onShow: function () {
+
+    console.log('app onHide', options);
+    let app = getApp();
+    delete app.globalData.context  //删除属性
+
+  },
+
   lookGroup: function () {
 
     let url = 'http://share-server.oss-cn-shenzhen.aliyuncs.com/4BE7BDE6792F92F96916AF0FF97F5BF8.jpg';
