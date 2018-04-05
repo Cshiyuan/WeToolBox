@@ -64,7 +64,7 @@ Page({
 
   onShow: function () {
 
-    console.log('app onHide', options);
+    // console.log('app onHide', options);
     let app = getApp();
     delete app.globalData.context  //删除属性
 
