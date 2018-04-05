@@ -23,15 +23,17 @@ Page({
       that.setData({
         groupList: result
       })
+    }).catch(err => {
 
+      console.log(err)
     })
   },
 
-  jumpToIndexGroup:function(e) {
-    
+  jumpToIndexGroup: function (e) {
+
     console.log(e);
     let index = e.currentTarget.dataset.index;
-    if(index !== undefined) {
+    if (index !== undefined) {
       let group = this.data.groupList[index];
       let openGId = group.openg_id || '';
 
@@ -39,7 +41,7 @@ Page({
       let param = generateNaviParam({
         openGId: group.openg_id
       });
-  
+
       wx.navigateTo({
         url: url + param
       });
@@ -79,7 +81,15 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
+    getGroupListPromise().then(result => {
+      console.log(result);
+      that.setData({
+        groupList: result
+      })
+    }).catch(err => {
 
+      console.log(err)
+    })
   },
 
   /**
