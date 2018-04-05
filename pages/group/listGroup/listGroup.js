@@ -83,6 +83,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
+    let that = this;
     getGroupListPromise().then(result => {
       console.log(result);
       that.setData({
