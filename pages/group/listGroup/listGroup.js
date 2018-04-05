@@ -23,8 +23,10 @@ Page({
       that.setData({
         groupList: result
       })
+      wx.stopPullDownRefresh();
     }).catch(err => {
 
+      wx.stopPullDownRefresh();
       console.log(err)
     })
   },
@@ -86,8 +88,10 @@ Page({
       that.setData({
         groupList: result
       })
+      wx.stopPullDownRefresh();
     }).catch(err => {
 
+      wx.stopPullDownRefresh();
       console.log(err)
     })
   },
