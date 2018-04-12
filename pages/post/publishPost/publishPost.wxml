@@ -58,7 +58,7 @@
     <view class="page__bd_spacing" style="margin-top: 50rpx">
         <button class="weui-btn" hover-class="weui-btn-hover" bindtap="publishPost">
             <view wx:if="{{loading}}" class="weui-loading"></view>
-            发布相册</button>
+            发布动态</button>
     </view>
 
 </view>

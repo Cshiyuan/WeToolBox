@@ -80,6 +80,7 @@
                 <view class="c-minheight wx-view_WnUrtw">
                     <view class="wx-view_F9ISUC">
                         <text class="wx-text_71u3gA">{{post.nick_name}}</text>
+                        <text wx:if="{{post.isOwner}}" data-postindex="{{postIndex}}" catchtap="longpressPost" class="wx-text_71u3gA">删除</text>
                     </view>
 
                     <view class="example--box" hover-class="navigator-hover" data-index="{{activityIndex}}" bindtap="naviToActivity">
